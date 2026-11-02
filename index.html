@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>مقهى نَمَقْ | المنظومة الذكية للطاولات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #0a0a0c;
+      --card-bg: rgba(18, 19, 24, 0.75);
+      --card-border: rgba(212, 175, 55, 0.18);
+      --gold: #D4AF37;
+      --gold-light: #F4E295;
+      --gold-dark: #9A7B1C;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding-bottom: 100px;
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* تأثير الزجاج الداكن */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      transition: all 0.25s ease;
+    }
+
+    /* الشريط العلوي */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 14px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10B981;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 10px #10B981;
+    }
+    .table-tag {
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* واجهة الهوية والشعار */
+    .brand-hero {
+      text-align: center;
+      padding: 18px 10px 8px;
+    }
+    .brand-logo {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      background: radial-gradient(circle, #1a1a24 0%, #0a0a0c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+    }
+    .brand-logo span {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* شبكة الواي فاي */
+    .wifi-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--gold);
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* أزرار الخدمات الصامتة */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .service-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .service-btn:active {
+      transform: scale(0.96);
+      border-color: var(--gold);
+    }
+    .service-btn span.icon {
+      font-size: 20px;
+    }
+    .service-btn span.label {
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* تصنيفات القائمة */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #000;
+      font-weight: 800;
+    }
+
+    /* عناصر القائمة */
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .menu-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .item-info {
+      flex: 1;
+    }
+    .item-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .item-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 2px 0 6px;
+      line-height: 1.4;
+    }
+    .item-price {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+    .add-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .add-btn:active {
+      background: var(--gold);
+      color: #000;
+      transform: scale(0.92);
+    }
+
+    /* شريط السلة العائم */
+    .cart-bar {
+      position: fixed;
+      bottom: 14px;
+      width: calc(100% - 28px);
+      max-width: 412px;
+      background: rgba(18, 19, 24, 0.92);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--gold);
+      border-radius: 16px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      z-index: 99;
+    }
+    .cart-summary {
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .cart-amount {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+    .order-btn {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border: none;
+      color: #000;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 10px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    /* النوافذ المنبثقة (Modals) */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1000;
+    }
+    .modal-content {
+      width: 100%;
+      max-width: 320px;
+      background: #14151a;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .modal-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .opt-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .opt-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .close-modal {
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding-top: 4px;
+    }
+
+    /* إشعار التنبيه اللحظي */
+    .toast {
+      position: fixed;
+      top: 20px;
+      background: rgba(212, 175, 55, 0.95);
+      color: #000;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: none;
+      z-index: 1001;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toast" id="toastMsg">تم الإجراء بنجاح</div>
+
+  <div class="app-container">
+    
+    <!-- شريط رقم الطاولة والحالة -->
+    <header class="glass-card top-header">
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 11px;">
+        <span class="status-dot"></span>
+        <span>المنظومة الذكية متصلة</span>
+      </div>
+      <div class="table-tag">
+        <span>📍 طاولة رقم</span>
+        <strong id="tableId">07</strong>
+      </div>
+    </header>
+
+    <!-- واجهة الهوية -->
+    <section class="brand-hero">
+      <div class="brand-logo">
+        <span>نَمَقْ</span>
+      </div>
+      <h1 class="brand-title">مقهى نَمَقْ | NAMQ</h1>
+      <p class="brand-subtitle">إتقان البُن ورقيّ المذاق في تجربة تفاعلية</p>
+    </section>
+
+    <!-- تفاصيل الواي فاي -->
+    <div class="glass-card wifi-strip">
+      <span>📶 شبكة الزوار: <strong>NAMQ_Guest</strong></span>
+      <button class="copy-btn" onclick="copyWifi()">نسخ الرمز</button>
+    </div>
+
+    <!-- الخدمات الصامتة للمضيف -->
+    <section>
+      <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px; font-weight: 700;">🛎️ خدمات الطاولة السريعة</div>
+      <div class="services-grid">
+        <div class="service-btn" onclick="openModal('billModal')">
+          <span class="icon">💳</span>
+          <span class="label">طلب الحساب</span>
+        </div>
+        <div class="service-btn" onclick="requestService('ماء ضيافة')">
+          <span class="icon">💧</span>
+          <span class="label">ماء بارد</span>
+        </div>
+        <div class="service-btn" onclick="openModal('chargerModal')">
+          <span class="icon">🔋</span>
+          <span class="label">شاحن سفري</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- تبويبات المنيو -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="filterMenu('all', this)">الكل</button>
+      <button class="tab-btn" onclick="filterMenu('coffee', this)">قهوة مختصة</button>
+      <button class="tab-btn" onclick="filterMenu('dessert', this)">الحلويات والمخبوزات</button>
+    </div>
+
+    <!-- عناصر القائمة -->
+    <div class="menu-list" id="menuContainer">
+      <!-- الأصناف تُحمّل تلقائياً عبر JavaScript -->
+    </div>
+
+  </div>
+
+  <!-- شريط السلة السفلي -->
+  <footer class="cart-bar">
+    <div class="cart-summary">
+      <span class="cart-label">إجمالي الطلب:</span>
+      <span class="cart-amount"><span id="totalPrice">0</span> ر.س</span>
+    </div>
+    <button class="order-btn" onclick="submitOrder()">إرسال للبار ➔</button>
+  </footer>
+
+  <!-- مودال طلب الحساب -->
+  <div class="modal-overlay" id="billModal">
+    <div class="modal-content">
+      <h3 style="font-size: 15px; font-weight: 800;">طريقة دفع الحساب</h3>
+      <p style="font-size: 12px; color: var(--text-muted);">اختر الوسيلة ليصلك المضيف بجهاز السداد:</p>
+      <div class="modal-options">
+        <button class="opt-btn" onclick="selectPayment('مدى / بطاقة بنكية')">مدى / فيزا</button>
+        <button class="opt-btn" onclick="selectPayment('Apple Pay')">Apple Pay</button>
+        <button class="opt-btn" onclick="selectPayment('نقداً (كاش)')">نقداً</button>
+      </div>
+      <button class="close-modal" onclick="closeModal('billModal')">إلغاء</button>
+    </div>
+  </div>
+
+  <!-- مودال الشاحن -->
+  <div class="modal-overlay" id="chargerModal">
+    <div class="modal-content">
+      <h3 style="font-size: 15px; font-weight: 800;">طلب شاحن للطاولة</h3>
+      <p style="font-size: 12px; color: var(--text-muted);">حدد نوع المنفذ المطلوب:</p>
+      <div class="modal-options">
+        <button class="opt-btn" onclick="selectCharger('Type-C')">سلك Type-C</button>
+        <button class="opt-btn" onclick="selectCharger('Lightning (iPhone)')">سلك آيفون (Lightning)</button>
+      </div>
+      <button class="close-modal" onclick="closeModal('chargerModal')">إلغاء</button>
+    </div>
+  </div>
+
+  <script>
+    // بيانات المنيو
+    const menuData = [
+      { id: 1, category: 'coffee', title: 'فلات وايت نَمَقْ', desc: 'ميزان حريري دقيق بين دبل إسبريسو والحليب المبخر', price: 16 },
+      { id: 2, category: 'coffee', title: 'V60 مقطرة (محصول إثيوبي)', desc: 'إيحاءات خوخ وزهور بقوام خفيف وعطري', price: 22 },
+      { id: 3, category: 'coffee', title: 'سبانيش لاتيه بارد', desc: 'إسبريسو غني مع مزيج الحليب المكثف المتوازن', price: 20 },
+      { id: 4, category: 'coffee', title: 'كولد برو (Cold Brew)', desc: 'قهوة منقوعة باردة لمدة 18 ساعة بنكهة نقية', price: 24 },
+      { id: 5, category: 'dessert', title: 'تيراميسو نَمَقْ الكلاسيكي', desc: 'طبقات بسكويت مشرب بإسبريسو نمق وكريمة فاخرة', price: 26 },
+      { id: 6, category: 'dessert', title: 'تشيز كيك سان سيباستيان', desc: 'قوام كريمي مخبوز طازج يقدم مع صوص الشوكولاتة', price: 28 },
+      { id: 7, category: 'dessert', title: 'كرواسون اللوز البلجيكي', desc: 'عجينة فرنسية هشة محشوة بكريمة اللوز المحمص', price: 18 }
+    ];
+
+    let cart = [];
+    let currentCategory = 'all';
+
+    function renderMenu() {
+      const container = document.getElementById('menuContainer');
+      container.innerHTML = '';
+
+      const filtered = currentCategory === 'all' 
+        ? menuData 
+        : menuData.filter(item => item.category === currentCategory);
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'glass-card menu-card';
+        card.innerHTML = `
+          <div class="item-info">
+            <div class="item-title">${item.title}</div>
+            <div class="item-desc">${item.desc}</div>
+            <div class="item-price">${item.price} ر.س</div>
+          </div>
+          <button class="add-btn" onclick="addToCart(${item.id})">+</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterMenu(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMenu();
+    }
+
+    function addToCart(id) {
+      const item = menuData.find(i => i.id === id);
+      cart.push(item);
+      updateCartUI();
+      showToast(`تمت إضافة: ${item.title}`);
+    }
+
+    function updateCartUI() {
+      const total = cart.reduce((acc, curr) => acc + curr.price, 0);
+      document.getElementById('totalPrice').innerText = total;
+    }
+
+    function submitOrder() {
+      if (cart.length === 0) {
+        showToast('سلة طلباتك فارغة!');
+        return;
+      }
+      const total = cart.reduce((acc, curr) => acc + curr.price, 0);
+      alert(`تم تأكيد إرسال طلبك إلى الباريستا!\nعدد الأصناف: ${cart.length}\nالإجمالي: ${total} ر.س\nسيتم تقديمه لطاولة رقم 07 فوراً.`);
+      cart = [];
+      updateCartUI();
+    }
+
+    function copyWifi() {
+      navigator.clipboard.writeText('Namq@2026');
+      showToast('تم نسخ رمز الشبكة: Namq@2026');
+    }
+
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function selectPayment(type) {
+      closeModal('billModal');
+      showToast(`تم إشعار المضيف: الحساب عبر ${type}`);
+    }
+
+    function selectCharger(type) {
+      closeModal('chargerModal');
+      showToast(`جاري إحضار شاحن (${type}) لطاولتك`);
+    }
+
+    function requestService(name) {
+      showToast(`تم إرسال طلب: ${name}`);
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toastMsg');
+      toast.innerText = text;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2200);
+    }
+
+    // تشغيل القائمة عند التحميل
+    renderMenu();
+  </script>
+</body>
+</html>
