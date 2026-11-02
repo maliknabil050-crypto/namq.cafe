@@ -3,486 +3,1229 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>مقهى نَمَقْ | NAMQ Cafe</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <title>مقهى نَمَقْ | القهوة المختصة والمنظومة الذكية الفاخرة</title>
   <style>
+    :root {
+      --bg: #0F0C0A;
+      --card-bg: #1B1512;
+      --card-border: #2D231E;
+      --accent: #C27803;
+      --accent-light: #FBBF24;
+      --accent-glow: rgba(194, 120, 3, 0.25);
+      --text: #FBFBFA;
+      --muted: #A39B95;
+      --green: #25D366;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Tajawal', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
+
     body {
-      background-color: #0b0806;
-      color: #ffffff;
-      min-height: 100vh;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 16px;
       display: flex;
       justify-content: center;
-      padding: 16px 12px 95px;
-      overflow-x: hidden;
+      min-height: 100vh;
+      padding-bottom: 110px;
     }
-    .mobile-screen {
+
+    .hub-container {
       width: 100%;
-      max-width: 410px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      max-width: 440px;
+      background: radial-gradient(circle at top, #2C1A10 0%, var(--bg) 80%);
+      border: 1px solid rgba(194, 120, 3, 0.25);
+      border-radius: 28px;
+      padding: 24px 18px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.85);
+      position: relative;
     }
-    /* الشريط العلوي */
-    .top-bar {
+
+    .top-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 16px;
     }
-    .pill-btn {
-      background: #1e1510;
-      border: 1px solid #d4a359;
-      color: #e5b974;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 6px 16px;
+
+    .badge {
+      background: var(--accent-glow);
+      border: 1px solid var(--accent);
+      color: var(--accent-light);
+      padding: 4px 12px;
       border-radius: 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
-    /* الهيدر والشعار */
-    .hero-header {
-      text-align: center;
+
+    .table-indicator {
+      background: #251D18;
+      border: 1px solid var(--accent);
+      color: #FFF;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 800;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 6px;
-      margin-top: 4px;
+      gap: 5px;
     }
-    .logo-ring {
+
+    .brand-logo-container {
       width: 82px;
       height: 82px;
+      margin: 0 auto 12px auto;
       border-radius: 50%;
-      background: radial-gradient(circle, #2a1f18 0%, #120d0a 100%);
-      border: 2px solid #e5b974;
-      box-shadow: 0 0 20px rgba(212, 163, 89, 0.25);
+      border: 2px solid var(--accent);
+      overflow: hidden;
+      background-color: #1F1712;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+    }
+
+    .brand-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-logo-text {
+      font-size: 24px;
       font-weight: 900;
-      color: #e5b974;
+      color: var(--accent-light);
       letter-spacing: 1px;
     }
-    .hero-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #ffffff;
+
+    .hub-title {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: #FFF;
+      margin-bottom: 2px;
+      letter-spacing: 0.5px;
     }
-    .hero-sub {
-      font-size: 13px;
-      color: #c99e63;
-      font-weight: 500;
+
+    .logo-subtitle {
+      font-size: 0.75rem;
+      color: var(--accent-light);
+      margin-bottom: 4px;
+      font-style: italic;
     }
-    .hero-desc {
-      font-size: 12px;
-      color: #9c958e;
+
+    .hub-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 16px;
     }
-    /* السلايدر الرئيسي */
-    .slider-box {
-      background: #17100b;
-      border: 1.5px solid #d4a359;
-      border-radius: 24px;
-      overflow: hidden;
+
+    /* شاشة العرض الإعلانية السينمائية */
+    .ad-screen-container {
       position: relative;
-      padding: 8px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-    }
-    .slider-img {
       width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 18px;
-      display: block;
+      height: 240px;
+      border-radius: 22px;
+      border: 2px solid var(--accent);
+      overflow: hidden;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+      background: #000;
     }
-    .slider-nav {
+
+    .ad-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .ad-slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .ad-slide img,
+    .ad-slide video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85);
+      border-radius: 20px;
+    }
+
+    /* أزرار التنقل */
+    .slider-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 32px;
-      height: 32px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: rgba(18, 13, 10, 0.85);
-      border: 1px solid #d4a359;
-      color: #d4a359;
+      background: rgba(18, 14, 12, 0.85);
+      border: 1px solid var(--accent);
+      color: var(--accent-light);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
-      user-select: none;
+      z-index: 10;
+      transition: 0.2s;
     }
-    .slider-prev { right: 16px; }
-    .slider-next { left: 16px; }
-    .slider-caption {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(18, 13, 10, 0.9);
-      border: 1px solid #d4a359;
-      color: #ffffff;
-      padding: 6px 18px;
+
+    .slider-btn:active {
+      transform: translateY(-50%) scale(0.9);
+      background: var(--accent);
+      color: #FFF;
+    }
+
+    .slider-btn.prev { right: 12px; }
+    .slider-btn.next { left: 12px; }
+
+    .slider-caption-badge {
+      position: relative;
+      z-index: 5;
+      background: rgba(27, 21, 18, 0.9);
+      border: 1px solid var(--accent);
+      color: #FFF;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 6px 16px;
       border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
+
     /* شريط الواي فاي */
-    .wifi-card {
-      background: #17100b;
-      border: 1px solid rgba(212, 163, 89, 0.35);
-      border-radius: 16px;
+    .wifi-quick-box {
+      background: rgba(30, 24, 21, 0.7);
+      border: 1px dashed var(--accent);
+      border-radius: 14px;
       padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 12px;
+      margin-bottom: 18px;
+      font-size: 0.78rem;
     }
-    .wifi-copy {
-      background: #e5b974;
-      color: #0b0806;
-      font-weight: 800;
-      font-size: 11px;
+
+    .wifi-btn {
+      background: var(--accent);
+      color: #FFF;
       border: none;
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.2s;
     }
-    /* قسم الخدمات */
+
+    /* الخدمات الصامتة */
     .section-label {
-      text-align: center;
-      font-size: 12px;
-      color: #e5b974;
-      font-weight: 700;
+      text-align: right;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: var(--accent-light);
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
-      margin-top: 2px;
     }
-    .services-row {
+
+    .concierge-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
+      margin-bottom: 20px;
     }
-    .srv-btn {
-      background: #17100b;
-      border: 1px solid rgba(212, 163, 89, 0.25);
+
+    .concierge-btn {
+      background: #201915;
+      border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 12px 4px;
+      padding: 12px 6px;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .concierge-btn .icon { font-size: 1.25rem; }
+    .concierge-btn span.label { font-size: 0.68rem; font-weight: 700; }
+
+    .concierge-btn:active {
+      transform: scale(0.95);
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* طلب الكوب الثاني */
+    .refill-card {
+      background: linear-gradient(135deg, #271B14 0%, #17110E 100%);
+      border: 1px solid var(--accent);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 20px;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .refill-badge {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: var(--accent);
+      color: #FFF;
+      font-size: 0.62rem;
+      font-weight: bold;
+      padding: 2px 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    .refill-info h4 { font-size: 0.88rem; color: #FFF; margin-bottom: 2px; }
+    .refill-info p { font-size: 0.72rem; color: var(--muted); }
+
+    .refill-btn {
+      background: var(--accent);
+      color: #FFF;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(194, 120, 3, 0.4);
+    }
+
+    /* الأزرار الرئيسية */
+    .hub-links {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 20px;
+    }
+
+    .hub-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      text-decoration: none;
+      padding: 13px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .hub-btn:hover, .hub-btn:active {
+      background: #251D18;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .hub-btn span.icon { font-size: 1.15rem; }
+    .hub-btn span.arrow { color: var(--accent); font-size: 0.95rem; }
+
+    /* لوحات المحتوى */
+    .content-panel {
+      display: none;
+      background: #17110E;
+      border: 1px solid var(--accent);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: right;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .content-panel.active { display: block; }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 8px;
+    }
+
+    .panel-header h3 {
+      font-size: 0.98rem;
+      color: var(--accent-light);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .close-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* كروت المنيو */
+    .menu-card {
+      background: #221A15;
+      border: 1px solid #33261F;
+      padding: 10px;
+      border-radius: 12px;
+      margin-bottom: 9px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .item-img {
+      width: 54px;
+      height: 54px;
+      border-radius: 9px;
+      object-fit: cover;
+      border: 1px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .item-info { flex-grow: 1; }
+    .menu-card h4 { font-size: 0.84rem; color: #FFF; margin-bottom: 2px; }
+    .menu-card p { font-size: 0.7rem; color: var(--muted); margin-bottom: 3px; }
+    .menu-card span { font-size: 0.8rem; color: var(--accent-light); font-weight: bold; }
+
+    .add-to-cart-btn {
+      background: var(--accent);
+      color: #FFF;
+      border: none;
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.72rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: 0.2s;
+    }
+
+    .add-to-cart-btn:active { transform: scale(0.92); }
+
+    /* النوافذ المنبثقة */
+    .action-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 14px;
+    }
+
+    .action-modal.active { display: flex; animation: fadeIn 0.2s ease; }
+
+    .modal-box {
+      width: 100%;
+      max-width: 420px;
+      background: #1E1713;
+      border: 1px solid var(--accent);
+      border-radius: 22px;
+      padding: 20px;
+      text-align: right;
+      animation: slideUp 0.25s ease;
+    }
+
+    .modal-box h4 { font-size: 1rem; color: #FFF; margin-bottom: 6px; }
+    .modal-box p { font-size: 0.76rem; color: var(--muted); margin-bottom: 14px; }
+
+    .modal-options {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 14px;
+    }
+
+    .modal-opt-btn {
+      background: #281F19;
+      border: 1px solid var(--card-border);
+      color: #FFF;
+      padding: 11px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: bold;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .modal-opt-btn:active {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    .modal-close-action {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.8rem;
+      width: 100%;
+      padding: 8px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* سلة الطلبات */
+    .floating-cart {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92%;
+      max-width: 420px;
+      background: #1B1512;
+      border: 2px solid var(--accent);
+      border-radius: 18px;
+      padding: 12px 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.95);
+      z-index: 1000;
+      animation: slideUp 0.3s ease;
+      text-align: right;
+    }
+
+    .cart-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.84rem;
+    }
+
+    .cart-summary strong { color: var(--accent-light); }
+
+    .cart-items-preview {
+      max-height: 110px;
+      overflow-y: auto;
+      margin-bottom: 8px;
+      font-size: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 6px;
+    }
+
+    .cart-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      color: var(--muted);
+    }
+
+    .cart-ctrls { display: flex; align-items: center; gap: 6px; }
+
+    .ctrl-btn {
+      background: #2E221B;
+      color: #FFF;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .whatsapp-send-btn {
+      background: var(--green);
+      color: #FFF;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 0.86rem;
+      cursor: pointer;
+      display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
+      width: 100%;
+    }
+
+    .action-link-btn {
+      display: block;
+      background: var(--accent);
+      color: #FFF;
       text-decoration: none;
-    }
-    .srv-btn:active {
-      border-color: #d4a359;
-      background: #231912;
-    }
-    .srv-icon {
-      font-size: 18px;
-    }
-    /* قائمة الأصناف */
-    .menu-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .menu-item {
-      background: #17100b;
-      border: 1px solid rgba(212, 163, 89, 0.2);
-      border-radius: 16px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .item-txt h4 {
-      font-size: 14px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-    .item-txt p {
-      font-size: 11px;
-      color: #8f8780;
-      margin-top: 2px;
-    }
-    .item-txt span {
-      display: inline-block;
-      margin-top: 4px;
-      font-size: 12px;
-      font-weight: 800;
-      color: #e5b974;
-    }
-    .add-action {
-      background: rgba(212, 163, 89, 0.15);
-      border: 1px solid #d4a359;
-      color: #e5b974;
-      width: 34px;
-      height: 34px;
+      padding: 10px;
       border-radius: 10px;
-      font-size: 18px;
       font-weight: bold;
+      font-size: 0.82rem;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* تقييم النجوم */
+    .stars-container {
       display: flex;
-      align-items: center;
       justify-content: center;
+      gap: 8px;
+      margin: 12px 0;
+      font-size: 1.6rem;
       cursor: pointer;
     }
-    .add-action:active {
-      background: #e5b974;
-      color: #000;
+
+    .star { color: #4B3E36; transition: 0.2s; }
+    .star.selected { color: #FBBF24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+
+    .hub-footer {
+      font-size: 0.72rem;
+      color: var(--muted);
+      border-top: 1px dashed rgba(194, 120, 3, 0.3);
+      padding-top: 14px;
+      margin-top: 10px;
     }
-    /* شريط السلة */
-    .checkout-footer {
-      position: fixed;
-      bottom: 12px;
-      width: calc(100% - 24px);
-      max-width: 410px;
-      background: rgba(23, 16, 11, 0.95);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1.5px solid #d4a359;
-      border-radius: 20px;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-      z-index: 100;
-    }
-    .order-submit {
-      background: #e5b974;
-      color: #0b0806;
-      border: none;
-      padding: 9px 18px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 12px;
-      cursor: pointer;
-    }
-    /* التنبيه اللحظي */
-    .toast {
+
+    .hub-footer strong { color: #FFF; }
+
+    /* إشعار Toast */
+    .toast-msg {
       position: fixed;
       top: 16px;
-      background: #e5b974;
-      color: #000;
-      font-size: 12px;
-      font-weight: 800;
-      padding: 8px 18px;
-      border-radius: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1B1512;
+      border: 1px solid var(--accent);
+      color: #FFF;
+      padding: 9px 16px;
+      border-radius: 30px;
+      font-size: 0.78rem;
+      font-weight: bold;
+      z-index: 3000;
       display: none;
-      z-index: 200;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <div id="toast" class="toast">تم الإشعار بنجاح</div>
+  <!-- إشعار Toast -->
+  <div id="toast" class="toast-msg"></div>
 
-  <div class="mobile-screen">
+  <div class="hub-container">
     
     <!-- الشريط العلوي -->
-    <div class="top-bar">
-      <div class="pill-btn">
+    <div class="top-meta">
+      <span class="badge">المنظومة الذكية ☕</span>
+      <div id="tableDisplay" class="table-indicator">
         <span>📍</span>
-        <span id="tableLabel">طاولة رقم 1</span>
+        <span id="currentTableText">طاولة رقم 1</span>
       </div>
-      <div class="pill-btn">
-        <span>☕</span>
-        <span>المنظومة الذكية</span>
+    </div>
+    
+    <div class="brand-logo-container">
+      <img src="logo.jpg" alt="شعار مقهى نمق" class="brand-logo" onerror="this.style.display='none'; document.getElementById('brandLogoText').style.display='block';">
+      <span id="brandLogoText" class="brand-logo-text" style="display:none;">نَمَقْ</span>
+    </div>
+    
+    <div class="hub-title">مقهى نَمَقْ | NAMQ</div>
+    <div class="logo-subtitle">أيقونة القهوة المختصة والضيافة الحديثة</div>
+    <div class="hub-subtitle">تجربة ضيافة استثنائية بلمسة واحدة</div>
+
+    <!-- شاشة العرض الإعلانية السينمائية -->
+    <div class="ad-screen-container">
+      <button class="slider-btn prev" onclick="moveSlide(-1)">❯</button>
+      <button class="slider-btn next" onclick="moveSlide(1)">❮</button>
+
+      <div class="ad-slide active">
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-coffee-maker-pouring-fresh-coffee-into-a-cup-42861-large.mp4" type="video/mp4">
+        </video>
+        <span class="slider-caption-badge">🔥 استخلاص محاصيل اليوم الفاخرة</span>
+      </div>
+
+      <div class="ad-slide">
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1534778101976-62847782c213?w=600">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-barista-making-latte-art-in-a-coffee-shop-42862-large.mp4" type="video/mp4">
+        </video>
+        <span class="slider-caption-badge">✨ فلات وايت نمق الخاص بخصم 15%</span>
+      </div>
+
+      <div class="ad-slide">
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-coffee-beans-falling-into-a-grinder-42863-large.mp4" type="video/mp4">
+        </video>
+        <span class="slider-caption-badge">🛍️ محاصيل الموسم للتحضير المنزلي</span>
       </div>
     </div>
 
-    <!-- الهيدر والشعار -->
-    <div class="hero-header">
-      <div class="logo-ring">نَمَقْ</div>
-      <h1 class="hero-title">مقهى نَمَقْ | NAMQ</h1>
-      <div class="hero-sub">أيقونة القهوة المختصة والضيافة الحديثة</div>
-      <div class="hero-desc">تجربة ضيافة استثنائية بلمسة واحدة</div>
-    </div>
-
-    <!-- كارت الصورة والسلايدر -->
-    <div class="slider-box">
-      <img id="slideImg" class="slider-img" src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600" alt="قهوة مختصة">
-      <button class="slider-nav slider-prev" onclick="changeSlide(-1)">❮</button>
-      <button class="slider-nav slider-next" onclick="changeSlide(1)">❯</button>
-      <div class="slider-caption">
-        <span>🔥</span>
-        <span id="slideText">استخلاص محاصيل اليوم الفاخرة</span>
+    <!-- نسخ الواي فاي السريع -->
+    <div class="wifi-quick-box">
+      <div>
+        <strong>📶 شبكة الزوار:</strong> NAMQ_Guest
       </div>
+      <button class="wifi-btn" onclick="copyWifi('Namq@2026')">نسخ الكلمة 📋</button>
     </div>
 
-    <!-- بطاقة شبكة الزوار -->
-    <div class="wifi-card">
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <span style="color: #e5b974;">📶</span>
-        <span>شبكة الزوار: <strong style="color: #fff;">NAMQ_Guest</strong></span>
-      </div>
-      <button class="wifi-copy" onclick="copyWifi()">نسخ الكلمة 📋</button>
-    </div>
-
-    <!-- الخدمات الصامتة المباشرة -->
+    <!-- منظومة الخدمات الصامتة الفورية -->
     <div class="section-label">
-      <span>🛎️</span>
-      <span>الخدمات الصامتة المباشرة</span>
+      <span>🛎️ الخدمات الصامتة المباشرة</span>
     </div>
 
-    <div class="services-row">
-      <div class="srv-btn" onclick="sendServiceToWhatsapp('طلب الحساب وجهاز الدفع')">
-        <span class="srv-icon">💳</span>
-        <span>الحساب</span>
-      </div>
-      <div class="srv-btn" onclick="sendServiceToWhatsapp('طلب ماء ضيافة بارد')">
-        <span class="srv-icon">💧</span>
-        <span>ماء</span>
-      </div>
-      <div class="srv-btn" onclick="sendServiceToWhatsapp('طلب شاحن سفري للطاولة')">
-        <span class="srv-icon">🔋</span>
-        <span>شاحن</span>
-      </div>
-      <div class="srv-btn" onclick="sendServiceToWhatsapp('استدعاء المضيف للطاولة')">
-        <span class="srv-icon">🛎️</span>
-        <span>استدعاء</span>
-      </div>
+    <div class="concierge-grid">
+      <button class="concierge-btn" onclick="callHost()">
+        <span class="icon">👋</span>
+        <span class="label">مناداة المضيف</span>
+      </button>
+
+      <button class="concierge-btn" onclick="openModal('billModal')">
+        <span class="icon">💳</span>
+        <span class="label">طلب الحساب</span>
+      </button>
+
+      <button class="concierge-btn" onclick="cleanTable()">
+        <span class="icon">✨</span>
+        <span class="label">تنظيف الطاولة</span>
+      </button>
+
+      <button class="concierge-btn" onclick="openModal('powerModal')">
+        <span class="icon">🔋</span>
+        <span class="label">استعارة شاحن</span>
+      </button>
     </div>
 
-    <!-- قائمة المشروبات والمخبوزات -->
-    <div class="menu-list">
-      <div class="menu-item">
-        <div class="item-txt">
-          <h4>فلات وايت نَمَقْ</h4>
-          <p>استخلاص موزون مع حليب طازج ناعم</p>
+    <!-- كرت طلب الدفعة الثانية الصامتة (Refill) -->
+    <div class="refill-card">
+      <span class="refill-badge">خصم 15% للطلب المتكرر</span>
+      <div class="refill-info">
+        <h4>كوبك الثاني؟ (Refill)</h4>
+        <p>فلات وايت / قهوتك المعتادة بلمسة واحدة</p>
+      </div>
+      <button class="refill-btn" onclick="quickRefill('فلات وايت نمق - دفعة ثانية', 14)">أعد الطلب ⚡</button>
+    </div>
+
+    <!-- الأزرار الرئيسية -->
+    <div class="hub-links">
+      <button class="hub-btn" onclick="showPanel('menuPanel')">
+        <span class="icon">📜</span>
+        <span>استعراض المنيو والطلب الفوري</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('beansPanel')">
+        <span class="icon">🛍️</span>
+        <span>محاصيل القهوة وأدوات التحضير</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('offersPanel')">
+        <span class="icon">🎁</span>
+        <span>العروض الحصرية الصباحية</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('loyaltyPanel')">
+        <span class="icon">⭐</span>
+        <span>بطاقة الولاء الرقمية VIP</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('ratePanel')">
+        <span class="icon">☕</span>
+        <span>تقييم التجربة وخدمة الباريستا</span>
+        <span class="arrow">←</span>
+      </button>
+
+      <button class="hub-btn" onclick="showPanel('contactPanel')">
+        <span class="icon">📍</span>
+        <span>الموقع وأوقات العمل</span>
+        <span class="arrow">←</span>
+      </button>
+    </div>
+
+    <!-- 1. لوحة المنيو مع الصور والأصناف -->
+    <div id="menuPanel" class="content-panel">
+      <div class="panel-header">
+        <h3>📜 قائمة المشروبات والمخبوزات</h3>
+        <button class="close-btn" onclick="closePanel()">✕</button>
+      </div>
+      
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=150" alt="إسبريسو" class="item-img">
+        <div class="item-info">
+          <h4>إسبريسو نَمَقْ (Espresso)</h4>
+          <p>استخلاص غني بقوام متوازن</p>
+          <span>14 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('إسبريسو نَمَقْ', 14)">إضافة +</button>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=150" alt="فلات وايت" class="item-img">
+        <div class="item-info">
+          <h4>فلات وايت (Flat White)</h4>
+          <p>ميزان دقيق بين الإسبريسو والحليب</p>
           <span>16 ر.س</span>
         </div>
-        <div class="add-action" onclick="addItem('فلات وايت نَمَقْ', 16)">+</div>
+        <button class="add-to-cart-btn" onclick="addToCart('فلات وايت نَمَقْ', 16)">إضافة +</button>
       </div>
 
-      <div class="menu-item">
-        <div class="item-txt">
-          <h4>V60 مقطرة إثيوبي</h4>
-          <p>إيحاءات خوخ وزهور عطرية خفيفة</p>
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=150" alt="كابتشينو" class="item-img">
+        <div class="item-info">
+          <h4>كابتشينو (Cappuccino)</h4>
+          <p>إسبريسو مع رغوة حليب ناعمة</p>
+          <span>18 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('كابتشينو نَمَقْ', 18)">إضافة +</button>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=150" alt="لاتيه" class="item-img">
+        <div class="item-info">
+          <h4>لاتيه حار / بارد (Latte)</h4>
+          <p>مستخلصة بعناية مع الحليب الطازج</p>
+          <span>18 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('لاتيه نَمَقْ', 18)">إضافة +</button>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150" alt="في 60" class="item-img">
+        <div class="item-info">
+          <h4>في 60 - مقطرة (V60)</h4>
+          <p>محاصيل فاخرة للفلتر اليومي</p>
           <span>22 ر.س</span>
         </div>
-        <div class="add-action" onclick="addItem('V60 مقطرة إثيوبي', 22)">+</div>
+        <button class="add-to-cart-btn" onclick="addToCart('في 60 نَمَقْ', 22)">إضافة +</button>
       </div>
 
-      <div class="menu-item">
-        <div class="item-txt">
-          <h4>سبانيش لاتيه بارد</h4>
-          <p>مزيج منعش ومتوازن الحلاوة</p>
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=150" alt="اسبانيش لاتيه" class="item-img">
+        <div class="item-info">
+          <h4>اسبانيش لاتيه بارد</h4>
+          <p>إسبريسو مع حليب وحلا نَمَقْ المتوازن</p>
+          <span>21 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('اسبانيش لاتيه نَمَقْ', 21)">إضافة +</button>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150" alt="كيكة العسل" class="item-img">
+        <div class="item-info">
+          <h4>كيكة العسل الخاصة</h4>
+          <p>طبقات هشة ومحضرة يومياً</p>
+          <span>24 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('كيكة العسل', 24)">إضافة +</button>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1519869325930-281384150729?w=150" alt="تارت التوت" class="item-img">
+        <div class="item-info">
+          <h4>تارت التوت الفاخر</h4>
+          <p>معجنات مقرمشة بكريمة الفانيليا</p>
           <span>20 ر.س</span>
         </div>
-        <div class="add-action" onclick="addItem('سبانيش لاتيه بارد', 20)">+</div>
-      </div>
-
-      <div class="menu-item">
-        <div class="item-txt">
-          <h4>تيراميسو نَمَقْ الكلاسيكي</h4>
-          <p>طبقات مشربة بإسبريسو غني وكريمة فاخرة</p>
-          <span>26 ر.س</span>
-        </div>
-        <div class="add-action" onclick="addItem('تيراميسو نَمَقْ الكلاسيكي', 26)">+</div>
+        <button class="add-to-cart-btn" onclick="addToCart('تارت التوت', 20)">إضافة +</button>
       </div>
     </div>
 
+    <!-- 2. لوحة المحاصيل -->
+    <div id="beansPanel" class="content-panel">
+      <div class="panel-header">
+        <h3>🛍️ محاصيل نَمَقْ المختصة</h3>
+        <button class="close-btn" onclick="closePanel()">✕</button>
+      </div>
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=150" alt="محصول إثيوبيا" class="item-img">
+        <div class="item-info">
+          <h4>محصول إثيوبيا قيديب (250g)</h4>
+          <p>إيحاءات: خوخ، ياسمين، وحلاوة عسل</p>
+          <span>75 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('محصول إثيوبيا (250g)', 75)">إضافة +</button>
+      </div>
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1611854779393-1b2da9d401fe?w=150" alt="محصول كولومبي" class="item-img">
+        <div class="item-info">
+          <h4>محصول كولومبي هائلا (250g)</h4>
+          <p>إيحاءات: كراميل، شوكولاتة داكنة، ومكسرات</p>
+          <span>70 ر.س</span>
+        </div>
+        <button class="add-to-cart-btn" onclick="addToCart('محصول كولومبي (250g)', 70)">إضافة +</button>
+      </div>
+    </div>
+
+    <!-- 3. لوحة العروض -->
+    <div id="offersPanel" class="content-panel">
+      <div class="panel-header">
+        <h3>🎁 العروض الحصرية</h3>
+        <button class="close-btn" onclick="closePanel()">✕</button>
+      </div>
+      <div class="menu-card" style="flex-direction: column; text-align: center; padding: 14px;">
+        <h4 style="font-size: 0.95rem;">عرض الصباح الراقي ☀️</h4>
+        <p>أي كوب قهوة سوداء أو حليب مع حلا الصباح بخصم 20% حتى 11 صباحاً.</p>
+        <button class="action-link-btn" style="width: 100%; border: none; cursor: pointer;" onclick="sendQuickMessage('طلب الاستفادة من عرض الصباح السعيد')">تفعيل العرض عبر الواتساب</button>
+      </div>
+    </div>
+
+    <!-- 4. لوحة برنامج الولاء -->
+    <div id="loyaltyPanel" class="content-panel">
+      <div class="panel-header">
+        <h3>⭐ بطاقة نَمَقْ VIP الرقمية</h3>
+        <button class="close-btn" onclick="closePanel()">✕</button>
+      </div>
+      <p style="font-size: 0.8rem; margin-bottom: 12px; color: var(--muted);">كل 6 أكواب قهوة تمنحك الكوب الـ 7 مجاناً! سجل رقمك وابدأ بجمع الأختام فوراً.</p>
+      <button class="action-link-btn" style="width: 100%; border: none; cursor: pointer;" onclick="sendQuickMessage('أرغب في تفعيل اشتراكي ببرنامج الولاء الرقمي لنَمَقْ')">ربط رقمي ببرنامج الأختام</button>
+    </div>
+
+    <!-- 5. لوحة تقييم التجربة مع درع الحماية الذكي -->
+    <div id="ratePanel" class="content-panel">
+      <div class="panel-header">
+        <h3>☕ تقييم مستوى التجربة</h3>
+        <button class="close-btn" onclick="closePanel()">✕</button>
+      </div>
+      <div style="text-align: center; padding: 8px;">
+        <p style="font-size: 0.82rem; color: #FFF; margin-bottom: 4px;">كيف كانت قهوتك وخدمة المضيف اليوم؟</p>
+        <p style="font-size: 0.72rem; color: var(--muted);">رأيك يبني تميزنا المستمر</p>
+        
+        <div class="stars-container" id="starContainer">
+          <span class="star" onclick="handleRating(1)">★</span>
+          <span class="star" onclick="handleRating(2)">★</span>
+          <span class="star" onclick="handleRating(3)">★</span>
+          <span class="star" onclick="handleRating(4)">★</span>
+          <span class="star" onclick="handleRating(5)">★</span>
+        </div>
+        
+        <div id="ratingActionArea" style="min-height: 40px; margin-top: 10px;"></div>
+      </div>
+    </div>
+
+    <!-- 6. لوحة التواصل والموقع -->
+    <div id="contactPanel" class="content-panel">
+      <div class="panel-header">
+        <h3>📍 الموقع والضيافة</h3>
+        <button class="close-btn" onclick="closePanel()">✕</button>
+      </div>
+      <p style="font-size: 0.8rem; margin-bottom: 8px;">نستقبلكم يومياً بكل شغف من الساعة 6:00 صباحاً حتى 12:00 منتصف الليل.</p>
+      <a href="https://maps.google.com" target="_blank" class="action-link-btn">الاتجاهات على خرائط Google ➔</a>
+      <button class="action-link-btn" style="background: #201915; border: 1px solid var(--accent); margin-top: 8px; width: 100%; cursor: pointer;" onclick="sendQuickMessage('مرحباً، لدي استفسار خاص بإدارة مقهى نَمَقْ')">محادثة الإدارة المباشرة</button>
+    </div>
+
+    <!-- الفوتر -->
+    <div class="hub-footer">
+      تطوير المنظومة الذكية: <strong>نبيل النمر</strong><br>
+      جميع الحقوق محفوظة لمقهى نَمَقْ © 2026
+    </div>
   </div>
 
-  <!-- شريط الطلب السفلي العائم -->
-  <div class="checkout-footer">
-    <div>
-      <div style="font-size: 11px; color: #9c958e;">سلة الطلبات:</div>
-      <div style="font-size: 15px; font-weight: 800; color: #e5b974;"><span id="totalSum">0</span> ر.س</div>
+  <!-- نافذة طلب الحساب المنبثقة -->
+  <div id="billModal" class="action-modal">
+    <div class="modal-box">
+      <h4>💳 طلب الحساب الصامت</h4>
+      <p>حدد وسيلة الدفع المفضلة ليصلك المضيف فوراً:</p>
+      <div class="modal-options">
+        <button class="modal-opt-btn" onclick="requestBill('جهاز الشبكة (مدى / فيزا / أبل باي)')">
+          <span>جهاز الدفع الإلكتروني (شبكة)</span> 💳
+        </button>
+        <button class="modal-opt-btn" onclick="requestBill('دفع نقدي (كاش)')">
+          <span>دفع نقدي (كاش)</span> 💵
+        </button>
+        <button class="modal-opt-btn" onclick="requestBill('رابط دفع إلكتروني عبر الجوال')">
+          <span>رابط سداد أونلاين سريع</span> ⚡
+        </button>
+      </div>
+      <button class="modal-close-action" onclick="closeModal('billModal')">إلغاء</button>
     </div>
-    <button class="order-submit" onclick="sendOrderViaWhatsapp()">إرسال الطلب عبر واتساب ➔</button>
+  </div>
+
+  <!-- نافذة استعارة بنك الطاقة المنبثقة -->
+  <div id="powerModal" class="action-modal">
+    <div class="modal-box">
+      <h4>🔋 طلب شاحن سفري للطاولة</h4>
+      <p>اختر نوع السلك المطلوب لنوصله لك فوراً:</p>
+      <div class="modal-options">
+        <button class="modal-opt-btn" onclick="requestPower('سلك Type-C حديث')">
+          <span>منفذ تايب سي (Type-C)</span> 🔌
+        </button>
+        <button class="modal-opt-btn" onclick="requestPower('سلك آيفون لايتنينج (Lightning)')">
+          <span>منفذ آيفون المعتاد (Lightning)</span> ⚡
+        </button>
+      </div>
+      <button class="modal-close-action" onclick="closeModal('powerModal')">إلغاء</button>
+    </div>
+  </div>
+
+  <!-- سلة الطلبات العائمة -->
+  <div id="floatingCart" class="floating-cart" style="display: none;">
+    <div class="cart-summary">
+      <span>🛒 سلة طلباتك</span>
+      <strong id="cartTotalText">0 ر.س</strong>
+    </div>
+    
+    <div id="cartItemsList" class="cart-items-preview"></div>
+
+    <button class="whatsapp-send-btn" onclick="sendCartOrder()">
+      <span>إرسال الطلب للباريستا فوراً</span> 💬
+    </button>
   </div>
 
   <script>
-    const PHONE_NUMBER = "966560564719";
-    const TABLE_NAME = "طاولة رقم 1";
-
-    const slides = [
-      { img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600", text: "استخلاص محاصيل اليوم الفاخرة" },
-      { img: "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600", text: "فلات وايت نمق بخصم 15% على الكوب الثاني" },
-      { img: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600", text: "محاصيل الموسم المختصة للتحضير المنزلي" }
-    ];
-    let currentSlide = 0;
-
-    function changeSlide(direction) {
-      currentSlide = (currentSlide + direction + slides.length) % slides.length;
-      document.getElementById('slideImg').src = slides[currentSlide].img;
-      document.getElementById('slideText').innerText = slides[currentSlide].text;
-    }
-
+    const CAFE_PHONE = "966560564719";
     let cart = [];
+    let activeTable = "طاولة رقم 1";
+    let isCooldown = false;
 
-    function addItem(name, price) {
-      cart.push({ name, price });
-      updateUI();
-      triggerToast(`أضيف للسلة: ${name}`);
+    // استخراج رقم الطاولة تلقائياً من رابط الـ NFC
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tableParam = urlParams.get('table') || urlParams.get('t');
+      if (tableParam) {
+        activeTable = `طاولة رقم ${tableParam}`;
+        document.getElementById('currentTableText').innerText = activeTable;
+      }
+      startAutoSlide();
+    });
+
+    // التحكم في سلايدر شاشة العرض
+    let currentSlide = 0;
+    let slideTimer;
+
+    function showSlide(index) {
+      const slides = document.querySelectorAll('.ad-slide');
+      if (index >= slides.length) currentSlide = 0;
+      else if (index < 0) currentSlide = slides.length - 1;
+      else currentSlide = index;
+
+      slides.forEach((s, idx) => {
+        const isActive = (idx === currentSlide);
+        s.classList.toggle('active', isActive);
+        
+        const vid = s.querySelector('video');
+        if (vid) {
+          if (isActive) {
+            vid.currentTime = 0;
+            vid.play().catch(() => {});
+          } else {
+            vid.pause();
+          }
+        }
+      });
     }
 
-    function updateUI() {
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      document.getElementById('totalSum').innerText = total;
+    function moveSlide(step) {
+      clearInterval(slideTimer);
+      showSlide(currentSlide + step);
+      startAutoSlide();
     }
 
-    function sendOrderViaWhatsapp() {
-      if (cart.length === 0) {
-        triggerToast('السلة فارغة حالياً!');
+    function startAutoSlide() {
+      slideTimer = setInterval(() => {
+        showSlide(currentSlide + 1);
+      }, 6000);
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      toast.innerText = text;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
+    function showPanel(panelId) {
+      document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(panelId);
+      if (target) {
+        target.classList.add('active');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function closePanel() {
+      document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+    }
+
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    function copyWifi(pass) {
+      navigator.clipboard.writeText(pass).then(() => {
+        showToast("✓ تم نسخ كلمة مرور الواي فاي!");
+      });
+    }
+
+    // الخدمات الصامتة
+    function callHost() {
+      if (isCooldown) {
+        showToast("تم إشعار المضيف مسبقاً، هو في طريقه إليك");
         return;
       }
-      
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      const itemsText = cart.map(item => `• ${item.name} (${item.price} ر.س)`).join('\n');
-      
-      const message = `*طلب جديد من المنظومة الذكية ☕*\n` +
-                      `📍 *الموقع:* ${TABLE_NAME}\n\n` +
-                      `*الأصناف:*\n${itemsText}\n\n` +
-                      `💰 *الإجمالي:* ${total} ر.س`;
-
-      window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
-      
-      cart = [];
-      updateUI();
+      isCooldown = true;
+      showToast("🔔 جاري استدعاء المضيف بهدوء...");
+      const msg = `🔔 *نداء صامت للمضيف*\nالموقع: ${activeTable}\nالرجاء الحضور للطاولة بلطف.`;
+      sendWhatsAppDirect(msg);
+      setTimeout(() => { isCooldown = false; }, 45000);
     }
 
-    function sendServiceToWhatsapp(serviceType) {
-      const message = `🛎️ *نداء خدمة سريعة*\n` +
-                      `📍 *الموقع:* ${TABLE_NAME}\n` +
-                      `الخدمة المطلوبة: *${serviceType}*`;
-      window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+    function cleanTable() {
+      showToast("✨ تم إبلاغ فريق النظافة لتجهيز الطاولة");
+      const msg = `✨ *طلب تنظيف وتجهيز الطاولة*\nالموقع: ${activeTable}\nالرجاء تنظيف الطاولة ومسحها فوراً.`;
+      sendWhatsAppDirect(msg);
     }
 
-    function copyWifi() {
-      navigator.clipboard.writeText('NAMQ2026');
-      triggerToast('تم نسخ كلمة المرور: NAMQ2026');
+    function requestBill(method) {
+      closeModal('billModal');
+      showToast("💳 تم طلب الحساب، الويتر قادم إليك");
+      const msg = `💳 *طلب الحساب الصامت*\nالموقع: ${activeTable}\nطريقة الدفع المطلوبة: ${method}`;
+      sendWhatsAppDirect(msg);
     }
 
-    function triggerToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.innerText = msg;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2200);
+    function requestPower(cable) {
+      closeModal('powerModal');
+      showToast("🔋 جاري تجهيز الشاحن لطاولتك");
+      const msg = `🔋 *طلب استعارة بنك طاقة*\nالموقع: ${activeTable}\nنوع المنفذ المطلوب: ${cable}`;
+      sendWhatsAppDirect(msg);
+    }
+
+    function quickRefill(itemName, price) {
+      showToast("⚡ جاري إرسال طلب الدفعة الثانية...");
+      const msg = `⚡ *طلب دفعة ثانية صامتة (Refill)*\nالموقع: ${activeTable}\nالمطلوب: ${itemName} (السعر بعد الخصم: ${price} ر.س)\nيرجى تحضيره مباشرة.`;
+      sendWhatsAppDirect(msg);
+    }
+
+    // إدارة السلة
+    function addToCart(name, price) {
+      let item = cart.find(i => i.name === name);
+      if (item) {
+        item.qty += 1;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      showToast(`+ تم إضافة ${name} للسلة`);
+      renderCart();
+    }
+
+    function changeQty(index, delta) {
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) cart.splice(index, 1);
+      renderCart();
+    }
+
+    function renderCart() {
+      const cartDiv = document.getElementById('floatingCart');
+      const cartTotalText = document.getElementById('cartTotalText');
+      const cartItemsList = document.getElementById('cartItemsList');
+
+      let totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+      let totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+      if (totalItems > 0) {
+        cartDiv.style.display = 'block';
+        cartTotalText.innerText = `${totalPrice} ر.س (${totalItems} قطع)`;
+        
+        cartItemsList.innerHTML = cart.map((i, idx) => `
+          <div class="cart-row">
+            <span>${i.name} (x${i.qty})</span>
+            <div class="cart-ctrls">
+              <span>${i.price * i.qty} ر.س</span>
+              <button class="ctrl-btn" onclick="changeQty(${idx}, -1)">-</button>
+              <button class="ctrl-btn" onclick="changeQty(${idx}, 1)">+</button>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        cartDiv.style.display = 'none';
+      }
+    }
+
+    function sendCartOrder() {
+      if (cart.length === 0) return;
+      let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+      let msg = `☕ *طلب جديد من المنيو الذكي - مقهى نَمَقْ*\n`;
+      msg += `📍 *الموقع:* ${activeTable}\n`;
+      msg += `─────────────────────\n`;
+      cart.forEach((i, idx) => {
+        msg += `${idx + 1}. ${i.name} | العدد: ${i.qty} = ${i.price * i.qty} ر.س\n`;
+      });
+      msg += `─────────────────────\n`;
+      msg += `💰 *الإجمالي المطلوب:* ${total} ر.س\n\nأرجو البدء بالتحضير وشكراً لكم!`;
+
+      sendWhatsAppDirect(msg);
+    }
+
+    function sendQuickMessage(text) {
+      let msg = `${text}\nالموقع: ${activeTable}`;
+      sendWhatsAppDirect(msg);
+    }
+
+    function sendWhatsAppDirect(message) {
+      let url = `https://wa.me/${CAFE_PHONE}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    // درع التقييم الذكي
+    function handleRating(stars) {
+      const allStars = document.querySelectorAll('.star');
+      allStars.forEach((s, idx) => {
+        if (idx < stars) s.classList.add('selected');
+        else s.classList.remove('selected');
+      });
+
+      const area = document.getElementById('ratingActionArea');
+      if (stars >= 4) {
+        area.innerHTML = `
+          <p style="font-size:0.75rem; color:#FBBF24; margin-bottom:6px;">سعداء جداً بإعجابك! نسعد بدعمك لنَمَقْ على خرائط جوجل 🌟</p>
+          <a href="https://maps.google.com" target="_blank" class="action-link-btn" style="background:#FBBF24; color:#000;">اكتب تقييمك على جوجل ➔</a>
+        `;
+      } else {
+        area.innerHTML = `
+          <p style="font-size:0.75rem; color:#A39B95; margin-bottom:6px;">نعتذر منك بشدة إن لم تكن تجربتك على أكمل وجه. يهمنا تصحيح ذلك فوراً:</p>
+          <button class="action-link-btn" style="background:#281F19; border:1px solid var(--accent); width:100%; cursor:pointer;" onclick="sendQuickMessage('ملاحظة غير مرضية عن التجربة للتقييم: ${stars}/5، وأرغب في توضيح المشكلة')">أرسل ملاحظتك مباشرة للمدير 💬</button>
+        `;
+      }
     }
   </script>
 </body>
