@@ -9,13 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #0A0A0A;
-      --card-bg: rgba(22, 22, 26, 0.75);
+      --bg-dark: #08080A;
+      --card-bg: rgba(18, 18, 22, 0.65);
       --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(255, 255, 255, 0.12);
       --accent: #C5A880;
-      --accent-light: #E0C9A6;
-      --accent-glow: rgba(197, 168, 128, 0.25);
-      --text: #F3F4F6;
+      --accent-light: #E4D0B5;
+      --accent-glow: rgba(197, 168, 128, 0.35);
+      --text: #F9FAFB;
       --muted: #9CA3AF;
       --success: #10B981;
       --whatsapp: #25D366;
@@ -31,23 +32,26 @@
 
     body {
       background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(197, 168, 128, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(197, 168, 128, 0.08) 0px, transparent 50%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 12px 8px 100px;
+      padding: 14px 10px 110px;
       overflow-x: hidden;
       transition: filter 0.3s ease, font-size 0.2s ease;
     }
 
     .ambient-glow {
       position: fixed;
-      top: -150px;
+      top: -120px;
       left: 50%;
       transform: translateX(-50%);
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      width: 440px;
+      height: 440px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
       pointer-events: none;
       z-index: 0;
     }
@@ -62,12 +66,12 @@
       gap: 14px;
     }
 
-    /* رأس الصفحة */
+    /* رأس الصفحة والبادج */
     .header-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 6px 4px;
+      padding: 4px 6px;
     }
 
     .brand-tag {
@@ -75,7 +79,7 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--accent);
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .table-badge {
@@ -83,27 +87,30 @@
       align-items: center;
       gap: 6px;
       padding: 5px 12px;
-      background: rgba(197, 168, 128, 0.12);
-      border: 1px solid var(--accent);
+      background: rgba(197, 168, 128, 0.1);
+      border: 1px solid rgba(197, 168, 128, 0.5);
       border-radius: 20px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--accent-light);
       font-weight: 700;
+      box-shadow: 0 0 15px rgba(197, 168, 128, 0.15);
+      backdrop-filter: blur(10px);
     }
 
+    /* قسم الترحيب والشعار */
     .hero-section {
       text-align: center;
-      padding: 14px 10px 8px;
+      padding: 12px 10px 4px;
     }
 
     .logo-wrapper {
-      width: 76px;
-      height: 76px;
+      width: 82px;
+      height: 82px;
       margin: 0 auto 10px;
       border-radius: 50%;
       background: #111;
       border: 1.5px solid var(--accent);
-      box-shadow: 0 0 25px var(--accent-glow);
+      box-shadow: 0 0 30px var(--accent-glow);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -117,14 +124,15 @@
     }
 
     .cafe-title {
-      font-size: 1.55rem;
+      font-size: 1.65rem;
       font-weight: 900;
       color: #FFF;
       letter-spacing: 0.5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     .cafe-subtitle {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--accent-light);
       margin-top: 2px;
     }
@@ -135,25 +143,26 @@
       margin-top: 4px;
     }
 
-    /* شريط الفيديوهات والتمرير */
+    /* شريط مقاطع الفيديو المتحركة */
     .video-reel-container {
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding: 4px 2px 8px;
+      padding: 4px 2px 6px;
       scrollbar-width: none;
     }
     .video-reel-container::-webkit-scrollbar { display: none; }
 
     .reel-card {
-      min-width: 120px;
-      height: 175px;
-      border-radius: 14px;
+      min-width: 124px;
+      height: 180px;
+      border-radius: 16px;
       overflow: hidden;
       position: relative;
       border: 1px solid var(--card-border);
       flex-shrink: 0;
       background: #000;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
     }
 
     .reel-card video {
@@ -168,20 +177,20 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 6px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.88));
+      padding: 8px 6px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.92));
       font-size: 0.68rem;
       font-weight: 700;
       color: #FFF;
       text-align: center;
     }
 
-    /* شبكة الواي فاي */
+    /* كبسولة الواي فاي الفاخرة */
     .wifi-pill {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      backdrop-filter: blur(12px);
-      border-radius: 12px;
+      backdrop-filter: blur(16px);
+      border-radius: 14px;
       padding: 10px 14px;
       display: flex;
       justify-content: space-between;
@@ -194,14 +203,14 @@
       background: rgba(197, 168, 128, 0.15);
       border: 1px solid var(--accent);
       color: var(--accent-light);
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 8px;
       font-size: 0.72rem;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* الخدمات الصامتة */
+    /* عناوين الأقسام */
     .section-title {
       font-size: 0.88rem;
       font-weight: 800;
@@ -209,9 +218,10 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      margin: 4px 2px;
+      margin: 4px 4px 0;
     }
 
+    /* شبكة الخدمات الصامتة بالزجاج */
     .silent-services-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -221,9 +231,9 @@
     .service-btn {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
       border-radius: 14px;
-      padding: 12px 10px;
+      padding: 14px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -239,38 +249,40 @@
     .service-btn:active {
       transform: scale(0.97);
       border-color: var(--accent);
+      background: var(--card-hover);
     }
 
-    .service-btn .icon { font-size: 1.45rem; }
+    .service-btn .icon { font-size: 1.5rem; }
     .service-btn strong { font-size: 0.78rem; font-weight: 700; color: #FFF; }
-    .service-btn span { font-size: 0.65rem; color: var(--muted); }
+    .service-btn span { font-size: 0.66rem; color: var(--muted); }
 
     /* بانر الكوب الثاني */
     .refill-banner {
-      background: linear-gradient(135deg, rgba(197, 168, 128, 0.22) 0%, rgba(20, 20, 20, 0.85) 100%);
-      border: 1px solid var(--accent);
+      background: linear-gradient(135deg, rgba(197, 168, 128, 0.22) 0%, rgba(18, 18, 22, 0.85) 100%);
+      border: 1px solid rgba(197, 168, 128, 0.4);
       border-radius: 14px;
       padding: 12px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      backdrop-filter: blur(14px);
     }
 
-    .refill-info h4 { font-size: 0.85rem; font-weight: 800; color: #FFF; }
+    .refill-info h4 { font-size: 0.86rem; font-weight: 800; color: #FFF; }
     .refill-info p { font-size: 0.72rem; color: var(--accent-light); margin-top: 2px; }
 
     .refill-btn {
       background: var(--accent);
       color: #000;
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 10px;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 800;
       text-decoration: none;
       white-space: nowrap;
     }
 
-    /* أزرار التبديل والتصفح */
+    /* أزرار التبويبات بالشبكة الزجاجية */
     .nav-tabs-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -278,16 +290,17 @@
     }
 
     .nav-tab-btn {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 10px 6px;
+      border-radius: 12px;
+      padding: 10px 4px;
       color: var(--muted);
       font-size: 0.74rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
       text-align: center;
+      backdrop-filter: blur(10px);
     }
 
     .nav-tab-btn.active, .nav-tab-btn:hover {
@@ -296,20 +309,24 @@
       color: var(--accent-light);
     }
 
-    /* بطاقات القائمة والمنتجات */
+    /* لوحات المحتوى المنبثقة */
     .content-panel {
       display: none;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      padding: 14px;
-      backdrop-filter: blur(14px);
+      padding: 16px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
-    .content-panel.active { display: block; animation: fadeIn 0.25s ease; }
+    .content-panel.active { 
+      display: block; 
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+    }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -317,41 +334,42 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       padding-bottom: 8px;
     }
 
-    .panel-header h3 { font-size: 0.95rem; font-weight: 800; color: #FFF; }
+    .panel-header h3 { font-size: 0.94rem; font-weight: 800; color: #FFF; }
     .close-btn {
       background: transparent;
       border: none;
       color: var(--muted);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       cursor: pointer;
     }
 
+    /* عناصر المنيو */
     .menu-item-row {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 9px 0;
+      padding: 10px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .menu-item-row:last-child { border-bottom: none; }
 
     .menu-item-img {
-      width: 54px;
-      height: 54px;
-      border-radius: 10px;
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
       object-fit: cover;
       background: #222;
       flex-shrink: 0;
     }
 
     .menu-item-info { flex: 1; }
-    .menu-item-info h4 { font-size: 0.84rem; font-weight: 700; color: #FFF; }
+    .menu-item-info h4 { font-size: 0.85rem; font-weight: 700; color: #FFF; }
     .menu-item-info p { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
     .menu-price {
       font-size: 0.82rem;
@@ -377,7 +395,7 @@
 
     .add-to-cart-btn:active { background: var(--accent); color: #000; }
 
-    /* درع التقييم الذكي */
+    /* نجوم تقييم خرائط Google */
     .stars-container {
       display: flex;
       justify-content: center;
@@ -411,15 +429,15 @@
       cursor: pointer;
     }
 
-    /* الشريط السفلي للسلة */
+    /* الشريط السفلي العائم للسلة */
     .cart-bar {
       position: fixed;
-      bottom: 12px;
+      bottom: 14px;
       left: 50%;
       transform: translateX(-50%);
       width: calc(100% - 24px);
       max-width: 440px;
-      background: rgba(15, 15, 18, 0.95);
+      background: rgba(16, 16, 20, 0.92);
       border: 1.5px solid var(--accent);
       border-radius: 14px;
       padding: 10px 14px;
@@ -427,7 +445,7 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.85);
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(16px);
       z-index: 100;
     }
 
@@ -453,7 +471,7 @@
       font-size: 0.68rem;
       color: #6B7280;
       margin-top: 16px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .footer-note strong { color: var(--accent); }
@@ -484,13 +502,7 @@
       <p class="welcome-text">تجربة ضيافة استثنائية بلمسة واحدة</p>
     </div>
 
-    <!-- زر الوصول الشامل لأصحاب الهمم (مباشر في الواجهة) -->
-    <button class="action-link-btn" onclick="openPanel('accessPanel')" style="background: rgba(46, 125, 50, 0.25); border: 1px solid rgba(129, 199, 132, 0.4); color: #A5D6A7; font-weight: 800; margin: 0; padding: 10px 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-      <span style="font-size: 1.1rem;">♿</span>
-      <span>خدمات أصحاب الهمم والوصول السهل</span>
-    </button>
-
-    <!-- شريط الفيديوهات المباشرة -->
+    <!-- شريط مقاطع الفيديو التفاعلية -->
     <div class="video-reel-container">
       <div class="reel-card">
         <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600">
@@ -518,7 +530,7 @@
       <button class="wifi-copy-btn" onclick="copyWifi()">نسخ الرمز</button>
     </div>
 
-    <!-- شبكة الخدمات الصامتة -->
+    <!-- شبكة الخدمات الصامتة المباشرة -->
     <div class="section-title">🛎️ الخدمات الصامتة المباشرة</div>
     <div class="silent-services-grid">
       <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D9%86%D8%B1%D8%AC%D9%88%20%D8%AD%D8%B6%D9%88%D8%B1%20%D8%A7%D9%84%D9%85%D8%B6%D9%8A%D9%81%20%D8%A5%D9%84%D9%89%20%D8%B7%D8%A7%D9%88%D9%84%D8%A9%20%D8%B1%D9%82%D9%85%201%20%D9%84%D8%B7%D9%81%D8%A7%D9%8B." target="_blank" class="service-btn">
@@ -555,14 +567,15 @@
       <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%B7%D9%84%D8%A8%20%D8%A7%D9%84%D9%83%D9%88%D8%A8%20%D8%A7%D9%84%D8%AB%D8%A7%D9%86%D9%8A%20(Refill)%20%D8%A8%D8%AE%D8%B5%D9%85%2015%25%20%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201." target="_blank" class="refill-btn">اطلب الآن ➔</a>
     </div>
 
-    <!-- شبكة أزرار التبويبات -->
+    <!-- شبكة أزرار التبويبات (مع زر أصحاب الهمم المدمج) -->
     <div class="nav-tabs-grid">
       <button class="nav-tab-btn active" onclick="openPanel('menuPanel')">📜 المنيو</button>
       <button class="nav-tab-btn" onclick="openPanel('beansPanel')">🛍️ المحاصيل</button>
       <button class="nav-tab-btn" onclick="openPanel('offersPanel')">🎁 العروض</button>
       <button class="nav-tab-btn" onclick="openPanel('vipPanel')">⭐ بطاقة VIP</button>
       <button class="nav-tab-btn" onclick="openPanel('ratePanel')">☕ التقييم</button>
-      <button class="nav-tab-btn" onclick="openPanel('locationPanel')">📍 الفرع</button>
+      <button class="nav-tab-btn" onclick="openPanel('accessPanel')" style="border-color: rgba(129, 199, 132, 0.4); color: #A5D6A7;">♿ الهمم</button>
+      <button class="nav-tab-btn" onclick="openPanel('locationPanel')" style="grid-column: span 3;">📍 موقع الفرع وساعات الضيافة</button>
     </div>
 
     <!-- اللوحة 1: قائمة المشروبات والمخبوزات -->
@@ -572,7 +585,6 @@
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
 
-      <!-- صنف 1 -->
       <div class="menu-item-row">
         <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=150" alt="إسبريسو" class="menu-item-img">
         <div class="menu-item-info">
@@ -583,7 +595,6 @@
         <button class="add-to-cart-btn" onclick="addToCart('إسبريسو نَمَقْ', 14)">+</button>
       </div>
 
-      <!-- صنف 2 -->
       <div class="menu-item-row">
         <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=150" alt="فلات وايت" class="menu-item-img">
         <div class="menu-item-info">
@@ -594,7 +605,6 @@
         <button class="add-to-cart-btn" onclick="addToCart('فلات وايت', 16)">+</button>
       </div>
 
-      <!-- صنف 3 -->
       <div class="menu-item-row">
         <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=150" alt="كابتشينو" class="menu-item-img">
         <div class="menu-item-info">
@@ -605,7 +615,6 @@
         <button class="add-to-cart-btn" onclick="addToCart('كابتشينو', 18)">+</button>
       </div>
 
-      <!-- صنف 4 -->
       <div class="menu-item-row">
         <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=150" alt="لاتيه" class="menu-item-img">
         <div class="menu-item-info">
@@ -616,7 +625,6 @@
         <button class="add-to-cart-btn" onclick="addToCart('لاتيه', 18)">+</button>
       </div>
 
-      <!-- صنف 5 -->
       <div class="menu-item-row">
         <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150" alt="في 60" class="menu-item-img">
         <div class="menu-item-info">
@@ -627,7 +635,6 @@
         <button class="add-to-cart-btn" onclick="addToCart('في 60 (V60)', 22)">+</button>
       </div>
 
-      <!-- صنف 6 -->
       <div class="menu-item-row">
         <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=150" alt="اسبانيش لاتيه" class="menu-item-img">
         <div class="menu-item-info">
@@ -638,7 +645,6 @@
         <button class="add-to-cart-btn" onclick="addToCart('اسبانيش لاتيه بارد', 21)">+</button>
       </div>
 
-      <!-- صنف 7 -->
       <div class="menu-item-row">
         <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150" alt="كيكة العسل" class="menu-item-img">
         <div class="menu-item-info">
@@ -649,7 +655,6 @@
         <button class="add-to-cart-btn" onclick="addToCart('كيكة العسل', 24)">+</button>
       </div>
 
-      <!-- صنف 8 -->
       <div class="menu-item-row">
         <img src="https://images.unsplash.com/photo-1519869325930-281384150729?w=150" alt="تارت التوت" class="menu-item-img">
         <div class="menu-item-info">
@@ -723,7 +728,6 @@
         <p style="font-size: 0.82rem; color: #FFF; margin-bottom: 4px;">رأيك يصنع فارقاً حقيقياً في نَمَقْ 🌟</p>
         <p style="font-size: 0.72rem; color: var(--muted); margin-bottom: 10px;">كيف كانت قهوتك وخدمة المضيف اليوم؟</p>
 
-        <!-- النجوم -->
         <div class="stars-container" id="starContainer">
           <span class="star" onclick="rateStar(1)">★</span>
           <span class="star" onclick="rateStar(2)">★</span>
@@ -736,20 +740,7 @@
       </div>
     </div>
 
-    <!-- اللوحة 6: الموقع والاتجاهات -->
-    <div id="locationPanel" class="content-panel">
-      <div class="panel-header">
-        <h3>📍 الموقع والضيافة</h3>
-        <button class="close-btn" onclick="closePanel()">✕</button>
-      </div>
-      <p style="font-size: 0.76rem; color: var(--muted); margin-bottom: 12px; line-height: 1.6;">
-        نستقبلكم يومياً بكل شغف من الساعة 6:00 صباحاً حتى 12:00 منتصف الليل.<br>
-        الرياض، المملكة العربية السعودية.
-      </p>
-      <a href="https://maps.google.com" target="_blank" class="action-link-btn">الاتجاهات على خرائط Google ➔</a>
-    </div>
-
-    <!-- اللوحة 7: لوحة خدمات أصحاب الهمم والوصول السهل -->
+    <!-- اللوحة 6: قسم أصحاب الهمم والوصول السهل (الجديدة كلياً) -->
     <div id="accessPanel" class="content-panel">
       <div class="panel-header">
         <h3 style="display: flex; align-items: center; gap: 8px;">
@@ -758,17 +749,17 @@
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
 
-      <div style="padding: 6px 2px;">
+      <div style="padding: 4px 2px;">
         <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; line-height: 1.5;">
-          نسعد بخدمتكم وتوفير أقصى درجات الراحة والاستقلالية. اختر ما يناسب احتياجك ليصلك الطاقم فوراً:
+          نسعد بخدمتكم وتوفير تجربة مريحة ومستقلة بالكامل. اختر الخدمة ليصلك طاقم الضيافة فوراً:
         </p>
 
-        <!-- أدوات العرض الميسر البصرية والصوتية -->
+        <!-- أدوات العرض الميسر -->
         <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 10px; margin-bottom: 12px;">
           <div style="font-size: 0.74rem; font-weight: 700; color: #FFF; margin-bottom: 8px;">🎛️ أدوات العرض الميسّر</div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
             <button class="action-link-btn" onclick="toggleHighContrast()" style="background: rgba(255,255,255,0.08); font-size: 0.72rem; padding: 8px 4px; margin: 0; color: #FFF;">
-              👁️ تباين عالي / خط كبير
+              👁️ تباين عالي / تكبير
             </button>
             <button class="action-link-btn" onclick="readMenuVoice()" style="background: rgba(255,255,255,0.08); font-size: 0.72rem; padding: 8px 4px; margin: 0; color: #FFF;">
               🔊 قراءة المنيو صوتياً
@@ -776,9 +767,8 @@
           </div>
         </div>
 
-        <!-- خدمات المساعدة الميدانية المباشرة عبر الواتساب -->
+        <!-- خدمات المساعدة الميدانية عبر الواتساب -->
         <div style="display: flex; flex-direction: column; gap: 8px;">
-          
           <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D9%86%D8%B1%D8%AC%D9%88%20%D8%AA%D9%87%D9%8A%D8%A6%D8%A9%20%D8%A7%D9%84%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%20%D9%84%D9%85%D8%B3%D8%AA%D8%AE%D8%AF%D9%85%20%D9%83%D8%B1%D8%B3%D9%8A%20%D9%85%D8%AA%D8%AD%D8%B1%D9%83%20%D8%B9%D9%86%D8%AF%20%D8%A7%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%20%D8%B1%D9%82%D9%85%201%20%D8%A8%D9%84%D8%B7%D9%81." target="_blank" class="action-link-btn" style="background: rgba(33, 150, 243, 0.15); border: 1px solid rgba(33, 150, 243, 0.3); color: #90CAF9; display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; text-decoration: none; margin: 0;">
             <span style="font-size: 0.78rem; font-weight: 700;">🦽 تهيئة مساحة لكرسي متحرك</span>
             <span style="font-size: 0.7rem; opacity: 0.85;">طلب فوري ➔</span>
@@ -798,9 +788,21 @@
             <span style="font-size: 0.78rem; font-weight: 700;">🥤 طلب كوب مريح / مصاصة سيليكون</span>
             <span style="font-size: 0.7rem; opacity: 0.85;">طلب فوري ➔</span>
           </a>
-
         </div>
       </div>
+    </div>
+
+    <!-- اللوحة 7: الموقع والاتجاهات -->
+    <div id="locationPanel" class="content-panel">
+      <div class="panel-header">
+        <h3>📍 الموقع وساعات الضيافة</h3>
+        <button class="close-btn" onclick="closePanel()">✕</button>
+      </div>
+      <p style="font-size: 0.76rem; color: var(--muted); margin-bottom: 12px; line-height: 1.6;">
+        نستقبلكم يومياً بكل شغف من الساعة 6:00 صباحاً حتى 12:00 منتصف الليل.<br>
+        الرياض، المملكة العربية السعودية.
+      </p>
+      <a href="https://maps.google.com" target="_blank" class="action-link-btn">الاتجاهات على خرائط Google ➔</a>
     </div>
 
     <!-- لوحة طلب الحساب المنبثقة -->
@@ -811,10 +813,10 @@
       </div>
       <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">حدد وسيلة الدفع المفضلة ليصلك المضيف بجهاز الشبكة فوراً:</p>
       <div style="display: flex; flex-direction: column; gap: 8px;">
-        <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D8%B7%D9%84%D8%A8%20%D8%A7%D9%84%D8%AD%D8%B3%D8%A7%D8%A8%20%D8%B9%D8%A8%D8%B1%20(%D9%85%D8%AF%D9%89%20/%20Apple%20Pay)%20%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201." target="_blank" class="action-link-btn" style="background: rgba(255,255,255,0.08); color: #FFF; text-align: right; padding: 12px;">
+        <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D8%B7%D9%84%D8%A8%20%D8%A7%D9%84%D8%AD%D8%B3%D8%A7%D8%A8%20%D8%B9%D8%A8%D8%B1%20(%D9%85%D8%AF%D9%89%20/%20Apple%20Pay)%20%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201." target="_blank" class="action-link-btn" style="background: rgba(255,255,255,0.06); color: #FFF; text-align: right; padding: 12px; border: 1px solid var(--card-border);">
           💳 مدى أو Apple Pay
         </a>
-        <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D8%B7%D9%84%D8%A8%20%D8%A7%D9%84%D8%AD%D8%B3%D8%A7%D8%A8%20%D9%86%D9%82%D8%AF%D8%A7%D9%8B%20(%D9%83%D8%A7%D8%B4)%20%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201." target="_blank" class="action-link-btn" style="background: rgba(255,255,255,0.08); color: #FFF; text-align: right; padding: 12px;">
+        <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D8%B7%D9%84%D8%A8%20%D8%A7%D9%84%D8%AD%D8%B3%D8%A7%D8%A8%20%D9%86%D9%82%D8%AF%D8%A7%D9%8B%20(%D9%83%D8%A7%D8%B4)%20%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201." target="_blank" class="action-link-btn" style="background: rgba(255,255,255,0.06); color: #FFF; text-align: right; padding: 12px; border: 1px solid var(--card-border);">
           💵 الدفع نقداً (كاش)
         </a>
       </div>
@@ -828,10 +830,10 @@
       </div>
       <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">اختر المنفذ المطلوب لنوصل لك بنك الطاقة فوراً:</p>
       <div style="display: flex; flex-direction: column; gap: 8px;">
-        <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D8%A3%D8%B1%D8%AC%D9%88%20%D8%AA%D9%88%D9%81%D9%8A%D8%B1%20%D8%B4%D8%A7%D8%AD%D9%86%20(%D8%A2%D9%8A%D9%81%D9%88%D9%86%20Lightning)%20%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201." target="_blank" class="action-link-btn" style="background: rgba(255,255,255,0.08); color: #FFF; text-align: right; padding: 12px;">
+        <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D8%A3%D8%B1%D8%AC%D9%88%20%D8%AA%D9%88%D9%81%D9%8A%D8%B1%20%D8%B4%D8%A7%D8%AD%D9%86%20(%D8%A2%D9%8A%D9%81%D9%88%D9%86%20Lightning)%20%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201." target="_blank" class="action-link-btn" style="background: rgba(255,255,255,0.06); color: #FFF; text-align: right; padding: 12px; border: 1px solid var(--card-border);">
           ⚡ شاحن آيفون (Lightning)
         </a>
-        <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D8%A3%D8%B1%D8%AC%D9%88%20%D8%AA%D9%88%D9%81%D9%8A%D8%B1%20%D8%B4%D8%A7%D8%AD%D9%86%20(%D8%AA%D8%A7%D9%8A%D8%A8%20%D8%B3%D9%8A%20Type-C)%20%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201." target="_blank" class="action-link-btn" style="background: rgba(255,255,255,0.08); color: #FFF; text-align: right; padding: 12px;">
+        <a href="https://wa.me/966560564719?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%86%D9%85%D9%82%D8%8C%20%D8%A3%D8%B1%D8%AC%D9%88%20%D8%AA%D9%88%D9%81%D9%8A%D8%B1%20%D8%B4%D8%A7%D8%AD%D9%86%20(%D8%AA%D8%A7%D9%8A%D8%A8%20%D8%B3%D9%8A%20Type-C)%20%D9%84%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201." target="_blank" class="action-link-btn" style="background: rgba(255,255,255,0.06); color: #FFF; text-align: right; padding: 12px; border: 1px solid var(--card-border);">
           🔌 شاحن تايب سي (Type-C)
         </a>
       </div>
@@ -858,10 +860,8 @@
   </div>
 
   <script>
-    // متغيرات السلة
     let cart = [];
 
-    // فتح اللوحات وإغلاق ما سواها
     function openPanel(panelId) {
       document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
       const target = document.getElementById(panelId);
@@ -875,7 +875,6 @@
       document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
     }
 
-    // نسخ رمز شبكة الواي فاي
     function copyWifi() {
       navigator.clipboard.writeText("namq2026").then(() => {
         alert("تم نسخ رمز شبكة الضيوف (namq2026) بنجاح 📶");
@@ -884,7 +883,6 @@
       });
     }
 
-    // إدارة السلة
     function addToCart(name, price) {
       cart.push({ name, price });
       updateCartUI();
@@ -917,7 +915,6 @@
       updateCartUI();
     }
 
-    // آلية درع تقييم خرائط Google
     function rateStar(stars) {
       const starSpans = document.querySelectorAll('#starContainer .star');
       starSpans.forEach((span, idx) => {
@@ -931,14 +928,14 @@
       const actionArea = document.getElementById('ratingActionArea');
       if (stars >= 4) {
         actionArea.innerHTML = `
-          <p style="font-size:0.75rem; color:#A7F3D0; margin-top:8px;">نسعد جداً بأن التجربة نالت إعجابك! يسعدنا دعمك بتقييم 5 نجوم على خرائط Google 🌟</p>
+          <p style="font-size:0.75rem; color:#A7F3D0; margin-top:8px;">يسعدنا جداً أن التجربة نالت إعجابك! نسعد بدعمك بتقييم 5 نجوم على خرائط Google 🌟</p>
           <a href="https://maps.google.com" target="_blank" class="action-link-btn" style="background:#FBBF24; color:#000;">
             ⭐ كتابة التقييم على خرائط Google مباشرة ➔
           </a>
         `;
       } else {
         actionArea.innerHTML = `
-          <p style="font-size:0.75rem; color:#FCA5A5; margin-top:8px;">نعتذر إن لم تكن التجربة بالمستوى المأمول.. رأيك يهم الإدارة مباشرة لتدارك أي ملاحظة:</p>
+          <p style="font-size:0.75rem; color:#FCA5A5; margin-top:8px;">نعتذر إن لم تكن التجربة بالمستوى المطلوب.. رأيك يصل للإدارة فوراً لتدارك الملاحظة:</p>
           <a href="https://wa.me/966560564719?text=%D9%85%D9%84%D8%A7%D8%AD%D8%B8%D8%A9%20%D8%AE%D8%A7%D8%B5%D8%A9%20%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%AA%D8%AC%D8%B1%D8%A8%D8%A9%20%D9%81%D9%8A%20%D9%86%D9%85%D9%82%20(%D8%B7%D8%A7%D9%88%D9%84%D8%A9%201):" target="_blank" class="action-link-btn" style="background:rgba(239, 68, 68, 0.25); color:#FCA5A5; border:1px solid rgba(239, 68, 68, 0.4);">
             ✍️ إرسال ملاحظتك سراً للإدارة عبر الواتساب
           </a>
@@ -946,7 +943,6 @@
       }
     }
 
-    // بطاقة VIP الرقمية
     function registerVip() {
       const phone = document.getElementById('vipPhone').value.trim();
       if (!phone || phone.length < 9) {
@@ -957,24 +953,18 @@
       document.getElementById('vipPhone').value = "";
     }
 
-    // خدمات الوصول الشامل وأصحاب الهمم
+    // دوال الوصول الشامل وأصحاب الهمم
     let isHighContrastActive = false;
 
     function toggleHighContrast() {
       isHighContrastActive = !isHighContrastActive;
       if (isHighContrastActive) {
         document.body.style.filter = "contrast(135%) brightness(110%)";
-        document.body.style.fontSize = "1.08rem";
-        document.querySelectorAll('.menu-item-info h4, .service-btn strong, h3').forEach(el => {
-          el.style.color = "#FFD54F";
-        });
+        document.body.style.fontSize = "1.06rem";
         alert("تم تفعيل وضع التباين العالي والخط الكبير 👁️");
       } else {
         document.body.style.filter = "none";
         document.body.style.fontSize = "";
-        document.querySelectorAll('.menu-item-info h4, .service-btn strong, h3').forEach(el => {
-          el.style.color = "";
-        });
         alert("تمت العودة للوضع الطبيعي");
       }
     }
@@ -987,7 +977,7 @@
 
       window.speechSynthesis.cancel();
 
-      const text = "أهلاً بك في مقهى نَمَقْ. من أصنافنا: إسبريسو نَمَقْ بأربعة عشر ريالاً، فلات وايت بستة عشر ريالاً، كابتشينو بثمانية عشر ريالاً، قهوة في ستين باثنين وعشرين ريالاً، وكيكة العسل بأربعة وعشرين ريالاً. للمساعدة في أي وقت اضغط زر طلب المضيف.";
+      const text = "أهلاً بك في مقهى نَمَقْ. من أصنافنا: إسبريسو نَمَقْ بأربعة عشر ريالاً، فلات وايت بستة عشر ريالاً، كابتشينو بثمانية عشر ريالاً، قهوة في ستين باثنين وعشرين ريالاً، وكيكة العسل بأربعة وعشرين ريالاً. للمساعدة في أي وقت يمكنك استخدام أزرار الخدمة المباشرة.";
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = 'ar-SA';
       utter.rate = 0.9;
