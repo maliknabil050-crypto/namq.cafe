@@ -3,159 +3,489 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>مقهى نَمَقْ | القهوة المختصة والمنظومة الذكية الفاخرة</title>
+  <title>مقهى نَمَقْ | NAMQ — المنظومة الهولوغرامية الذكية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0F0C0A;
-      --card-bg: #1B1512;
-      --card-border: #2D231E;
-      --accent: #C27803;
-      --accent-light: #FBBF24;
-      --accent-glow: rgba(194, 120, 3, 0.25);
-      --text: #FBFBFA;
-      --muted: #A39B95;
+      --bg: #050507;
+      --surface: #0D0E12;
+      --card: rgba(18, 19, 25, 0.88);
+      --gold: #D4AF37;
+      --gold-light: #F3E5AB;
+      --gold-dim: rgba(212, 175, 55, 0.22);
+      --cyan: #00F0FF;
+      --cyan-dim: rgba(0, 240, 255, 0.16);
+      --text: #F8FAFC;
+      --muted: #94A3B8;
       --green: #25D366;
+      --stage-glow: rgba(212, 175, 55, 0.25);
+      --stage-ring: #D4AF37;
+      --stage-bg: radial-gradient(circle at 50% 45%, rgba(212, 175, 55, 0.18) 0%, rgba(5, 5, 7, 0.96) 72%);
+    }
+
+    body.theme-neon {
+      --stage-glow: rgba(0, 240, 255, 0.35);
+      --stage-ring: #00F0FF;
+      --stage-bg: radial-gradient(circle at 50% 45%, rgba(0, 240, 255, 0.22) 0%, rgba(12, 10, 28, 0.96) 72%);
+    }
+
+    body.theme-day {
+      --stage-glow: rgba(255, 236, 179, 0.45);
+      --stage-ring: #FDE68A;
+      --stage-bg: radial-gradient(circle at 50% 45%, rgba(253, 230, 138, 0.28) 0%, rgba(28, 22, 16, 0.94) 72%);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
     body {
       background-color: var(--bg);
+      background-image:
+        linear-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
       color: var(--text);
       line-height: 1.6;
-      padding: 16px;
+      padding: 14px 14px 125px 14px;
       display: flex;
       justify-content: center;
       min-height: 100vh;
-      padding-bottom: 110px;
+      overflow-x: hidden;
     }
 
+    /* بوابة الدخول الهولوغرامية */
+    .holo-gate {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #141218 0%, #050507 85%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .holo-gate.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .gate-ring-wrap {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .gate-ring-outer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px dashed var(--gold);
+      animation: spinSlow 14s linear infinite;
+    }
+
+    .gate-ring-inner {
+      position: absolute;
+      inset: 14px;
+      border-radius: 50%;
+      border: 1.5px solid var(--cyan);
+      box-shadow: 0 0 25px var(--cyan-dim), inset 0 0 20px var(--gold-dim);
+      animation: spinReverse 9s linear infinite;
+    }
+
+    .gate-logo-core {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: #0D0E12;
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: var(--gold-light);
+      box-shadow: 0 0 30px var(--gold-dim);
+      overflow: hidden;
+    }
+
+    .gate-logo-core img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gate-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #FFF;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .gate-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 320px;
+      margin-bottom: 24px;
+    }
+
+    .gate-enter-btn {
+      background: linear-gradient(135deg, #D4AF37 0%, #AA821E 100%);
+      color: #050507;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 0 28px rgba(212, 175, 55, 0.55);
+      transition: transform 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gate-enter-btn:active { transform: scale(0.95); }
+
+    .gate-skip-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 14px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* الحاوية الرئيسية بنمط عِزوة */
     .hub-container {
       width: 100%;
-      max-width: 440px;
-      background: radial-gradient(circle at top, #2C1A10 0%, var(--bg) 80%);
-      border: 1px solid rgba(194, 120, 3, 0.25);
-      border-radius: 28px;
-      padding: 24px 18px;
+      max-width: 450px;
+      background: linear-gradient(180deg, rgba(16, 17, 23, 0.96) 0%, rgba(8, 9, 12, 0.98) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 30px;
+      padding: 20px 16px;
       text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.85);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.92), 0 0 40px rgba(212, 175, 55, 0.08);
       position: relative;
+      backdrop-filter: blur(12px);
     }
 
     .top-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      gap: 6px;
     }
 
-    .badge {
-      background: var(--accent-glow);
-      border: 1px solid var(--accent);
-      color: var(--accent-light);
-      padding: 4px 12px;
+    .badge-holo {
+      background: var(--gold-dim);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      padding: 4px 11px;
       border-radius: 20px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    .table-indicator {
-      background: #251D18;
-      border: 1px solid var(--accent);
-      color: #FFF;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 800;
       display: flex;
       align-items: center;
       gap: 5px;
     }
 
-    .brand-logo-container {
-      width: 82px;
-      height: 82px;
-      margin: 0 auto 12px auto;
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      border: 2px solid var(--accent);
-      overflow: hidden;
-      background-color: #1F1712;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      animation: pulse 1.5s infinite;
+    }
+
+    .table-nfc-pill {
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--cyan);
+      color: #FFF;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .table-nfc-pill:active { transform: scale(0.95); }
+
+    .brand-header {
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
-    .brand-logo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .brand-logo-container {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      overflow: hidden;
+      background: #111217;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px var(--gold-dim);
+      flex-shrink: 0;
     }
 
-    .brand-logo-text {
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--accent-light);
-      letter-spacing: 1px;
-    }
+    .brand-logo { width: 100%; height: 100%; object-fit: cover; }
+    .brand-logo-text { font-size: 1.25rem; font-weight: 900; color: var(--gold-light); }
 
+    .brand-titles { text-align: right; }
     .hub-title {
-      font-size: 1.55rem;
+      font-size: 1.35rem;
       font-weight: 900;
       color: #FFF;
-      margin-bottom: 2px;
-      letter-spacing: 0.5px;
+      line-height: 1.2;
     }
-
+    .hub-title span { color: var(--gold); }
     .logo-subtitle {
-      font-size: 0.75rem;
-      color: var(--accent-light);
-      margin-bottom: 4px;
-      font-style: italic;
+      font-size: 0.74rem;
+      color: var(--cyan);
+      font-weight: 700;
     }
 
-    .hub-subtitle {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-
-    /* شاشة العرض الإعلانية السينمائية */
-    .ad-screen-container {
+    /* مسرح العرض الهولوغرامي ثلاثي الأبعاد (نمط عِزوة) */
+    .holo-stage-card {
       position: relative;
       width: 100%;
-      height: 240px;
-      border-radius: 22px;
-      border: 2px solid var(--accent);
+      border-radius: 24px;
+      border: 1.5px solid var(--stage-ring);
+      background: var(--stage-bg);
+      padding: 14px 12px 16px 12px;
+      margin-bottom: 16px;
       overflow: hidden;
-      margin-bottom: 18px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.7);
-      background: #000;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), inset 0 0 30px var(--stage-glow);
+      transition: transform 0.2s ease, border-color 0.4s ease;
+      transform-style: preserve-3d;
     }
+
+    .laser-scanline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--gold), transparent);
+      box-shadow: 0 0 12px var(--cyan);
+      opacity: 0.75;
+      z-index: 6;
+      pointer-events: none;
+      animation: scanMove 4s ease-in-out infinite;
+    }
+
+    .stage-top-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 8;
+    }
+
+    .mode-switch-group {
+      display: flex;
+      background: rgba(5, 5, 7, 0.75);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      padding: 2px;
+    }
+
+    .mode-tab {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .mode-tab.active {
+      background: var(--gold);
+      color: #050507;
+    }
+
+    .lighting-pills {
+      display: flex;
+      gap: 5px;
+    }
+
+    .light-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .light-dot.active { transform: scale(1.18); border-color: #FFF; }
+    .light-dot.gold { background: radial-gradient(circle, #FBBF24, #92400E); }
+    .light-dot.neon { background: radial-gradient(circle, #00F0FF, #1E1B4B); }
+    .light-dot.day { background: radial-gradient(circle, #FEF3C7, #B45309); }
+
+    /* العرض العائم ثلاثي الأبعاد */
+    .holo-3d-viewport {
+      position: relative;
+      height: 215px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+    }
+
+    .holo-energy-rings {
+      position: absolute;
+      bottom: 18px;
+      width: 190px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid var(--stage-ring);
+      box-shadow: 0 0 25px var(--stage-glow), inset 0 0 15px var(--stage-glow);
+      transform: rotateX(68deg);
+      animation: pulseRing 3s ease-in-out infinite;
+    }
+
+    .holo-energy-rings::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      border: 1px dashed var(--cyan);
+    }
+
+    .floating-product-img {
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid var(--gold);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.8), 0 0 25px var(--stage-glow);
+      animation: float3D 4s ease-in-out infinite;
+      cursor: zoom-in;
+      z-index: 5;
+      background: #141210;
+    }
+
+    .stage-item-meta {
+      margin-top: 10px;
+      z-index: 5;
+    }
+
+    .stage-item-meta h3 {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #FFF;
+    }
+
+    .stage-item-meta p {
+      font-size: 0.72rem;
+      color: var(--gold-light);
+    }
+
+    .stage-actions-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      z-index: 7;
+      position: relative;
+    }
+
+    .stage-nav-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(13, 14, 18, 0.9);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stage-order-btn {
+      background: linear-gradient(135deg, #D4AF37 0%, #B48A22 100%);
+      color: #050507;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--gold-dim);
+    }
+
+    .stage-zoom-btn {
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 6px 11px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* وضع الفيديو السينمائي داخل المسرح */
+    .cinema-viewport {
+      display: none;
+      position: relative;
+      height: 225px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--gold);
+    }
+
+    .cinema-viewport.active { display: block; }
+    .holo-3d-viewport.hidden { display: none; }
 
     .ad-slide {
       position: absolute;
       inset: 0;
       opacity: 0;
-      transition: opacity 0.5s ease-in-out;
+      transition: opacity 0.5s ease;
       display: flex;
       align-items: flex-end;
       justify-content: center;
     }
 
-    .ad-slide.active {
-      opacity: 1;
-      z-index: 1;
-    }
+    .ad-slide.active { opacity: 1; z-index: 2; }
 
-    .ad-slide img,
     .ad-slide video {
       position: absolute;
       inset: 0;
@@ -163,85 +493,137 @@
       height: 100%;
       object-fit: cover;
       filter: brightness(0.85);
-      border-radius: 20px;
     }
-
-    /* أزرار التنقل */
-    .slider-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: rgba(18, 14, 12, 0.85);
-      border: 1px solid var(--accent);
-      color: var(--accent-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 10;
-      transition: 0.2s;
-    }
-
-    .slider-btn:active {
-      transform: translateY(-50%) scale(0.9);
-      background: var(--accent);
-      color: #FFF;
-    }
-
-    .slider-btn.prev { right: 12px; }
-    .slider-btn.next { left: 12px; }
 
     .slider-caption-badge {
       position: relative;
       z-index: 5;
-      background: rgba(27, 21, 18, 0.9);
-      border: 1px solid var(--accent);
-      color: #FFF;
-      font-size: 0.78rem;
+      background: rgba(10, 11, 15, 0.88);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-size: 0.75rem;
       font-weight: 800;
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 20px;
-      margin-bottom: 12px;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      margin-bottom: 10px;
+    }
+
+    /* شريط الباريستا الصوتي الذكي (نمط مستشار عِزوة) */
+    .ai-barista-box {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.08) 0%, rgba(212, 175, 55, 0.08) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 18px;
+      padding: 12px;
+      margin-bottom: 16px;
+      text-align: right;
+    }
+
+    .ai-barista-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .ai-title {
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mic-btn {
+      background: linear-gradient(135deg, #00F0FF 0%, #0284C7 100%);
+      color: #050507;
+      border: none;
+      padding: 6px 13px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+    }
+
+    .mic-btn.listening {
+      background: #EF4444;
+      color: #FFF;
+      animation: pulse 1s infinite;
+    }
+
+    .ai-input-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .ai-input {
+      flex: 1;
+      background: rgba(5, 5, 7, 0.85);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 10px;
+      padding: 7px 10px;
+      color: #FFF;
+      font-size: 0.74rem;
+      outline: none;
+    }
+
+    .ai-send-btn {
+      background: var(--gold);
+      color: #050507;
+      border: none;
+      padding: 0 12px;
+      border-radius: 10px;
+      font-weight: 900;
+      font-size: 0.74rem;
+      cursor: pointer;
+    }
+
+    .ai-reply-bubble {
+      margin-top: 8px;
+      font-size: 0.73rem;
+      color: var(--gold-light);
+      background: rgba(0, 0, 0, 0.45);
+      padding: 7px 10px;
+      border-radius: 10px;
+      border-right: 2px solid var(--cyan);
+      display: none;
     }
 
     /* شريط الواي فاي */
     .wifi-quick-box {
-      background: rgba(30, 24, 21, 0.7);
-      border: 1px dashed var(--accent);
+      background: rgba(18, 19, 25, 0.85);
+      border: 1px dashed var(--gold);
       border-radius: 14px;
-      padding: 10px 14px;
+      padding: 9px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 18px;
-      font-size: 0.78rem;
+      margin-bottom: 16px;
+      font-size: 0.76rem;
     }
 
     .wifi-btn {
-      background: var(--accent);
-      color: #FFF;
+      background: var(--gold);
+      color: #050507;
       border: none;
       padding: 5px 12px;
       border-radius: 8px;
       font-size: 0.72rem;
-      font-weight: bold;
+      font-weight: 900;
       cursor: pointer;
-      transition: 0.2s;
     }
 
     /* الخدمات الصامتة */
     .section-label {
       text-align: right;
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: var(--accent-light);
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--gold-light);
       margin-bottom: 8px;
       display: flex;
       align-items: center;
@@ -251,46 +633,45 @@
     .concierge-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
+      gap: 7px;
+      margin-bottom: 16px;
     }
 
     .concierge-btn {
-      background: #201915;
-      border: 1px solid var(--card-border);
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.22);
       border-radius: 14px;
-      padding: 12px 6px;
+      padding: 11px 5px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       color: var(--text);
       cursor: pointer;
-      transition: all 0.2s;
-      outline: none;
+      transition: 0.2s;
     }
-
-    .concierge-btn .icon { font-size: 1.25rem; }
-    .concierge-btn span.label { font-size: 0.68rem; font-weight: 700; }
 
     .concierge-btn:active {
       transform: scale(0.95);
-      border-color: var(--accent);
-      background: var(--accent-glow);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px var(--cyan-dim);
     }
 
-    /* طلب الكوب الثاني */
+    .concierge-btn .icon { font-size: 1.2rem; }
+    .concierge-btn span.label { font-size: 0.66rem; font-weight: 800; }
+
+    /* كرت الدفعة الثانية */
     .refill-card {
-      background: linear-gradient(135deg, #271B14 0%, #17110E 100%);
-      border: 1px solid var(--accent);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.14) 0%, rgba(13, 14, 18, 0.95) 100%);
+      border: 1px solid var(--gold);
       border-radius: 16px;
       padding: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       text-align: right;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       position: relative;
       overflow: hidden;
     }
@@ -299,71 +680,67 @@
       position: absolute;
       top: 0;
       left: 0;
-      background: var(--accent);
-      color: #FFF;
+      background: var(--gold);
+      color: #050507;
       font-size: 0.62rem;
-      font-weight: bold;
+      font-weight: 900;
       padding: 2px 10px;
       border-bottom-right-radius: 10px;
     }
 
-    .refill-info h4 { font-size: 0.88rem; color: #FFF; margin-bottom: 2px; }
-    .refill-info p { font-size: 0.72rem; color: var(--muted); }
+    .refill-info h4 { font-size: 0.86rem; color: #FFF; margin-bottom: 2px; }
+    .refill-info p { font-size: 0.7rem; color: var(--muted); }
 
     .refill-btn {
-      background: var(--accent);
-      color: #FFF;
+      background: var(--gold);
+      color: #050507;
       border: none;
-      padding: 9px 14px;
+      padding: 8px 13px;
       border-radius: 10px;
-      font-size: 0.75rem;
-      font-weight: 800;
+      font-size: 0.74rem;
+      font-weight: 900;
       cursor: pointer;
       white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(194, 120, 3, 0.4);
     }
 
     /* الأزرار الرئيسية */
     .hub-links {
       display: flex;
       flex-direction: column;
-      gap: 9px;
-      margin-bottom: 20px;
+      gap: 8px;
+      margin-bottom: 18px;
     }
 
     .hub-btn {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.22);
       color: var(--text);
-      text-decoration: none;
-      padding: 13px 16px;
+      padding: 12px 15px;
       border-radius: 14px;
-      font-weight: 700;
-      font-size: 0.84rem;
-      transition: all 0.25s ease;
+      font-weight: 800;
+      font-size: 0.82rem;
+      transition: 0.2s;
       cursor: pointer;
     }
 
     .hub-btn:hover, .hub-btn:active {
-      background: #251D18;
-      border-color: var(--accent);
-      transform: translateY(-1px);
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.1);
     }
 
-    .hub-btn span.icon { font-size: 1.15rem; }
-    .hub-btn span.arrow { color: var(--accent); font-size: 0.95rem; }
+    .hub-btn span.arrow { color: var(--gold); font-weight: 900; }
 
     /* لوحات المحتوى */
     .content-panel {
       display: none;
-      background: #17110E;
-      border: 1px solid var(--accent);
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 20px;
+      background: #0D0E13;
+      border: 1px solid var(--gold);
+      border-radius: 20px;
+      padding: 15px;
+      margin-bottom: 18px;
       text-align: right;
       animation: fadeIn 0.25s ease;
     }
@@ -374,82 +751,110 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
       padding-bottom: 8px;
     }
 
-    .panel-header h3 {
-      font-size: 0.98rem;
-      color: var(--accent-light);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .panel-header h3 { font-size: 0.94rem; color: var(--gold-light); }
 
     .close-btn {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--muted);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--gold-light);
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      font-size: 0.9rem;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    /* كروت المنيو */
+    /* كروت المنيو بنمط هولوغرام */
     .menu-card {
-      background: #221A15;
-      border: 1px solid #33261F;
+      background: rgba(22, 24, 32, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.22);
       padding: 10px;
-      border-radius: 12px;
+      border-radius: 14px;
       margin-bottom: 9px;
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-
-    .item-img {
-      width: 54px;
-      height: 54px;
-      border-radius: 9px;
-      object-fit: cover;
-      border: 1px solid var(--accent);
-      flex-shrink: 0;
-    }
-
-    .item-info { flex-grow: 1; }
-    .menu-card h4 { font-size: 0.84rem; color: #FFF; margin-bottom: 2px; }
-    .menu-card p { font-size: 0.7rem; color: var(--muted); margin-bottom: 3px; }
-    .menu-card span { font-size: 0.8rem; color: var(--accent-light); font-weight: bold; }
-
-    .add-to-cart-btn {
-      background: var(--accent);
-      color: #FFF;
-      border: none;
-      padding: 6px 11px;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 0.72rem;
-      cursor: pointer;
-      flex-shrink: 0;
       transition: 0.2s;
     }
 
-    .add-to-cart-btn:active { transform: scale(0.92); }
+    .menu-card:hover { border-color: var(--cyan); }
+
+    .item-img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--gold);
+      box-shadow: 0 0 12px var(--gold-dim);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .item-info { flex-grow: 1; }
+    .menu-card h4 { font-size: 0.83rem; color: #FFF; margin-bottom: 1px; }
+    .menu-card p { font-size: 0.69rem; color: var(--muted); margin-bottom: 3px; }
+    .menu-card span { font-size: 0.8rem; color: var(--gold-light); font-weight: 900; }
+
+    .add-to-cart-btn {
+      background: linear-gradient(135deg, #D4AF37 0%, #AA821E 100%);
+      color: #050507;
+      border: none;
+      padding: 6px 11px;
+      border-radius: 9px;
+      font-weight: 900;
+      font-size: 0.72rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* بطاقة الولاء الهولوغرامية */
+    .vip-holo-card {
+      background: linear-gradient(135deg, #1B1811 0%, #090A0F 60%, #1F1A10 100%);
+      border: 1.5px solid var(--gold);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), inset 0 0 20px var(--gold-dim);
+    }
+
+    .stamps-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin: 12px 0;
+    }
+
+    .stamp-circle {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px dashed var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: var(--gold-light);
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    .stamp-circle.free {
+      background: var(--gold);
+      color: #050507;
+      border-style: solid;
+    }
 
     /* النوافذ المنبثقة */
     .action-modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(4px);
-      z-index: 2000;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(6px);
+      z-index: 4000;
       justify-content: center;
       align-items: flex-end;
       padding: 14px;
@@ -460,42 +865,31 @@
     .modal-box {
       width: 100%;
       max-width: 420px;
-      background: #1E1713;
-      border: 1px solid var(--accent);
+      background: #111218;
+      border: 1.5px solid var(--gold);
       border-radius: 22px;
       padding: 20px;
       text-align: right;
       animation: slideUp 0.25s ease;
     }
 
-    .modal-box h4 { font-size: 1rem; color: #FFF; margin-bottom: 6px; }
+    .modal-box h4 { font-size: 1rem; color: var(--gold-light); margin-bottom: 6px; }
     .modal-box p { font-size: 0.76rem; color: var(--muted); margin-bottom: 14px; }
 
-    .modal-options {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      margin-bottom: 14px;
-    }
+    .modal-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 
     .modal-opt-btn {
-      background: #281F19;
-      border: 1px solid var(--card-border);
+      background: #1A1C24;
+      border: 1px solid rgba(212, 175, 55, 0.25);
       color: #FFF;
       padding: 11px;
       border-radius: 12px;
-      font-size: 0.82rem;
-      font-weight: bold;
-      text-align: right;
+      font-size: 0.8rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-    }
-
-    .modal-opt-btn:active {
-      border-color: var(--accent);
-      background: var(--accent-glow);
     }
 
     .modal-close-action {
@@ -504,26 +898,42 @@
       color: var(--muted);
       font-size: 0.8rem;
       width: 100%;
-      padding: 8px;
+      padding: 6px;
       cursor: pointer;
       text-decoration: underline;
+    }
+
+    /* نافذة التكبير الهولوغرامية */
+    .zoom-modal-box {
+      text-align: center;
+      align-self: center;
+    }
+
+    .zoom-img-preview {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 35px var(--gold-dim);
+      margin: 10px auto 14px auto;
+      display: block;
     }
 
     /* سلة الطلبات */
     .floating-cart {
       position: fixed;
-      bottom: 14px;
+      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
       width: 92%;
-      max-width: 420px;
-      background: #1B1512;
-      border: 2px solid var(--accent);
+      max-width: 430px;
+      background: #0F1016;
+      border: 2px solid var(--gold);
       border-radius: 18px;
-      padding: 12px 14px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.95);
-      z-index: 1000;
-      animation: slideUp 0.3s ease;
+      padding: 11px 14px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.95);
+      z-index: 3000;
       text-align: right;
     }
 
@@ -531,50 +941,49 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
-      font-size: 0.84rem;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
     }
 
-    .cart-summary strong { color: var(--accent-light); }
+    .cart-summary strong { color: var(--gold-light); }
 
     .cart-items-preview {
-      max-height: 110px;
+      max-height: 95px;
       overflow-y: auto;
       margin-bottom: 8px;
-      font-size: 0.75rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 6px;
+      font-size: 0.74rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 5px;
     }
 
     .cart-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 4px 0;
+      padding: 3px 0;
       color: var(--muted);
     }
 
     .cart-ctrls { display: flex; align-items: center; gap: 6px; }
 
     .ctrl-btn {
-      background: #2E221B;
+      background: #232530;
       color: #FFF;
       border: none;
       width: 22px;
       height: 22px;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 0.8rem;
     }
 
     .whatsapp-send-btn {
       background: var(--green);
       color: #FFF;
       border: none;
-      padding: 10px 14px;
+      padding: 10px;
       border-radius: 12px;
-      font-weight: bold;
-      font-size: 0.86rem;
+      font-weight: 900;
+      font-size: 0.84rem;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -585,150 +994,217 @@
 
     .action-link-btn {
       display: block;
-      background: var(--accent);
-      color: #FFF;
+      background: var(--gold);
+      color: #050507;
       text-decoration: none;
       padding: 10px;
       border-radius: 10px;
-      font-weight: bold;
-      font-size: 0.82rem;
+      font-weight: 900;
+      font-size: 0.8rem;
       text-align: center;
       margin-top: 8px;
     }
 
-    /* تقييم النجوم */
     .stars-container {
       display: flex;
       justify-content: center;
       gap: 8px;
-      margin: 12px 0;
+      margin: 10px 0;
       font-size: 1.6rem;
       cursor: pointer;
     }
 
-    .star { color: #4B3E36; transition: 0.2s; }
-    .star.selected { color: #FBBF24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+    .star { color: #334155; transition: 0.2s; }
+    .star.selected { color: #FBBF24; text-shadow: 0 0 12px rgba(251, 191, 36, 0.6); }
 
     .hub-footer {
       font-size: 0.72rem;
       color: var(--muted);
-      border-top: 1px dashed rgba(194, 120, 3, 0.3);
-      padding-top: 14px;
-      margin-top: 10px;
+      border-top: 1px dashed rgba(212, 175, 55, 0.3);
+      padding-top: 12px;
+      margin-top: 8px;
     }
 
-    .hub-footer strong { color: #FFF; }
+    .hub-footer strong { color: var(--gold-light); }
 
-    /* إشعار Toast */
     .toast-msg {
       position: fixed;
-      top: 16px;
+      top: 14px;
       left: 50%;
       transform: translateX(-50%);
-      background: #1B1512;
-      border: 1px solid var(--accent);
+      background: #0F1016;
+      border: 1px solid var(--cyan);
       color: #FFF;
-      padding: 9px 16px;
+      padding: 8px 16px;
       border-radius: 30px;
-      font-size: 0.78rem;
-      font-weight: bold;
-      z-index: 3000;
+      font-size: 0.76rem;
+      font-weight: 800;
+      z-index: 5000;
       display: none;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
-      animation: fadeIn 0.2s ease;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.9);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes spinSlow { to { transform: rotate(360deg); } }
+    @keyframes spinReverse { to { transform: rotate(-360deg); } }
+    @keyframes float3D {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes pulseRing {
+      0%, 100% { opacity: 0.75; transform: rotateX(68deg) scale(1); }
+      50% { opacity: 1; transform: rotateX(68deg) scale(1.06); }
     }
+    @keyframes scanMove {
+      0%, 100% { top: 8%; }
+      50% { top: 88%; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
+
+  <!-- بوابة الدخول الهولوغرامية بالصوت الفضائي -->
+  <div id="holoGate" class="holo-gate">
+    <div class="gate-ring-wrap">
+      <div class="gate-ring-outer"></div>
+      <div class="gate-ring-inner"></div>
+      <div class="gate-logo-core">
+        <img src="logo.jpg" alt="نَمَقْ" onerror="this.style.display='none'; document.getElementById('gateText').style.display='block';">
+        <span id="gateText" style="display:none;">نَمَقْ</span>
+      </div>
+    </div>
+    <div class="gate-title">بوابة مقهى نَمَقْ الهولوغرامية</div>
+    <p class="gate-sub" id="gateTableHint">تم التعرف على طاولتك عبر نظام NFC الذكي • اضغط لتفعيل العرض الهولوغرامي والصوت الترحيبي</p>
+    <button class="gate-enter-btn" onclick="enterHoloCafe(true)">
+      <span>◈ تفعيل البوابة الهولوغرامية ◈</span>
+    </button>
+    <button class="gate-skip-btn" onclick="enterHoloCafe(false)">الدخول في الوضع الصامت</button>
+  </div>
 
   <!-- إشعار Toast -->
   <div id="toast" class="toast-msg"></div>
 
   <div class="hub-container">
-    
+
     <!-- الشريط العلوي -->
     <div class="top-meta">
-      <span class="badge">المنظومة الذكية ☕</span>
-      <div id="tableDisplay" class="table-indicator">
-        <span>📍</span>
+      <span class="badge-holo"><span class="pulse-dot"></span> HOLO SYSTEM v3</span>
+      <button class="table-nfc-pill" onclick="openModal('nfcModal')">
+        <span>📡</span>
         <span id="currentTableText">طاولة رقم 1</span>
+      </button>
+    </div>
+
+    <!-- الهوية -->
+    <div class="brand-header">
+      <div class="brand-logo-container">
+        <img src="logo.jpg" alt="شعار مقهى نمق" class="brand-logo" onerror="this.style.display='none'; document.getElementById('brandLogoText').style.display='block';">
+        <span id="brandLogoText" class="brand-logo-text" style="display:none;">نَمَقْ</span>
+      </div>
+      <div class="brand-titles">
+        <div class="hub-title">مقهى <span>نَمَقْ</span> | NAMQ</div>
+        <div class="logo-subtitle">أيقونة القهوة المختصة والمنظومة الهولوغرامية</div>
       </div>
     </div>
-    
-    <div class="brand-logo-container">
-      <img src="logo.jpg" alt="شعار مقهى نمق" class="brand-logo" onerror="this.style.display='none'; document.getElementById('brandLogoText').style.display='block';">
-      <span id="brandLogoText" class="brand-logo-text" style="display:none;">نَمَقْ</span>
+
+    <!-- مسرح العرض الهولوغرامي المركزي (نمط عِزوة) -->
+    <div id="holoStageCard" class="holo-stage-card">
+      <div class="laser-scanline"></div>
+
+      <div class="stage-top-controls">
+        <div class="mode-switch-group">
+          <button id="tab3d" class="mode-tab active" onclick="switchStageMode('3d')">مسرح 3D</button>
+          <button id="tabVid" class="mode-tab" onclick="switchStageMode('vid')">عرض فيديو</button>
+        </div>
+        <div class="lighting-pills" title="تغيير الإضاءة المحيطية">
+          <button class="light-dot gold active" onclick="setStageTheme('gold', this)" aria-label="ذهبي"></button>
+          <button class="light-dot neon" onclick="setStageTheme('neon', this)" aria-label="نيون"></button>
+          <button class="light-dot day" onclick="setStageTheme('day', this)" aria-label="نهاري"></button>
+        </div>
+      </div>
+
+      <!-- وضع العرض الهولوغرامي 3D -->
+      <div id="viewport3d" class="holo-3d-viewport">
+        <div class="holo-energy-rings"></div>
+        <img id="stageDrinkImg" src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=300" alt="مشروب هولوغرام" class="floating-product-img" onclick="openZoomModal()">
+        <div class="stage-item-meta">
+          <h3 id="stageDrinkName">فلات وايت نَمَقْ (Flat White)</h3>
+          <p id="stageDrinkDesc">ميزان دقيق بين الإسبريسو والحليب • 16 ر.س</p>
+        </div>
+        <div class="stage-actions-bar">
+          <button class="stage-nav-btn" onclick="cycleHeroDrink(-1)">❯</button>
+          <button class="stage-order-btn" onclick="addHeroDrinkToCart()">أضف للسلة +</button>
+          <button class="stage-zoom-btn" onclick="openZoomModal()">🔍 تكبير</button>
+          <button class="stage-nav-btn" onclick="cycleHeroDrink(1)">❮</button>
+        </div>
+      </div>
+
+      <!-- وضع الشاشة السينمائية بالفيديو -->
+      <div id="viewportVid" class="cinema-viewport">
+        <div class="ad-slide active">
+          <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-coffee-maker-pouring-fresh-coffee-into-a-cup-42861-large.mp4" type="video/mp4">
+          </video>
+          <span class="slider-caption-badge">🔥 استخلاص محاصيل اليوم الفاخرة</span>
+        </div>
+        <div class="ad-slide">
+          <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1534778101976-62847782c213?w=600">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-barista-making-latte-art-in-a-coffee-shop-42862-large.mp4" type="video/mp4">
+          </video>
+          <span class="slider-caption-badge">✨ فلات وايت نمق الخاص بخصم 15%</span>
+        </div>
+        <div class="ad-slide">
+          <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-coffee-beans-falling-into-a-grinder-42863-large.mp4" type="video/mp4">
+          </video>
+          <span class="slider-caption-badge">🛍️ محاصيل الموسم للتحضير المنزلي</span>
+        </div>
+        <div class="stage-actions-bar" style="position:absolute; bottom:42px; left:0; right:0; z-index:9;">
+          <button class="stage-nav-btn" onclick="moveSlide(-1)">❯</button>
+          <button class="stage-nav-btn" onclick="moveSlide(1)">❮</button>
+        </div>
+      </div>
     </div>
-    
-    <div class="hub-title">مقهى نَمَقْ | NAMQ</div>
-    <div class="logo-subtitle">أيقونة القهوة المختصة والضيافة الحديثة</div>
-    <div class="hub-subtitle">تجربة ضيافة استثنائية بلمسة واحدة</div>
 
-    <!-- شاشة العرض الإعلانية السينمائية -->
-    <div class="ad-screen-container">
-      <button class="slider-btn prev" onclick="moveSlide(-1)">❯</button>
-      <button class="slider-btn next" onclick="moveSlide(1)">❮</button>
-
-      <div class="ad-slide active">
-        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600">
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-coffee-maker-pouring-fresh-coffee-into-a-cup-42861-large.mp4" type="video/mp4">
-        </video>
-        <span class="slider-caption-badge">🔥 استخلاص محاصيل اليوم الفاخرة</span>
+    <!-- الباريستا الصوتي الذكي -->
+    <div class="ai-barista-box">
+      <div class="ai-barista-top">
+        <span class="ai-title">🎙️ الباريستا الصوتي الذكي (NAMQ AI)</span>
+        <button id="micBtn" class="mic-btn" onclick="startVoiceBarista()">اطلب بصوتك</button>
       </div>
-
-      <div class="ad-slide">
-        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1534778101976-62847782c213?w=600">
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-barista-making-latte-art-in-a-coffee-shop-42862-large.mp4" type="video/mp4">
-        </video>
-        <span class="slider-caption-badge">✨ فلات وايت نمق الخاص بخصم 15%</span>
+      <div class="ai-input-row">
+        <input id="aiQueryInput" class="ai-input" type="text" placeholder="مثال: أبغى فلات وايت أو كيكة العسل..." onkeydown="if(event.key==='Enter') processBaristaCommand(this.value)">
+        <button class="ai-send-btn" onclick="processBaristaCommand(document.getElementById('aiQueryInput').value)">إرسال</button>
       </div>
-
-      <div class="ad-slide">
-        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600">
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-coffee-beans-falling-into-a-grinder-42863-large.mp4" type="video/mp4">
-        </video>
-        <span class="slider-caption-badge">🛍️ محاصيل الموسم للتحضير المنزلي</span>
-      </div>
+      <div id="aiReplyBubble" class="ai-reply-bubble"></div>
     </div>
 
     <!-- نسخ الواي فاي السريع -->
     <div class="wifi-quick-box">
-      <div>
-        <strong>📶 شبكة الزوار:</strong> NAMQ_Guest
-      </div>
+      <div><strong>📶 شبكة الزوار:</strong> NAMQ_Guest</div>
       <button class="wifi-btn" onclick="copyWifi('Namq@2026')">نسخ الكلمة 📋</button>
     </div>
 
     <!-- منظومة الخدمات الصامتة الفورية -->
-    <div class="section-label">
-      <span>🛎️ الخدمات الصامتة المباشرة</span>
-    </div>
-
+    <div class="section-label"><span>🛎️ الخدمات الصامتة المباشرة</span></div>
     <div class="concierge-grid">
       <button class="concierge-btn" onclick="callHost()">
         <span class="icon">👋</span>
         <span class="label">مناداة المضيف</span>
       </button>
-
       <button class="concierge-btn" onclick="openModal('billModal')">
         <span class="icon">💳</span>
         <span class="label">طلب الحساب</span>
       </button>
-
       <button class="concierge-btn" onclick="cleanTable()">
         <span class="icon">✨</span>
         <span class="label">تنظيف الطاولة</span>
       </button>
-
       <button class="concierge-btn" onclick="openModal('powerModal')">
         <span class="icon">🔋</span>
         <span class="label">استعارة شاحن</span>
@@ -748,51 +1224,40 @@
     <!-- الأزرار الرئيسية -->
     <div class="hub-links">
       <button class="hub-btn" onclick="showPanel('menuPanel')">
-        <span class="icon">📜</span>
-        <span>استعراض المنيو والطلب الفوري</span>
+        <span>📜 استعراض المنيو والطلب الفوري</span>
         <span class="arrow">←</span>
       </button>
-
       <button class="hub-btn" onclick="showPanel('beansPanel')">
-        <span class="icon">🛍️</span>
-        <span>محاصيل القهوة وأدوات التحضير</span>
+        <span>🛍️ محاصيل القهوة وأدوات التحضير</span>
         <span class="arrow">←</span>
       </button>
-
       <button class="hub-btn" onclick="showPanel('offersPanel')">
-        <span class="icon">🎁</span>
-        <span>العروض الحصرية الصباحية</span>
+        <span>🎁 العروض الحصرية الصباحية</span>
         <span class="arrow">←</span>
       </button>
-
       <button class="hub-btn" onclick="showPanel('loyaltyPanel')">
-        <span class="icon">⭐</span>
-        <span>بطاقة الولاء الرقمية VIP</span>
+        <span>⭐ بطاقة الولاء الهولوغرامية VIP</span>
         <span class="arrow">←</span>
       </button>
-
       <button class="hub-btn" onclick="showPanel('ratePanel')">
-        <span class="icon">☕</span>
-        <span>تقييم التجربة وخدمة الباريستا</span>
+        <span>☕ تقييم التجربة وخدمة الباريستا</span>
         <span class="arrow">←</span>
       </button>
-
       <button class="hub-btn" onclick="showPanel('contactPanel')">
-        <span class="icon">📍</span>
-        <span>الموقع وأوقات العمل</span>
+        <span>📍 الموقع وأوقات العمل</span>
         <span class="arrow">←</span>
       </button>
     </div>
 
-    <!-- 1. لوحة المنيو مع الصور والأصناف -->
+    <!-- 1. لوحة المنيو -->
     <div id="menuPanel" class="content-panel">
       <div class="panel-header">
         <h3>📜 قائمة المشروبات والمخبوزات</h3>
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
-      
+
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=150" alt="إسبريسو" class="item-img">
+        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200" alt="إسبريسو" class="item-img" onclick="previewItem('إسبريسو نَمَقْ (Espresso)', 'استخلاص غني بقوام متوازن', 14, this.src)">
         <div class="item-info">
           <h4>إسبريسو نَمَقْ (Espresso)</h4>
           <p>استخلاص غني بقوام متوازن</p>
@@ -802,7 +1267,7 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=150" alt="فلات وايت" class="item-img">
+        <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=200" alt="فلات وايت" class="item-img" onclick="previewItem('فلات وايت (Flat White)', 'ميزان دقيق بين الإسبريسو والحليب', 16, this.src)">
         <div class="item-info">
           <h4>فلات وايت (Flat White)</h4>
           <p>ميزان دقيق بين الإسبريسو والحليب</p>
@@ -812,7 +1277,7 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=150" alt="كابتشينو" class="item-img">
+        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200" alt="كابتشينو" class="item-img" onclick="previewItem('كابتشينو (Cappuccino)', 'إسبريسو مع رغوة حليب ناعمة', 18, this.src)">
         <div class="item-info">
           <h4>كابتشينو (Cappuccino)</h4>
           <p>إسبريسو مع رغوة حليب ناعمة</p>
@@ -822,7 +1287,7 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=150" alt="لاتيه" class="item-img">
+        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200" alt="لاتيه" class="item-img" onclick="previewItem('لاتيه حار / بارد (Latte)', 'مستخلصة بعناية مع الحليب الطازج', 18, this.src)">
         <div class="item-info">
           <h4>لاتيه حار / بارد (Latte)</h4>
           <p>مستخلصة بعناية مع الحليب الطازج</p>
@@ -832,7 +1297,7 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150" alt="في 60" class="item-img">
+        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=200" alt="في 60" class="item-img" onclick="previewItem('في 60 - مقطرة (V60)', 'محاصيل فاخرة للفلتر اليومي', 22, this.src)">
         <div class="item-info">
           <h4>في 60 - مقطرة (V60)</h4>
           <p>محاصيل فاخرة للفلتر اليومي</p>
@@ -842,7 +1307,7 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=150" alt="اسبانيش لاتيه" class="item-img">
+        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=200" alt="اسبانيش لاتيه" class="item-img" onclick="previewItem('اسبانيش لاتيه بارد', 'إسبريسو مع حليب وحلا نَمَقْ المتوازن', 21, this.src)">
         <div class="item-info">
           <h4>اسبانيش لاتيه بارد</h4>
           <p>إسبريسو مع حليب وحلا نَمَقْ المتوازن</p>
@@ -852,7 +1317,7 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150" alt="كيكة العسل" class="item-img">
+        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=200" alt="كيكة العسل" class="item-img" onclick="previewItem('كيكة العسل الخاصة', 'طبقات هشة ومحضرة يومياً', 24, this.src)">
         <div class="item-info">
           <h4>كيكة العسل الخاصة</h4>
           <p>طبقات هشة ومحضرة يومياً</p>
@@ -862,7 +1327,7 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1519869325930-281384150729?w=150" alt="تارت التوت" class="item-img">
+        <img src="https://images.unsplash.com/photo-1519869325930-281384150729?w=200" alt="تارت التوت" class="item-img" onclick="previewItem('تارت التوت الفاخر', 'معجنات مقرمشة بكريمة الفانيليا', 20, this.src)">
         <div class="item-info">
           <h4>تارت التوت الفاخر</h4>
           <p>معجنات مقرمشة بكريمة الفانيليا</p>
@@ -879,7 +1344,7 @@
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=150" alt="محصول إثيوبيا" class="item-img">
+        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=200" alt="محصول إثيوبيا" class="item-img">
         <div class="item-info">
           <h4>محصول إثيوبيا قيديب (250g)</h4>
           <p>إيحاءات: خوخ، ياسمين، وحلاوة عسل</p>
@@ -888,7 +1353,7 @@
         <button class="add-to-cart-btn" onclick="addToCart('محصول إثيوبيا (250g)', 75)">إضافة +</button>
       </div>
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1611854779393-1b2da9d401fe?w=150" alt="محصول كولومبي" class="item-img">
+        <img src="https://images.unsplash.com/photo-1611854779393-1b2da9d401fe?w=200" alt="محصول كولومبي" class="item-img">
         <div class="item-info">
           <h4>محصول كولومبي هائلا (250g)</h4>
           <p>إيحاءات: كراميل، شوكولاتة داكنة، ومكسرات</p>
@@ -905,7 +1370,7 @@
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
       <div class="menu-card" style="flex-direction: column; text-align: center; padding: 14px;">
-        <h4 style="font-size: 0.95rem;">عرض الصباح الراقي ☀️</h4>
+        <h4 style="font-size: 0.95rem; color: var(--gold-light);">عرض الصباح الراقي ☀️</h4>
         <p>أي كوب قهوة سوداء أو حليب مع حلا الصباح بخصم 20% حتى 11 صباحاً.</p>
         <button class="action-link-btn" style="width: 100%; border: none; cursor: pointer;" onclick="sendQuickMessage('طلب الاستفادة من عرض الصباح السعيد')">تفعيل العرض عبر الواتساب</button>
       </div>
@@ -914,23 +1379,37 @@
     <!-- 4. لوحة برنامج الولاء -->
     <div id="loyaltyPanel" class="content-panel">
       <div class="panel-header">
-        <h3>⭐ بطاقة نَمَقْ VIP الرقمية</h3>
+        <h3>⭐ بطاقة نَمَقْ VIP الهولوغرامية</h3>
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
-      <p style="font-size: 0.8rem; margin-bottom: 12px; color: var(--muted);">كل 6 أكواب قهوة تمنحك الكوب الـ 7 مجاناً! سجل رقمك وابدأ بجمع الأختام فوراً.</p>
+      <div class="vip-holo-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong style="color:var(--gold-light); font-size:0.86rem;">عضوية النخبة • NAMQ VIP</strong>
+          <span style="font-size:0.7rem; color:var(--cyan);">CLOUD PASS</span>
+        </div>
+        <div class="stamps-row">
+          <div class="stamp-circle">☕</div>
+          <div class="stamp-circle">☕</div>
+          <div class="stamp-circle">3</div>
+          <div class="stamp-circle">4</div>
+          <div class="stamp-circle">5</div>
+          <div class="stamp-circle">6</div>
+          <div class="stamp-circle free">مجاناً</div>
+        </div>
+        <p style="font-size: 0.74rem; color: var(--muted);">كل 6 أكواب قهوة تمنحك الكوب الـ 7 مجاناً! سجل رقمك لربط الأختام سحابياً.</p>
+      </div>
       <button class="action-link-btn" style="width: 100%; border: none; cursor: pointer;" onclick="sendQuickMessage('أرغب في تفعيل اشتراكي ببرنامج الولاء الرقمي لنَمَقْ')">ربط رقمي ببرنامج الأختام</button>
     </div>
 
-    <!-- 5. لوحة تقييم التجربة مع درع الحماية الذكي -->
+    <!-- 5. لوحة تقييم التجربة -->
     <div id="ratePanel" class="content-panel">
       <div class="panel-header">
         <h3>☕ تقييم مستوى التجربة</h3>
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
-      <div style="text-align: center; padding: 8px;">
+      <div style="text-align: center; padding: 6px;">
         <p style="font-size: 0.82rem; color: #FFF; margin-bottom: 4px;">كيف كانت قهوتك وخدمة المضيف اليوم؟</p>
         <p style="font-size: 0.72rem; color: var(--muted);">رأيك يبني تميزنا المستمر</p>
-        
         <div class="stars-container" id="starContainer">
           <span class="star" onclick="handleRating(1)">★</span>
           <span class="star" onclick="handleRating(2)">★</span>
@@ -938,8 +1417,7 @@
           <span class="star" onclick="handleRating(4)">★</span>
           <span class="star" onclick="handleRating(5)">★</span>
         </div>
-        
-        <div id="ratingActionArea" style="min-height: 40px; margin-top: 10px;"></div>
+        <div id="ratingActionArea" style="min-height: 40px; margin-top: 8px;"></div>
       </div>
     </div>
 
@@ -949,50 +1427,65 @@
         <h3>📍 الموقع والضيافة</h3>
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
-      <p style="font-size: 0.8rem; margin-bottom: 8px;">نستقبلكم يومياً بكل شغف من الساعة 6:00 صباحاً حتى 12:00 منتصف الليل.</p>
+      <p style="font-size: 0.8rem; margin-bottom: 8px; color: var(--muted);">نستقبلكم يومياً بكل شغف من الساعة 6:00 صباحاً حتى 12:00 منتصف الليل.</p>
       <a href="https://maps.google.com" target="_blank" class="action-link-btn">الاتجاهات على خرائط Google ➔</a>
-      <button class="action-link-btn" style="background: #201915; border: 1px solid var(--accent); margin-top: 8px; width: 100%; cursor: pointer;" onclick="sendQuickMessage('مرحباً، لدي استفسار خاص بإدارة مقهى نَمَقْ')">محادثة الإدارة المباشرة</button>
+      <button class="action-link-btn" style="background: #181A22; color: var(--gold-light); border: 1px solid var(--gold); margin-top: 8px; width: 100%; cursor: pointer;" onclick="sendQuickMessage('مرحباً، لدي استفسار خاص بإدارة مقهى نَمَقْ')">محادثة الإدارة المباشرة</button>
     </div>
 
     <!-- الفوتر -->
     <div class="hub-footer">
-      تطوير المنظومة الذكية: <strong>نبيل النمر</strong><br>
+      تطوير المنظومة الهولوغرامية الذكية: <strong>نبيل النمر</strong><br>
       جميع الحقوق محفوظة لمقهى نَمَقْ © 2026
     </div>
   </div>
 
-  <!-- نافذة طلب الحساب المنبثقة -->
+  <!-- نافذة توثيق شريحة الطاولة NFC -->
+  <div id="nfcModal" class="action-modal">
+    <div class="modal-box" style="text-align:center;">
+      <h4>📡 توثيق طاولة NFC السحابي</h4>
+      <p>تم الاتصال بشريحة الطاولة المدمجة بنجاح</p>
+      <div style="background:#08090D; border:1px solid var(--cyan); border-radius:14px; padding:14px; margin-bottom:14px; text-align:right; font-size:0.78rem;">
+        <div><strong>الموقع النشط:</strong> <span id="nfcModalTable" style="color:var(--gold-light);">طاولة رقم 1</span></div>
+        <div><strong>حالة الاتصال:</strong> <span style="color:#25D366;">متصل وموثق سحابياً ✓</span></div>
+        <div><strong>الرقم التسلسلي:</strong> <span style="color:var(--cyan);">NAMQ-NFC-2026-VIP</span></div>
+      </div>
+      <button class="modal-close-action" onclick="closeModal('nfcModal')">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- نافذة التكبير الهولوغرامية -->
+  <div id="zoomModal" class="action-modal">
+    <div class="modal-box zoom-modal-box">
+      <h4 id="zoomTitle">فلات وايت نَمَقْ</h4>
+      <p id="zoomDesc">ميزان دقيق بين الإسبريسو والحليب</p>
+      <img id="zoomImg" src="" alt="معاينة" class="zoom-img-preview">
+      <button id="zoomAddBtn" class="action-link-btn" style="width:100%; border:none; cursor:pointer; margin-bottom:8px;">أضف للسلة الآن +</button>
+      <button class="modal-close-action" onclick="closeModal('zoomModal')">إغلاق المعاينة</button>
+    </div>
+  </div>
+
+  <!-- نافذة طلب الحساب -->
   <div id="billModal" class="action-modal">
     <div class="modal-box">
       <h4>💳 طلب الحساب الصامت</h4>
       <p>حدد وسيلة الدفع المفضلة ليصلك المضيف فوراً:</p>
       <div class="modal-options">
-        <button class="modal-opt-btn" onclick="requestBill('جهاز الشبكة (مدى / فيزا / أبل باي)')">
-          <span>جهاز الدفع الإلكتروني (شبكة)</span> 💳
-        </button>
-        <button class="modal-opt-btn" onclick="requestBill('دفع نقدي (كاش)')">
-          <span>دفع نقدي (كاش)</span> 💵
-        </button>
-        <button class="modal-opt-btn" onclick="requestBill('رابط دفع إلكتروني عبر الجوال')">
-          <span>رابط سداد أونلاين سريع</span> ⚡
-        </button>
+        <button class="modal-opt-btn" onclick="requestBill('جهاز الشبكة (مدى / فيزا / أبل باي)')"><span>جهاز الدفع الإلكتروني (شبكة)</span> 💳</button>
+        <button class="modal-opt-btn" onclick="requestBill('دفع نقدي (كاش)')"><span>دفع نقدي (كاش)</span> 💵</button>
+        <button class="modal-opt-btn" onclick="requestBill('رابط دفع إلكتروني عبر الجوال')"><span>رابط سداد أونلاين سريع</span> ⚡</button>
       </div>
       <button class="modal-close-action" onclick="closeModal('billModal')">إلغاء</button>
     </div>
   </div>
 
-  <!-- نافذة استعارة بنك الطاقة المنبثقة -->
+  <!-- نافذة استعارة الشاحن -->
   <div id="powerModal" class="action-modal">
     <div class="modal-box">
       <h4>🔋 طلب شاحن سفري للطاولة</h4>
       <p>اختر نوع السلك المطلوب لنوصله لك فوراً:</p>
       <div class="modal-options">
-        <button class="modal-opt-btn" onclick="requestPower('سلك Type-C حديث')">
-          <span>منفذ تايب سي (Type-C)</span> 🔌
-        </button>
-        <button class="modal-opt-btn" onclick="requestPower('سلك آيفون لايتنينج (Lightning)')">
-          <span>منفذ آيفون المعتاد (Lightning)</span> ⚡
-        </button>
+        <button class="modal-opt-btn" onclick="requestPower('سلك Type-C حديث')"><span>منفذ تايب سي (Type-C)</span> 🔌</button>
+        <button class="modal-opt-btn" onclick="requestPower('سلك آيفون لايتنينج (Lightning)')"><span>منفذ آيفون المعتاد (Lightning)</span> ⚡</button>
       </div>
       <button class="modal-close-action" onclick="closeModal('powerModal')">إلغاء</button>
     </div>
@@ -1001,12 +1494,10 @@
   <!-- سلة الطلبات العائمة -->
   <div id="floatingCart" class="floating-cart" style="display: none;">
     <div class="cart-summary">
-      <span>🛒 سلة طلباتك</span>
+      <span>🛒 سلة طلباتك الهولوغرامية</span>
       <strong id="cartTotalText">0 ر.س</strong>
     </div>
-    
     <div id="cartItemsList" class="cart-items-preview"></div>
-
     <button class="whatsapp-send-btn" onclick="sendCartOrder()">
       <span>إرسال الطلب للباريستا فوراً</span> 💬
     </button>
@@ -1018,18 +1509,180 @@
     let activeTable = "طاولة رقم 1";
     let isCooldown = false;
 
-    // استخراج رقم الطاولة تلقائياً من رابط الـ NFC
+    const heroDrinks = [
+      { name: "فلات وايت نَمَقْ (Flat White)", shortName: "فلات وايت نَمَقْ", desc: "ميزان دقيق بين الإسبريسو والحليب", price: 16, img: "https://images.unsplash.com/photo-1534778101976-62847782c213?w=300" },
+      { name: "اسبانيش لاتيه بارد", shortName: "اسبانيش لاتيه نَمَقْ", desc: "إسبريسو مع حليب وحلا نَمَقْ المتوازن", price: 21, img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300" },
+      { name: "في 60 - مقطرة (V60)", shortName: "في 60 نَمَقْ", desc: "محاصيل فاخرة للفلتر اليومي", price: 22, img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300" },
+      { name: "كيكة العسل الخاصة", shortName: "كيكة العسل", desc: "طبقات هشة ومحضرة يومياً", price: 24, img: "https://images.unsplash.com/photo-1587314168485-3236d6710814?w=300" }
+    ];
+    let currentHeroIdx = 0;
+
+    const menuCatalog = [
+      { keys: ["اسبريسو", "إسبريسو", "espresso"], name: "إسبريسو نَمَقْ", price: 14 },
+      { keys: ["فلات", "وايت", "flat"], name: "فلات وايت نَمَقْ", price: 16 },
+      { keys: ["كابتشينو", "cappuccino"], name: "كابتشينو نَمَقْ", price: 18 },
+      { keys: ["سبانش", "اسبانيش", "بارد", "spanish"], name: "اسبانيش لاتيه نَمَقْ", price: 21 },
+      { keys: ["لاتيه", "latte"], name: "لاتيه نَمَقْ", price: 18 },
+      { keys: ["60", "مقطرة", "v60", "في 60"], name: "في 60 نَمَقْ", price: 22 },
+      { keys: ["كيك", "كيكة", "عسل"], name: "كيكة العسل", price: 24 },
+      { keys: ["تارت", "توت"], name: "تارت التوت", price: 20 },
+      { keys: ["اثيوبيا", "إثيوبيا"], name: "محصول إثيوبيا (250g)", price: 75 },
+      { keys: ["كولومبي"], name: "محصول كولومبي (250g)", price: 70 }
+    ];
+
     window.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const tableParam = urlParams.get('table') || urlParams.get('t');
       if (tableParam) {
         activeTable = `طاولة رقم ${tableParam}`;
         document.getElementById('currentTableText').innerText = activeTable;
+        document.getElementById('nfcModalTable').innerText = activeTable;
+        document.getElementById('gateTableHint').innerText = `تم التعرف على (${activeTable}) عبر NFC • اضغط لتفعيل التجربة الهولوغرامية`;
       }
       startAutoSlide();
+      initStageTilt();
     });
 
-    // التحكم في سلايدر شاشة العرض
+    // بوابة الدخول والصوت الفضائي
+    function enterHoloCafe(withVoice) {
+      document.getElementById('holoGate').classList.add('hidden');
+      if (withVoice) {
+        playSciFiChime();
+        speakArabic(`تم تفعيل بوابة مقهى نمق الهولوغرامية... أهلاً بك في ${activeTable}.`);
+      }
+    }
+
+    function playSciFiChime() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(280, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(760, ctx.currentTime + 0.45);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.6);
+      } catch (e) {}
+    }
+
+    function speakArabic(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'ar-SA';
+        u.pitch = 0.82;
+        u.rate = 0.96;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    // مسرح العرض الهولوغرامي 3D
+    function cycleHeroDrink(dir) {
+      currentHeroIdx = (currentHeroIdx + dir + heroDrinks.length) % heroDrinks.length;
+      const d = heroDrinks[currentHeroIdx];
+      document.getElementById('stageDrinkImg').src = d.img;
+      document.getElementById('stageDrinkName').innerText = d.name;
+      document.getElementById('stageDrinkDesc').innerText = `${d.desc} • ${d.price} ر.س`;
+    }
+
+    function addHeroDrinkToCart() {
+      const d = heroDrinks[currentHeroIdx];
+      addToCart(d.shortName, d.price);
+    }
+
+    function openZoomModal() {
+      const d = heroDrinks[currentHeroIdx];
+      previewItem(d.name, d.desc, d.price, d.img);
+    }
+
+    function previewItem(name, desc, price, img) {
+      document.getElementById('zoomTitle').innerText = name;
+      document.getElementById('zoomDesc').innerText = `${desc} — السعر: ${price} ر.س`;
+      document.getElementById('zoomImg').src = img;
+      document.getElementById('zoomAddBtn').onclick = () => {
+        addToCart(name, price);
+        closeModal('zoomModal');
+      };
+      openModal('zoomModal');
+    }
+
+    function switchStageMode(mode) {
+      document.getElementById('tab3d').classList.toggle('active', mode === '3d');
+      document.getElementById('tabVid').classList.toggle('active', mode === 'vid');
+      document.getElementById('viewport3d').classList.toggle('hidden', mode !== '3d');
+      document.getElementById('viewportVid').classList.toggle('active', mode === 'vid');
+    }
+
+    function setStageTheme(theme, btn) {
+      document.body.classList.remove('theme-neon', 'theme-day');
+      if (theme === 'neon') document.body.classList.add('theme-neon');
+      if (theme === 'day') document.body.classList.add('theme-day');
+      document.querySelectorAll('.light-dot').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function initStageTilt() {
+      const stage = document.getElementById('holoStageCard');
+      stage.addEventListener('mousemove', (e) => {
+        const rect = stage.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
+        stage.style.transform = `perspective(700px) rotateX(${y}deg) rotateY(${x}deg)`;
+      });
+      stage.addEventListener('mouseleave', () => {
+        stage.style.transform = 'perspective(700px) rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    // الباريستا الصوتي الذكي
+    function startVoiceBarista() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) {
+        showToast("المتصفح لا يدعم المايكروفون، اكتب طلبك في الخانة");
+        return;
+      }
+      const recognition = new SpeechRec();
+      recognition.lang = 'ar-SA';
+      const micBtn = document.getElementById('micBtn');
+      micBtn.classList.add('listening');
+      micBtn.innerText = "أستمع إليك...";
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('aiQueryInput').value = transcript;
+        processBaristaCommand(transcript);
+      };
+      recognition.onend = () => {
+        micBtn.classList.remove('listening');
+        micBtn.innerText = "اطلب بصوتك";
+      };
+      recognition.start();
+    }
+
+    function processBaristaCommand(rawText) {
+      const text = (rawText || "").trim();
+      if (!text) return;
+      const bubble = document.getElementById('aiReplyBubble');
+      bubble.style.display = 'block';
+
+      let matched = menuCatalog.find(item => item.keys.some(k => text.toLowerCase().includes(k)));
+      if (matched) {
+        addToCart(matched.name, matched.price);
+        const reply = `تمت إضافة (${matched.name}) بسعر ${matched.price} ريال إلى سلة طاولتك بكل سرور.`;
+        bubble.innerText = `🤖 ${reply}`;
+        speakArabic(reply);
+      } else {
+        const reply = "أرشح لك فلات وايت نَمَقْ المميز مع كيكة العسل، أو يمكنك استعراض القائمة الكاملة بالأسفل.";
+        bubble.innerText = `🤖 ${reply}`;
+        speakArabic(reply);
+      }
+    }
+
+    // سلايدر الفيديو
     let currentSlide = 0;
     let slideTimer;
 
@@ -1042,15 +1695,10 @@
       slides.forEach((s, idx) => {
         const isActive = (idx === currentSlide);
         s.classList.toggle('active', isActive);
-        
         const vid = s.querySelector('video');
         if (vid) {
-          if (isActive) {
-            vid.currentTime = 0;
-            vid.play().catch(() => {});
-          } else {
-            vid.pause();
-          }
+          if (isActive) { vid.currentTime = 0; vid.play().catch(() => {}); }
+          else { vid.pause(); }
         }
       });
     }
@@ -1062,9 +1710,7 @@
     }
 
     function startAutoSlide() {
-      slideTimer = setInterval(() => {
-        showSlide(currentSlide + 1);
-      }, 6000);
+      slideTimer = setInterval(() => showSlide(currentSlide + 1), 6000);
     }
 
     function showToast(text) {
@@ -1104,45 +1750,37 @@
       }
       isCooldown = true;
       showToast("🔔 جاري استدعاء المضيف بهدوء...");
-      const msg = `🔔 *نداء صامت للمضيف*\nالموقع: ${activeTable}\nالرجاء الحضور للطاولة بلطف.`;
-      sendWhatsAppDirect(msg);
+      sendWhatsAppDirect(`🔔 *نداء صامت للمضيف*\nالموقع: ${activeTable}\nالرجاء الحضور للطاولة بلطف.`);
       setTimeout(() => { isCooldown = false; }, 45000);
     }
 
     function cleanTable() {
       showToast("✨ تم إبلاغ فريق النظافة لتجهيز الطاولة");
-      const msg = `✨ *طلب تنظيف وتجهيز الطاولة*\nالموقع: ${activeTable}\nالرجاء تنظيف الطاولة ومسحها فوراً.`;
-      sendWhatsAppDirect(msg);
+      sendWhatsAppDirect(`✨ *طلب تنظيف وتجهيز الطاولة*\nالموقع: ${activeTable}\nالرجاء تنظيف الطاولة ومسحها فوراً.`);
     }
 
     function requestBill(method) {
       closeModal('billModal');
       showToast("💳 تم طلب الحساب، الويتر قادم إليك");
-      const msg = `💳 *طلب الحساب الصامت*\nالموقع: ${activeTable}\nطريقة الدفع المطلوبة: ${method}`;
-      sendWhatsAppDirect(msg);
+      sendWhatsAppDirect(`💳 *طلب الحساب الصامت*\nالموقع: ${activeTable}\nطريقة الدفع المطلوبة: ${method}`);
     }
 
     function requestPower(cable) {
       closeModal('powerModal');
       showToast("🔋 جاري تجهيز الشاحن لطاولتك");
-      const msg = `🔋 *طلب استعارة بنك طاقة*\nالموقع: ${activeTable}\nنوع المنفذ المطلوب: ${cable}`;
-      sendWhatsAppDirect(msg);
+      sendWhatsAppDirect(`🔋 *طلب استعارة بنك طاقة*\nالموقع: ${activeTable}\nنوع المنفذ المطلوب: ${cable}`);
     }
 
     function quickRefill(itemName, price) {
       showToast("⚡ جاري إرسال طلب الدفعة الثانية...");
-      const msg = `⚡ *طلب دفعة ثانية صامتة (Refill)*\nالموقع: ${activeTable}\nالمطلوب: ${itemName} (السعر بعد الخصم: ${price} ر.س)\nيرجى تحضيره مباشرة.`;
-      sendWhatsAppDirect(msg);
+      sendWhatsAppDirect(`⚡ *طلب دفعة ثانية صامتة (Refill)*\nالموقع: ${activeTable}\nالمطلوب: ${itemName} (السعر بعد الخصم: ${price} ر.س)\nيرجى تحضيره مباشرة.`);
     }
 
     // إدارة السلة
     function addToCart(name, price) {
       let item = cart.find(i => i.name === name);
-      if (item) {
-        item.qty += 1;
-      } else {
-        cart.push({ name, price, qty: 1 });
-      }
+      if (item) item.qty += 1;
+      else cart.push({ name, price, qty: 1 });
       showToast(`+ تم إضافة ${name} للسلة`);
       renderCart();
     }
@@ -1164,7 +1802,6 @@
       if (totalItems > 0) {
         cartDiv.style.display = 'block';
         cartTotalText.innerText = `${totalPrice} ر.س (${totalItems} قطع)`;
-        
         cartItemsList.innerHTML = cart.map((i, idx) => `
           <div class="cart-row">
             <span>${i.name} (x${i.qty})</span>
@@ -1183,8 +1820,7 @@
     function sendCartOrder() {
       if (cart.length === 0) return;
       let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-
-      let msg = `☕ *طلب جديد من المنيو الذكي - مقهى نَمَقْ*\n`;
+      let msg = `☕ *طلب جديد من المنيو الهولوغرامي - مقهى نَمَقْ*\n`;
       msg += `📍 *الموقع:* ${activeTable}\n`;
       msg += `─────────────────────\n`;
       cart.forEach((i, idx) => {
@@ -1192,38 +1828,32 @@
       });
       msg += `─────────────────────\n`;
       msg += `💰 *الإجمالي المطلوب:* ${total} ر.س\n\nأرجو البدء بالتحضير وشكراً لكم!`;
-
       sendWhatsAppDirect(msg);
     }
 
     function sendQuickMessage(text) {
-      let msg = `${text}\nالموقع: ${activeTable}`;
-      sendWhatsAppDirect(msg);
+      sendWhatsAppDirect(`${text}\nالموقع: ${activeTable}`);
     }
 
     function sendWhatsAppDirect(message) {
-      let url = `https://wa.me/${CAFE_PHONE}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
+      window.open(`https://wa.me/${CAFE_PHONE}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
     // درع التقييم الذكي
     function handleRating(stars) {
-      const allStars = document.querySelectorAll('.star');
-      allStars.forEach((s, idx) => {
-        if (idx < stars) s.classList.add('selected');
-        else s.classList.remove('selected');
+      document.querySelectorAll('.star').forEach((s, idx) => {
+        s.classList.toggle('selected', idx < stars);
       });
-
       const area = document.getElementById('ratingActionArea');
       if (stars >= 4) {
         area.innerHTML = `
           <p style="font-size:0.75rem; color:#FBBF24; margin-bottom:6px;">سعداء جداً بإعجابك! نسعد بدعمك لنَمَقْ على خرائط جوجل 🌟</p>
-          <a href="https://maps.google.com" target="_blank" class="action-link-btn" style="background:#FBBF24; color:#000;">اكتب تقييمك على جوجل ➔</a>
+          <a href="https://maps.google.com" target="_blank" class="action-link-btn">اكتب تقييمك على جوجل ➔</a>
         `;
       } else {
         area.innerHTML = `
-          <p style="font-size:0.75rem; color:#A39B95; margin-bottom:6px;">نعتذر منك بشدة إن لم تكن تجربتك على أكمل وجه. يهمنا تصحيح ذلك فوراً:</p>
-          <button class="action-link-btn" style="background:#281F19; border:1px solid var(--accent); width:100%; cursor:pointer;" onclick="sendQuickMessage('ملاحظة غير مرضية عن التجربة للتقييم: ${stars}/5، وأرغب في توضيح المشكلة')">أرسل ملاحظتك مباشرة للمدير 💬</button>
+          <p style="font-size:0.75rem; color:#94A3B8; margin-bottom:6px;">نعتذر منك بشدة إن لم تكن تجربتك على أكمل وجه. يهمنا تصحيح ذلك فوراً:</p>
+          <button class="action-link-btn" style="background:#1A1C24; color:var(--gold-light); border:1px solid var(--gold); width:100%; cursor:pointer;" onclick="sendQuickMessage('ملاحظة غير مرضية عن التجربة للتقييم: ${stars}/5، وأرغب في توضيح المشكلة')">أرسل ملاحظتك مباشرة للمدير 💬</button>
         `;
       }
     }
