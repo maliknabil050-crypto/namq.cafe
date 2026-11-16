@@ -3,38 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>مقهى نَمَقْ | NAMQ — المنظومة الهولوغرامية الذكية</title>
+  <title>مقهى نَمَقْ | NAMQ — المنظومة الهولوغرامية الفضائية</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #050507;
-      --surface: #0D0E12;
-      --card: rgba(18, 19, 25, 0.88);
+      --bg: #020205;
+      --card: rgba(12, 14, 24, 0.72);
       --gold: #D4AF37;
       --gold-light: #F3E5AB;
-      --gold-dim: rgba(212, 175, 55, 0.22);
+      --gold-dim: rgba(212, 175, 55, 0.28);
       --cyan: #00F0FF;
-      --cyan-dim: rgba(0, 240, 255, 0.16);
+      --cyan-dim: rgba(0, 240, 255, 0.22);
       --text: #F8FAFC;
       --muted: #94A3B8;
       --green: #25D366;
-      --stage-glow: rgba(212, 175, 55, 0.25);
+      --stage-glow: rgba(212, 175, 55, 0.3);
       --stage-ring: #D4AF37;
-      --stage-bg: radial-gradient(circle at 50% 45%, rgba(212, 175, 55, 0.18) 0%, rgba(5, 5, 7, 0.96) 72%);
+      --stage-bg: radial-gradient(circle at 50% 45%, rgba(212, 175, 55, 0.2) 0%, rgba(4, 5, 12, 0.85) 75%);
     }
 
     body.theme-neon {
-      --stage-glow: rgba(0, 240, 255, 0.35);
+      --stage-glow: rgba(0, 240, 255, 0.38);
       --stage-ring: #00F0FF;
-      --stage-bg: radial-gradient(circle at 50% 45%, rgba(0, 240, 255, 0.22) 0%, rgba(12, 10, 28, 0.96) 72%);
+      --stage-bg: radial-gradient(circle at 50% 45%, rgba(0, 240, 255, 0.24) 0%, rgba(8, 10, 26, 0.88) 75%);
     }
 
     body.theme-day {
       --stage-glow: rgba(255, 236, 179, 0.45);
       --stage-ring: #FDE68A;
-      --stage-bg: radial-gradient(circle at 50% 45%, rgba(253, 230, 138, 0.28) 0%, rgba(28, 22, 16, 0.94) 72%);
+      --stage-bg: radial-gradient(circle at 50% 45%, rgba(253, 230, 138, 0.28) 0%, rgba(22, 18, 14, 0.88) 75%);
     }
 
     * {
@@ -47,10 +46,6 @@
 
     body {
       background-color: var(--bg);
-      background-image:
-        linear-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-      background-size: 32px 32px;
       color: var(--text);
       line-height: 1.6;
       padding: 14px 14px 125px 14px;
@@ -58,13 +53,36 @@
       justify-content: center;
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* خلفية الفضاء العميق والنجوم المتحركة */
+    #spaceCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .cosmic-nebula {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 20% 15%, rgba(0, 240, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 35%, rgba(212, 175, 55, 0.14) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 85%, rgba(88, 28, 135, 0.18) 0%, transparent 60%);
     }
 
     /* بوابة الدخول الهولوغرامية */
     .holo-gate {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, #141218 0%, #050507 85%);
+      background: radial-gradient(circle at center, rgba(16, 18, 32, 0.92) 0%, rgba(2, 2, 5, 0.98) 85%);
+      backdrop-filter: blur(8px);
       z-index: 9999;
       display: flex;
       flex-direction: column;
@@ -112,7 +130,7 @@
       width: 92px;
       height: 92px;
       border-radius: 50%;
-      background: #0D0E12;
+      background: #080910;
       border: 2px solid var(--gold);
       display: flex;
       align-items: center;
@@ -124,26 +142,10 @@
       overflow: hidden;
     }
 
-    .gate-logo-core img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .gate-logo-core img { width: 100%; height: 100%; object-fit: cover; }
 
-    .gate-title {
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: #FFF;
-      margin-bottom: 6px;
-      letter-spacing: 0.5px;
-    }
-
-    .gate-sub {
-      font-size: 0.85rem;
-      color: var(--muted);
-      max-width: 320px;
-      margin-bottom: 24px;
-    }
+    .gate-title { font-size: 1.5rem; font-weight: 900; color: #FFF; margin-bottom: 6px; }
+    .gate-sub { font-size: 0.85rem; color: var(--muted); max-width: 320px; margin-bottom: 24px; }
 
     .gate-enter-btn {
       background: linear-gradient(135deg, #D4AF37 0%, #AA821E 100%);
@@ -156,9 +158,6 @@
       cursor: pointer;
       box-shadow: 0 0 28px rgba(212, 175, 55, 0.55);
       transition: transform 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .gate-enter-btn:active { transform: scale(0.95); }
@@ -173,18 +172,19 @@
       text-decoration: underline;
     }
 
-    /* الحاوية الرئيسية بنمط عِزوة */
+    /* الحاوية الرئيسية الشفافة لإظهار الفضاء خلفها */
     .hub-container {
       width: 100%;
       max-width: 450px;
-      background: linear-gradient(180deg, rgba(16, 17, 23, 0.96) 0%, rgba(8, 9, 12, 0.98) 100%);
-      border: 1px solid rgba(212, 175, 55, 0.35);
+      background: linear-gradient(180deg, rgba(10, 12, 22, 0.68) 0%, rgba(5, 6, 12, 0.78) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.38);
       border-radius: 30px;
       padding: 20px 16px;
       text-align: center;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.92), 0 0 40px rgba(212, 175, 55, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), inset 0 0 35px rgba(0, 240, 255, 0.05);
       position: relative;
-      backdrop-filter: blur(12px);
+      z-index: 2;
+      backdrop-filter: blur(8px);
     }
 
     .top-meta {
@@ -218,7 +218,7 @@
     }
 
     .table-nfc-pill {
-      background: rgba(0, 240, 255, 0.1);
+      background: rgba(0, 240, 255, 0.12);
       border: 1px solid var(--cyan);
       color: #FFF;
       padding: 4px 12px;
@@ -229,10 +229,7 @@
       align-items: center;
       gap: 5px;
       cursor: pointer;
-      transition: 0.2s;
     }
-
-    .table-nfc-pill:active { transform: scale(0.95); }
 
     .brand-header {
       display: flex;
@@ -248,11 +245,11 @@
       border-radius: 50%;
       border: 2px solid var(--gold);
       overflow: hidden;
-      background: #111217;
+      background: #0B0D14;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 20px var(--gold-dim);
+      box-shadow: 0 0 22px var(--gold-dim);
       flex-shrink: 0;
     }
 
@@ -260,20 +257,11 @@
     .brand-logo-text { font-size: 1.25rem; font-weight: 900; color: var(--gold-light); }
 
     .brand-titles { text-align: right; }
-    .hub-title {
-      font-size: 1.35rem;
-      font-weight: 900;
-      color: #FFF;
-      line-height: 1.2;
-    }
+    .hub-title { font-size: 1.35rem; font-weight: 900; color: #FFF; line-height: 1.2; }
     .hub-title span { color: var(--gold); }
-    .logo-subtitle {
-      font-size: 0.74rem;
-      color: var(--cyan);
-      font-weight: 700;
-    }
+    .logo-subtitle { font-size: 0.74rem; color: var(--cyan); font-weight: 700; }
 
-    /* مسرح العرض الهولوغرامي ثلاثي الأبعاد (نمط عِزوة) */
+    /* مسرح العرض الهولوغرامي المركزي */
     .holo-stage-card {
       position: relative;
       width: 100%;
@@ -312,8 +300,8 @@
 
     .mode-switch-group {
       display: flex;
-      background: rgba(5, 5, 7, 0.75);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: rgba(5, 5, 10, 0.75);
+      border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: 12px;
       padding: 2px;
     }
@@ -327,18 +315,11 @@
       padding: 4px 9px;
       border-radius: 9px;
       cursor: pointer;
-      transition: 0.2s;
     }
 
-    .mode-tab.active {
-      background: var(--gold);
-      color: #050507;
-    }
+    .mode-tab.active { background: var(--gold); color: #050507; }
 
-    .lighting-pills {
-      display: flex;
-      gap: 5px;
-    }
+    .lighting-pills { display: flex; gap: 5px; }
 
     .light-dot {
       width: 22px;
@@ -346,7 +327,6 @@
       border-radius: 50%;
       border: 1.5px solid rgba(255,255,255,0.25);
       cursor: pointer;
-      transition: transform 0.2s;
     }
 
     .light-dot.active { transform: scale(1.18); border-color: #FFF; }
@@ -354,7 +334,6 @@
     .light-dot.neon { background: radial-gradient(circle, #00F0FF, #1E1B4B); }
     .light-dot.day { background: radial-gradient(circle, #FEF3C7, #B45309); }
 
-    /* العرض العائم ثلاثي الأبعاد */
     .holo-3d-viewport {
       position: relative;
       height: 215px;
@@ -367,12 +346,12 @@
 
     .holo-energy-rings {
       position: absolute;
-      bottom: 18px;
-      width: 190px;
+      bottom: 22px;
+      width: 195px;
       height: 46px;
       border-radius: 50%;
       border: 2px solid var(--stage-ring);
-      box-shadow: 0 0 25px var(--stage-glow), inset 0 0 15px var(--stage-glow);
+      box-shadow: 0 0 28px var(--stage-glow), inset 0 0 15px var(--stage-glow);
       transform: rotateX(68deg);
       animation: pulseRing 3s ease-in-out infinite;
     }
@@ -391,28 +370,15 @@
       border-radius: 50%;
       object-fit: cover;
       border: 2.5px solid var(--gold);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.8), 0 0 25px var(--stage-glow);
-      animation: float3D 4s ease-in-out infinite;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.85), 0 0 28px var(--stage-glow);
+      animation: float3D 3.6s ease-in-out infinite;
       cursor: zoom-in;
       z-index: 5;
-      background: #141210;
     }
 
-    .stage-item-meta {
-      margin-top: 10px;
-      z-index: 5;
-    }
-
-    .stage-item-meta h3 {
-      font-size: 1rem;
-      font-weight: 900;
-      color: #FFF;
-    }
-
-    .stage-item-meta p {
-      font-size: 0.72rem;
-      color: var(--gold-light);
-    }
+    .stage-item-meta { margin-top: 10px; z-index: 5; }
+    .stage-item-meta h3 { font-size: 1rem; font-weight: 900; color: #FFF; }
+    .stage-item-meta p { font-size: 0.72rem; color: var(--gold-light); }
 
     .stage-actions-bar {
       display: flex;
@@ -447,11 +413,10 @@
       font-size: 0.78rem;
       font-weight: 900;
       cursor: pointer;
-      box-shadow: 0 4px 15px var(--gold-dim);
     }
 
     .stage-zoom-btn {
-      background: rgba(0, 240, 255, 0.12);
+      background: rgba(0, 240, 255, 0.14);
       border: 1px solid var(--cyan);
       color: var(--cyan);
       padding: 6px 11px;
@@ -461,7 +426,7 @@
       cursor: pointer;
     }
 
-    /* وضع الفيديو السينمائي داخل المسرح */
+    /* وضع الفيديو السينمائي */
     .cinema-viewport {
       display: none;
       position: relative;
@@ -485,15 +450,7 @@
     }
 
     .ad-slide.active { opacity: 1; z-index: 2; }
-
-    .ad-slide video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.85);
-    }
+    .ad-slide video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
 
     .slider-caption-badge {
       position: relative;
@@ -508,9 +465,9 @@
       margin-bottom: 10px;
     }
 
-    /* شريط الباريستا الصوتي الذكي (نمط مستشار عِزوة) */
+    /* الباريستا الصوتي الذكي */
     .ai-barista-box {
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.08) 0%, rgba(212, 175, 55, 0.08) 100%);
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.09) 0%, rgba(212, 175, 55, 0.09) 100%);
       border: 1px solid rgba(0, 240, 255, 0.35);
       border-radius: 18px;
       padding: 12px;
@@ -526,14 +483,7 @@
       margin-bottom: 8px;
     }
 
-    .ai-title {
-      font-size: 0.78rem;
-      font-weight: 900;
-      color: var(--cyan);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .ai-title { font-size: 0.78rem; font-weight: 900; color: var(--cyan); }
 
     .mic-btn {
       background: linear-gradient(135deg, #00F0FF 0%, #0284C7 100%);
@@ -544,26 +494,15 @@
       font-size: 0.72rem;
       font-weight: 900;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
     }
 
-    .mic-btn.listening {
-      background: #EF4444;
-      color: #FFF;
-      animation: pulse 1s infinite;
-    }
+    .mic-btn.listening { background: #EF4444; color: #FFF; animation: pulse 1s infinite; }
 
-    .ai-input-row {
-      display: flex;
-      gap: 6px;
-    }
+    .ai-input-row { display: flex; gap: 6px; }
 
     .ai-input {
       flex: 1;
-      background: rgba(5, 5, 7, 0.85);
+      background: rgba(5, 6, 12, 0.85);
       border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: 10px;
       padding: 7px 10px;
@@ -587,16 +526,15 @@
       margin-top: 8px;
       font-size: 0.73rem;
       color: var(--gold-light);
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.55);
       padding: 7px 10px;
       border-radius: 10px;
       border-right: 2px solid var(--cyan);
       display: none;
     }
 
-    /* شريط الواي فاي */
     .wifi-quick-box {
-      background: rgba(18, 19, 25, 0.85);
+      background: rgba(14, 16, 26, 0.78);
       border: 1px dashed var(--gold);
       border-radius: 14px;
       padding: 9px 14px;
@@ -618,16 +556,12 @@
       cursor: pointer;
     }
 
-    /* الخدمات الصامتة */
     .section-label {
       text-align: right;
       font-size: 0.78rem;
       font-weight: 800;
       color: var(--gold-light);
       margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .concierge-grid {
@@ -639,7 +573,7 @@
 
     .concierge-btn {
       background: var(--card);
-      border: 1px solid rgba(212, 175, 55, 0.22);
+      border: 1px solid rgba(212, 175, 55, 0.25);
       border-radius: 14px;
       padding: 11px 5px;
       display: flex;
@@ -648,21 +582,14 @@
       gap: 5px;
       color: var(--text);
       cursor: pointer;
-      transition: 0.2s;
     }
 
-    .concierge-btn:active {
-      transform: scale(0.95);
-      border-color: var(--cyan);
-      box-shadow: 0 0 15px var(--cyan-dim);
-    }
-
+    .concierge-btn:active { transform: scale(0.95); border-color: var(--cyan); }
     .concierge-btn .icon { font-size: 1.2rem; }
     .concierge-btn span.label { font-size: 0.66rem; font-weight: 800; }
 
-    /* كرت الدفعة الثانية */
     .refill-card {
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.14) 0%, rgba(13, 14, 18, 0.95) 100%);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(10, 12, 20, 0.9) 100%);
       border: 1px solid var(--gold);
       border-radius: 16px;
       padding: 14px;
@@ -703,32 +630,20 @@
       white-space: nowrap;
     }
 
-    /* الأزرار الرئيسية */
-    .hub-links {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
+    .hub-links { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
 
     .hub-btn {
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: var(--card);
-      border: 1px solid rgba(212, 175, 55, 0.22);
+      border: 1px solid rgba(212, 175, 55, 0.25);
       color: var(--text);
       padding: 12px 15px;
       border-radius: 14px;
       font-weight: 800;
       font-size: 0.82rem;
-      transition: 0.2s;
       cursor: pointer;
-    }
-
-    .hub-btn:hover, .hub-btn:active {
-      border-color: var(--gold);
-      background: rgba(212, 175, 55, 0.1);
     }
 
     .hub-btn span.arrow { color: var(--gold); font-weight: 900; }
@@ -736,7 +651,7 @@
     /* لوحات المحتوى */
     .content-panel {
       display: none;
-      background: #0D0E13;
+      background: rgba(8, 10, 18, 0.82);
       border: 1px solid var(--gold);
       border-radius: 20px;
       padding: 15px;
@@ -751,8 +666,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.22);
       padding-bottom: 8px;
     }
 
@@ -760,7 +675,7 @@
 
     .close-btn {
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      border: 1px solid rgba(212, 175, 55, 0.35);
       color: var(--gold-light);
       width: 28px;
       height: 28px;
@@ -768,50 +683,91 @@
       cursor: pointer;
     }
 
-    /* كروت المنيو بنمط هولوغرام */
+    /* كروت المنيو العائمة بتأثير الهولوغرام والانعدام الجاذبي */
     .menu-card {
-      background: rgba(22, 24, 32, 0.9);
-      border: 1px solid rgba(212, 175, 55, 0.22);
-      padding: 10px;
-      border-radius: 14px;
-      margin-bottom: 9px;
+      position: relative;
+      background: linear-gradient(145deg, rgba(20, 24, 38, 0.86) 0%, rgba(9, 11, 18, 0.92) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.32);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.78), 0 0 18px rgba(0, 240, 255, 0.08), inset 0 0 14px rgba(212, 175, 55, 0.07);
+      padding: 12px 11px;
+      border-radius: 18px;
+      margin-bottom: 13px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      transition: 0.2s;
+      gap: 12px;
+      animation: cardFloat 4.2s ease-in-out infinite;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .menu-card:hover { border-color: var(--cyan); }
+    .menu-card:nth-child(even) {
+      animation-delay: 1.4s;
+      border-color: rgba(212, 175, 55, 0.36);
+    }
+
+    .menu-card:nth-child(3n) {
+      animation-delay: 2.3s;
+    }
+
+    .menu-card:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.9), 0 0 24px rgba(0, 240, 255, 0.22);
+    }
+
+    /* منصة الهولوغرام العائمة تحت صورة كل منتج */
+    .holo-item-float-wrap {
+      position: relative;
+      width: 64px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .holo-item-base {
+      position: absolute;
+      bottom: 1px;
+      width: 56px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid var(--cyan);
+      box-shadow: 0 0 12px var(--cyan), inset 0 0 8px var(--gold-dim);
+      transform: rotateX(65deg);
+      animation: pulseRing 2.8s ease-in-out infinite;
+    }
 
     .item-img {
       width: 56px;
       height: 56px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1.5px solid var(--gold);
-      box-shadow: 0 0 12px var(--gold-dim);
-      flex-shrink: 0;
+      border: 2px solid var(--gold);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.85), 0 0 14px var(--gold-dim);
+      animation: float3D 3s ease-in-out infinite;
       cursor: pointer;
+      z-index: 2;
+      margin-bottom: 6px;
     }
 
     .item-info { flex-grow: 1; }
-    .menu-card h4 { font-size: 0.83rem; color: #FFF; margin-bottom: 1px; }
+    .menu-card h4 { font-size: 0.84rem; color: #FFF; margin-bottom: 1px; }
     .menu-card p { font-size: 0.69rem; color: var(--muted); margin-bottom: 3px; }
-    .menu-card span { font-size: 0.8rem; color: var(--gold-light); font-weight: 900; }
+    .menu-card span { font-size: 0.82rem; color: var(--gold-light); font-weight: 900; }
 
     .add-to-cart-btn {
       background: linear-gradient(135deg, #D4AF37 0%, #AA821E 100%);
       color: #050507;
       border: none;
-      padding: 6px 11px;
-      border-radius: 9px;
+      padding: 7px 12px;
+      border-radius: 10px;
       font-weight: 900;
       font-size: 0.72rem;
       cursor: pointer;
       flex-shrink: 0;
+      box-shadow: 0 4px 12px var(--gold-dim);
     }
 
-    /* بطاقة الولاء الهولوغرامية */
+    /* بطاقة الولاء */
     .vip-holo-card {
       background: linear-gradient(135deg, #1B1811 0%, #090A0F 60%, #1F1A10 100%);
       border: 1.5px solid var(--gold);
@@ -841,11 +797,7 @@
       background: rgba(212, 175, 55, 0.08);
     }
 
-    .stamp-circle.free {
-      background: var(--gold);
-      color: #050507;
-      border-style: solid;
-    }
+    .stamp-circle.free { background: var(--gold); color: #050507; border-style: solid; }
 
     /* النوافذ المنبثقة */
     .action-modal {
@@ -865,7 +817,7 @@
     .modal-box {
       width: 100%;
       max-width: 420px;
-      background: #111218;
+      background: #0F111A;
       border: 1.5px solid var(--gold);
       border-radius: 22px;
       padding: 20px;
@@ -879,7 +831,7 @@
     .modal-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 
     .modal-opt-btn {
-      background: #1A1C24;
+      background: #181B26;
       border: 1px solid rgba(212, 175, 55, 0.25);
       color: #FFF;
       padding: 11px;
@@ -903,11 +855,7 @@
       text-decoration: underline;
     }
 
-    /* نافذة التكبير الهولوغرامية */
-    .zoom-modal-box {
-      text-align: center;
-      align-self: center;
-    }
+    .zoom-modal-box { text-align: center; align-self: center; }
 
     .zoom-img-preview {
       width: 210px;
@@ -918,6 +866,7 @@
       box-shadow: 0 0 35px var(--gold-dim);
       margin: 10px auto 14px auto;
       display: block;
+      animation: float3D 3.5s ease-in-out infinite;
     }
 
     /* سلة الطلبات */
@@ -928,7 +877,7 @@
       transform: translateX(-50%);
       width: 92%;
       max-width: 430px;
-      background: #0F1016;
+      background: #0D0F18;
       border: 2px solid var(--gold);
       border-radius: 18px;
       padding: 11px 14px;
@@ -1048,11 +997,15 @@
     @keyframes spinReverse { to { transform: rotate(-360deg); } }
     @keyframes float3D {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
     }
     @keyframes pulseRing {
-      0%, 100% { opacity: 0.75; transform: rotateX(68deg) scale(1); }
-      50% { opacity: 1; transform: rotateX(68deg) scale(1.06); }
+      0%, 100% { opacity: 0.72; transform: rotateX(68deg) scale(1); }
+      50% { opacity: 1; transform: rotateX(68deg) scale(1.08); }
     }
     @keyframes scanMove {
       0%, 100% { top: 8%; }
@@ -1068,6 +1021,10 @@
 </head>
 <body>
 
+  <!-- خلفية الفضاء والنجوم المتحركة -->
+  <canvas id="spaceCanvas"></canvas>
+  <div class="cosmic-nebula"></div>
+
   <!-- بوابة الدخول الهولوغرامية بالصوت الفضائي -->
   <div id="holoGate" class="holo-gate">
     <div class="gate-ring-wrap">
@@ -1078,7 +1035,7 @@
         <span id="gateText" style="display:none;">نَمَقْ</span>
       </div>
     </div>
-    <div class="gate-title">بوابة مقهى نَمَقْ الهولوغرامية</div>
+    <div class="gate-title">بوابة مقهى نَمَقْ الفضائية</div>
     <p class="gate-sub" id="gateTableHint">تم التعرف على طاولتك عبر نظام NFC الذكي • اضغط لتفعيل العرض الهولوغرامي والصوت الترحيبي</p>
     <button class="gate-enter-btn" onclick="enterHoloCafe(true)">
       <span>◈ تفعيل البوابة الهولوغرامية ◈</span>
@@ -1093,7 +1050,7 @@
 
     <!-- الشريط العلوي -->
     <div class="top-meta">
-      <span class="badge-holo"><span class="pulse-dot"></span> HOLO SYSTEM v3</span>
+      <span class="badge-holo"><span class="pulse-dot"></span> COSMIC HOLO v3</span>
       <button class="table-nfc-pill" onclick="openModal('nfcModal')">
         <span>📡</span>
         <span id="currentTableText">طاولة رقم 1</span>
@@ -1108,11 +1065,11 @@
       </div>
       <div class="brand-titles">
         <div class="hub-title">مقهى <span>نَمَقْ</span> | NAMQ</div>
-        <div class="logo-subtitle">أيقونة القهوة المختصة والمنظومة الهولوغرامية</div>
+        <div class="logo-subtitle">أيقونة القهوة المختصة والمنظومة الفضائية</div>
       </div>
     </div>
 
-    <!-- مسرح العرض الهولوغرامي المركزي (نمط عِزوة) -->
+    <!-- مسرح العرض الهولوغرامي المركزي -->
     <div id="holoStageCard" class="holo-stage-card">
       <div class="laser-scanline"></div>
 
@@ -1224,7 +1181,7 @@
     <!-- الأزرار الرئيسية -->
     <div class="hub-links">
       <button class="hub-btn" onclick="showPanel('menuPanel')">
-        <span>📜 استعراض المنيو والطلب الفوري</span>
+        <span>📜 استعراض المنيو العائم والطلب الفوري</span>
         <span class="arrow">←</span>
       </button>
       <button class="hub-btn" onclick="showPanel('beansPanel')">
@@ -1249,15 +1206,18 @@
       </button>
     </div>
 
-    <!-- 1. لوحة المنيو -->
-    <div id="menuPanel" class="content-panel">
+    <!-- 1. لوحة المنيو العائم -->
+    <div id="menuPanel" class="content-panel active">
       <div class="panel-header">
-        <h3>📜 قائمة المشروبات والمخبوزات</h3>
+        <h3>📜 قائمة المشروبات والمخبوزات العائمة</h3>
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200" alt="إسبريسو" class="item-img" onclick="previewItem('إسبريسو نَمَقْ (Espresso)', 'استخلاص غني بقوام متوازن', 14, this.src)">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200" alt="إسبريسو" class="item-img" onclick="previewItem('إسبريسو نَمَقْ (Espresso)', 'استخلاص غني بقوام متوازن', 14, this.src)">
+        </div>
         <div class="item-info">
           <h4>إسبريسو نَمَقْ (Espresso)</h4>
           <p>استخلاص غني بقوام متوازن</p>
@@ -1267,7 +1227,10 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=200" alt="فلات وايت" class="item-img" onclick="previewItem('فلات وايت (Flat White)', 'ميزان دقيق بين الإسبريسو والحليب', 16, this.src)">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=200" alt="فلات وايت" class="item-img" onclick="previewItem('فلات وايت (Flat White)', 'ميزان دقيق بين الإسبريسو والحليب', 16, this.src)">
+        </div>
         <div class="item-info">
           <h4>فلات وايت (Flat White)</h4>
           <p>ميزان دقيق بين الإسبريسو والحليب</p>
@@ -1277,7 +1240,10 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200" alt="كابتشينو" class="item-img" onclick="previewItem('كابتشينو (Cappuccino)', 'إسبريسو مع رغوة حليب ناعمة', 18, this.src)">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200" alt="كابتشينو" class="item-img" onclick="previewItem('كابتشينو (Cappuccino)', 'إسبريسو مع رغوة حليب ناعمة', 18, this.src)">
+        </div>
         <div class="item-info">
           <h4>كابتشينو (Cappuccino)</h4>
           <p>إسبريسو مع رغوة حليب ناعمة</p>
@@ -1287,7 +1253,10 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200" alt="لاتيه" class="item-img" onclick="previewItem('لاتيه حار / بارد (Latte)', 'مستخلصة بعناية مع الحليب الطازج', 18, this.src)">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200" alt="لاتيه" class="item-img" onclick="previewItem('لاتيه حار / بارد (Latte)', 'مستخلصة بعناية مع الحليب الطازج', 18, this.src)">
+        </div>
         <div class="item-info">
           <h4>لاتيه حار / بارد (Latte)</h4>
           <p>مستخلصة بعناية مع الحليب الطازج</p>
@@ -1297,7 +1266,10 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=200" alt="في 60" class="item-img" onclick="previewItem('في 60 - مقطرة (V60)', 'محاصيل فاخرة للفلتر اليومي', 22, this.src)">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=200" alt="في 60" class="item-img" onclick="previewItem('في 60 - مقطرة (V60)', 'محاصيل فاخرة للفلتر اليومي', 22, this.src)">
+        </div>
         <div class="item-info">
           <h4>في 60 - مقطرة (V60)</h4>
           <p>محاصيل فاخرة للفلتر اليومي</p>
@@ -1307,7 +1279,10 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=200" alt="اسبانيش لاتيه" class="item-img" onclick="previewItem('اسبانيش لاتيه بارد', 'إسبريسو مع حليب وحلا نَمَقْ المتوازن', 21, this.src)">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=200" alt="اسبانيش لاتيه" class="item-img" onclick="previewItem('اسبانيش لاتيه بارد', 'إسبريسو مع حليب وحلا نَمَقْ المتوازن', 21, this.src)">
+        </div>
         <div class="item-info">
           <h4>اسبانيش لاتيه بارد</h4>
           <p>إسبريسو مع حليب وحلا نَمَقْ المتوازن</p>
@@ -1317,7 +1292,10 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=200" alt="كيكة العسل" class="item-img" onclick="previewItem('كيكة العسل الخاصة', 'طبقات هشة ومحضرة يومياً', 24, this.src)">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=200" alt="كيكة العسل" class="item-img" onclick="previewItem('كيكة العسل الخاصة', 'طبقات هشة ومحضرة يومياً', 24, this.src)">
+        </div>
         <div class="item-info">
           <h4>كيكة العسل الخاصة</h4>
           <p>طبقات هشة ومحضرة يومياً</p>
@@ -1327,7 +1305,10 @@
       </div>
 
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1519869325930-281384150729?w=200" alt="تارت التوت" class="item-img" onclick="previewItem('تارت التوت الفاخر', 'معجنات مقرمشة بكريمة الفانيليا', 20, this.src)">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1519869325930-281384150729?w=200" alt="تارت التوت" class="item-img" onclick="previewItem('تارت التوت الفاخر', 'معجنات مقرمشة بكريمة الفانيليا', 20, this.src)">
+        </div>
         <div class="item-info">
           <h4>تارت التوت الفاخر</h4>
           <p>معجنات مقرمشة بكريمة الفانيليا</p>
@@ -1337,14 +1318,17 @@
       </div>
     </div>
 
-    <!-- 2. لوحة المحاصيل -->
+    <!-- 2. لوحة المحاصيل العائمة -->
     <div id="beansPanel" class="content-panel">
       <div class="panel-header">
         <h3>🛍️ محاصيل نَمَقْ المختصة</h3>
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=200" alt="محصول إثيوبيا" class="item-img">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=200" alt="محصول إثيوبيا" class="item-img" onclick="previewItem('محصول إثيوبيا قيديب (250g)', 'إيحاءات: خوخ، ياسمين، وحلاوة عسل', 75, this.src)">
+        </div>
         <div class="item-info">
           <h4>محصول إثيوبيا قيديب (250g)</h4>
           <p>إيحاءات: خوخ، ياسمين، وحلاوة عسل</p>
@@ -1353,7 +1337,10 @@
         <button class="add-to-cart-btn" onclick="addToCart('محصول إثيوبيا (250g)', 75)">إضافة +</button>
       </div>
       <div class="menu-card">
-        <img src="https://images.unsplash.com/photo-1611854779393-1b2da9d401fe?w=200" alt="محصول كولومبي" class="item-img">
+        <div class="holo-item-float-wrap">
+          <div class="holo-item-base"></div>
+          <img src="https://images.unsplash.com/photo-1611854779393-1b2da9d401fe?w=200" alt="محصول كولومبي" class="item-img" onclick="previewItem('محصول كولومبي هائلا (250g)', 'إيحاءات: كراميل، شوكولاتة داكنة، ومكسرات', 70, this.src)">
+        </div>
         <div class="item-info">
           <h4>محصول كولومبي هائلا (250g)</h4>
           <p>إيحاءات: كراميل، شوكولاتة داكنة، ومكسرات</p>
@@ -1531,24 +1518,70 @@
     ];
 
     window.addEventListener('DOMContentLoaded', () => {
+      initSpaceStars();
       const urlParams = new URLSearchParams(window.location.search);
       const tableParam = urlParams.get('table') || urlParams.get('t');
       if (tableParam) {
         activeTable = `طاولة رقم ${tableParam}`;
         document.getElementById('currentTableText').innerText = activeTable;
         document.getElementById('nfcModalTable').innerText = activeTable;
-        document.getElementById('gateTableHint').innerText = `تم التعرف على (${activeTable}) عبر NFC • اضغط لتفعيل التجربة الهولوغرامية`;
+        document.getElementById('gateTableHint').innerText = `تم التعرف على (${activeTable}) عبر NFC • اضغط لتفعيل التجربة الفضائية`;
       }
       startAutoSlide();
       initStageTilt();
     });
+
+    // رسم نجوم الفضاء المتحركة
+    function initSpaceStars() {
+      const canvas = document.getElementById('spaceCanvas');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      const count = 130;
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.8 + 0.3,
+          speed: Math.random() * 0.35 + 0.08,
+          alpha: Math.random() * 0.8 + 0.2,
+          color: Math.random() > 0.78 ? '#00F0FF' : (Math.random() > 0.55 ? '#F3E5AB' : '#FFFFFF')
+        });
+      }
+
+      function animateStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(s => {
+          s.y -= s.speed;
+          if (s.y < 0) {
+            s.y = canvas.height;
+            s.x = Math.random() * canvas.width;
+          }
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = s.alpha;
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(animateStars);
+      }
+      animateStars();
+    }
 
     // بوابة الدخول والصوت الفضائي
     function enterHoloCafe(withVoice) {
       document.getElementById('holoGate').classList.add('hidden');
       if (withVoice) {
         playSciFiChime();
-        speakArabic(`تم تفعيل بوابة مقهى نمق الهولوغرامية... أهلاً بك في ${activeTable}.`);
+        speakArabic(`تم تفعيل بوابة مقهى نمق الفضائية... أهلاً بك في ${activeTable}.`);
       }
     }
 
