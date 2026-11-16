@@ -19,20 +19,23 @@
       --text: #F8FAFC;
       --muted: #94A3B8;
       --green: #25D366;
-      --stage-glow: rgba(212, 175, 55, 0.3);
+      --stage-glow: rgba(212, 175, 55, 0.34);
       --stage-ring: #D4AF37;
+      --beam-color: rgba(212, 175, 55, 0.28);
       --stage-bg: radial-gradient(circle at 50% 45%, rgba(212, 175, 55, 0.2) 0%, rgba(4, 5, 12, 0.85) 75%);
     }
 
     body.theme-neon {
-      --stage-glow: rgba(0, 240, 255, 0.38);
+      --stage-glow: rgba(0, 240, 255, 0.4);
       --stage-ring: #00F0FF;
+      --beam-color: rgba(0, 240, 255, 0.32);
       --stage-bg: radial-gradient(circle at 50% 45%, rgba(0, 240, 255, 0.24) 0%, rgba(8, 10, 26, 0.88) 75%);
     }
 
     body.theme-day {
       --stage-glow: rgba(255, 236, 179, 0.45);
       --stage-ring: #FDE68A;
+      --beam-color: rgba(253, 230, 138, 0.34);
       --stage-bg: radial-gradient(circle at 50% 45%, rgba(253, 230, 138, 0.28) 0%, rgba(22, 18, 14, 0.88) 75%);
     }
 
@@ -72,8 +75,8 @@
       z-index: 0;
       pointer-events: none;
       background:
-        radial-gradient(ellipse at 20% 15%, rgba(0, 240, 255, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 35%, rgba(212, 175, 55, 0.14) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 15%, rgba(0, 240, 255, 0.13) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 35%, rgba(212, 175, 55, 0.15) 0%, transparent 55%),
         radial-gradient(ellipse at 50% 85%, rgba(88, 28, 135, 0.18) 0%, transparent 60%);
     }
 
@@ -172,7 +175,7 @@
       text-decoration: underline;
     }
 
-    /* الحاوية الرئيسية الشفافة لإظهار الفضاء خلفها */
+    /* الحاوية الرئيسية */
     .hub-container {
       width: 100%;
       max-width: 450px;
@@ -261,7 +264,7 @@
     .hub-title span { color: var(--gold); }
     .logo-subtitle { font-size: 0.74rem; color: var(--cyan); font-weight: 700; }
 
-    /* مسرح العرض الهولوغرامي المركزي */
+    /* مسرح العرض الهولوغرامي المركزي التلقائي */
     .holo-stage-card {
       position: relative;
       width: 100%;
@@ -336,7 +339,7 @@
 
     .holo-3d-viewport {
       position: relative;
-      height: 215px;
+      height: 230px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -344,16 +347,32 @@
       z-index: 4;
     }
 
+    /* شعاع الهولوغرام المخروطي المنبعث من القاعدة تحت المنتج */
+    .holo-projection-beam {
+      position: absolute;
+      bottom: 62px;
+      width: 210px;
+      height: 145px;
+      background: linear-gradient(to top, var(--beam-color) 0%, rgba(0, 240, 255, 0.14) 55%, transparent 100%);
+      clip-path: polygon(28% 100%, 72% 100%, 100% 0%, 0% 0%);
+      filter: blur(4px);
+      z-index: 2;
+      pointer-events: none;
+      animation: beamFlicker 2.8s ease-in-out infinite;
+    }
+
     .holo-energy-rings {
       position: absolute;
-      bottom: 22px;
+      bottom: 54px;
       width: 195px;
       height: 46px;
       border-radius: 50%;
       border: 2px solid var(--stage-ring);
-      box-shadow: 0 0 28px var(--stage-glow), inset 0 0 15px var(--stage-glow);
+      background: radial-gradient(ellipse at center, var(--stage-glow) 0%, transparent 72%);
+      box-shadow: 0 0 30px var(--stage-glow), inset 0 0 18px var(--stage-glow);
       transform: rotateX(68deg);
       animation: pulseRing 3s ease-in-out infinite;
+      z-index: 3;
     }
 
     .holo-energy-rings::after {
@@ -361,7 +380,7 @@
       position: absolute;
       inset: 8px;
       border-radius: 50%;
-      border: 1px dashed var(--cyan);
+      border: 1.5px dashed var(--cyan);
     }
 
     .floating-product-img {
@@ -370,15 +389,45 @@
       border-radius: 50%;
       object-fit: cover;
       border: 2.5px solid var(--gold);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.85), 0 0 28px var(--stage-glow);
-      animation: float3D 3.6s ease-in-out infinite;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.88), 0 0 32px var(--stage-glow);
+      animation: float3D 3.4s ease-in-out infinite;
       cursor: zoom-in;
       z-index: 5;
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
 
-    .stage-item-meta { margin-top: 10px; z-index: 5; }
+    .floating-product-img.switching {
+      opacity: 0.15;
+      transform: scale(0.85) translateY(8px);
+    }
+
+    .stage-item-meta { margin-top: 12px; z-index: 5; }
     .stage-item-meta h3 { font-size: 1rem; font-weight: 900; color: #FFF; }
     .stage-item-meta p { font-size: 0.72rem; color: var(--gold-light); }
+
+    /* مؤشر التبديل التلقائي للمسرح */
+    .stage-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 6px;
+      z-index: 6;
+    }
+
+    .stage-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      transition: 0.3s;
+    }
+
+    .stage-dot.active {
+      width: 18px;
+      border-radius: 10px;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+    }
 
     .stage-actions-bar {
       display: flex;
@@ -430,7 +479,7 @@
     .cinema-viewport {
       display: none;
       position: relative;
-      height: 225px;
+      height: 230px;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--gold);
@@ -556,36 +605,67 @@
       cursor: pointer;
     }
 
+    /* الخدمات الصامتة العائمة */
     .section-label {
       text-align: right;
       font-size: 0.78rem;
       font-weight: 800;
       color: var(--gold-light);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .concierge-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 18px;
     }
 
     .concierge-btn {
-      background: var(--card);
-      border: 1px solid rgba(212, 175, 55, 0.25);
-      border-radius: 14px;
-      padding: 11px 5px;
+      position: relative;
+      background: linear-gradient(160deg, rgba(20, 24, 38, 0.9) 0%, rgba(9, 11, 18, 0.95) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 16px;
+      padding: 12px 5px 14px 5px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 5px;
       color: var(--text);
       cursor: pointer;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.8), 0 0 14px rgba(0, 240, 255, 0.14);
+      animation: floatIconCard 3.6s ease-in-out infinite;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
 
-    .concierge-btn:active { transform: scale(0.95); border-color: var(--cyan); }
-    .concierge-btn .icon { font-size: 1.2rem; }
+    .concierge-btn:nth-child(1) { animation-delay: 0s; }
+    .concierge-btn:nth-child(2) { animation-delay: 0.6s; border-color: rgba(212, 175, 55, 0.42); }
+    .concierge-btn:nth-child(3) { animation-delay: 1.2s; }
+    .concierge-btn:nth-child(4) { animation-delay: 1.8s; border-color: rgba(212, 175, 55, 0.42); }
+
+    .concierge-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      width: 60%;
+      height: 3px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, var(--cyan) 0%, transparent 75%);
+      opacity: 0.7;
+    }
+
+    .concierge-btn:active {
+      transform: scale(0.93);
+      border-color: var(--gold);
+      box-shadow: 0 0 22px var(--gold-dim);
+    }
+
+    .concierge-btn .icon {
+      font-size: 1.3rem;
+      filter: drop-shadow(0 4px 8px rgba(0, 240, 255, 0.4));
+      animation: float3D 2.8s ease-in-out infinite;
+    }
+
     .concierge-btn span.label { font-size: 0.66rem; font-weight: 800; }
 
     .refill-card {
@@ -683,7 +763,7 @@
       cursor: pointer;
     }
 
-    /* كروت المنيو العائمة بتأثير الهولوغرام والانعدام الجاذبي */
+    /* كروت المنيو العائمة مع شعاع الهولوغرام تحت المنتج */
     .menu-card {
       position: relative;
       background: linear-gradient(145deg, rgba(20, 24, 38, 0.86) 0%, rgba(9, 11, 18, 0.92) 100%);
@@ -696,7 +776,6 @@
       align-items: center;
       gap: 12px;
       animation: cardFloat 4.2s ease-in-out infinite;
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .menu-card:nth-child(even) {
@@ -708,32 +787,42 @@
       animation-delay: 2.3s;
     }
 
-    .menu-card:hover {
-      border-color: var(--cyan);
-      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.9), 0 0 24px rgba(0, 240, 255, 0.22);
-    }
-
-    /* منصة الهولوغرام العائمة تحت صورة كل منتج */
     .holo-item-float-wrap {
       position: relative;
-      width: 64px;
-      height: 68px;
+      width: 68px;
+      height: 74px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
 
+    /* شعاع ضوئي ينبعث من القاعدة تحت كل منتج */
+    .holo-item-beam {
+      position: absolute;
+      bottom: 6px;
+      width: 64px;
+      height: 54px;
+      background: linear-gradient(to top, rgba(0, 240, 255, 0.42) 0%, rgba(212, 175, 55, 0.16) 60%, transparent 100%);
+      clip-path: polygon(22% 100%, 78% 100%, 100% 0%, 0% 0%);
+      filter: blur(2px);
+      z-index: 1;
+      pointer-events: none;
+      animation: beamFlicker 2.6s ease-in-out infinite;
+    }
+
     .holo-item-base {
       position: absolute;
       bottom: 1px;
-      width: 56px;
-      height: 14px;
+      width: 58px;
+      height: 15px;
       border-radius: 50%;
       border: 1.5px solid var(--cyan);
-      box-shadow: 0 0 12px var(--cyan), inset 0 0 8px var(--gold-dim);
+      background: radial-gradient(ellipse at center, rgba(0, 240, 255, 0.45) 0%, transparent 75%);
+      box-shadow: 0 0 14px var(--cyan), inset 0 0 8px var(--gold-dim);
       transform: rotateX(65deg);
       animation: pulseRing 2.8s ease-in-out infinite;
+      z-index: 1;
     }
 
     .item-img {
@@ -742,11 +831,11 @@
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid var(--gold);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.85), 0 0 14px var(--gold-dim);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.85), 0 0 16px var(--gold-dim);
       animation: float3D 3s ease-in-out infinite;
       cursor: pointer;
       z-index: 2;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
 
     .item-info { flex-grow: 1; }
@@ -997,14 +1086,22 @@
     @keyframes spinReverse { to { transform: rotate(-360deg); } }
     @keyframes float3D {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
+      50% { transform: translateY(-9px); }
+    }
+    @keyframes floatIconCard {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
     }
     @keyframes cardFloat {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-5px); }
     }
+    @keyframes beamFlicker {
+      0%, 100% { opacity: 0.75; transform: scaleX(1); }
+      50% { opacity: 1; transform: scaleX(1.06); }
+    }
     @keyframes pulseRing {
-      0%, 100% { opacity: 0.72; transform: rotateX(68deg) scale(1); }
+      0%, 100% { opacity: 0.75; transform: rotateX(68deg) scale(1); }
       50% { opacity: 1; transform: rotateX(68deg) scale(1.08); }
     }
     @keyframes scanMove {
@@ -1069,7 +1166,7 @@
       </div>
     </div>
 
-    <!-- مسرح العرض الهولوغرامي المركزي -->
+    <!-- مسرح العرض الهولوغرامي المركزي التلقائي -->
     <div id="holoStageCard" class="holo-stage-card">
       <div class="laser-scanline"></div>
 
@@ -1087,17 +1184,24 @@
 
       <!-- وضع العرض الهولوغرامي 3D -->
       <div id="viewport3d" class="holo-3d-viewport">
+        <div class="holo-projection-beam"></div>
         <div class="holo-energy-rings"></div>
         <img id="stageDrinkImg" src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=300" alt="مشروب هولوغرام" class="floating-product-img" onclick="openZoomModal()">
         <div class="stage-item-meta">
           <h3 id="stageDrinkName">فلات وايت نَمَقْ (Flat White)</h3>
           <p id="stageDrinkDesc">ميزان دقيق بين الإسبريسو والحليب • 16 ر.س</p>
         </div>
+        <div id="stageDots" class="stage-dots">
+          <span class="stage-dot active"></span>
+          <span class="stage-dot"></span>
+          <span class="stage-dot"></span>
+          <span class="stage-dot"></span>
+        </div>
         <div class="stage-actions-bar">
-          <button class="stage-nav-btn" onclick="cycleHeroDrink(-1)">❯</button>
+          <button class="stage-nav-btn" onclick="manualHeroCycle(-1)">❯</button>
           <button class="stage-order-btn" onclick="addHeroDrinkToCart()">أضف للسلة +</button>
           <button class="stage-zoom-btn" onclick="openZoomModal()">🔍 تكبير</button>
-          <button class="stage-nav-btn" onclick="cycleHeroDrink(1)">❮</button>
+          <button class="stage-nav-btn" onclick="manualHeroCycle(1)">❮</button>
         </div>
       </div>
 
@@ -1147,8 +1251,8 @@
       <button class="wifi-btn" onclick="copyWifi('Namq@2026')">نسخ الكلمة 📋</button>
     </div>
 
-    <!-- منظومة الخدمات الصامتة الفورية -->
-    <div class="section-label"><span>🛎️ الخدمات الصامتة المباشرة</span></div>
+    <!-- منظومة الخدمات الصامتة العائمة -->
+    <div class="section-label"><span>🛎️ الخدمات الصامتة العائمة</span></div>
     <div class="concierge-grid">
       <button class="concierge-btn" onclick="callHost()">
         <span class="icon">👋</span>
@@ -1215,6 +1319,7 @@
 
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200" alt="إسبريسو" class="item-img" onclick="previewItem('إسبريسو نَمَقْ (Espresso)', 'استخلاص غني بقوام متوازن', 14, this.src)">
         </div>
@@ -1228,6 +1333,7 @@
 
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=200" alt="فلات وايت" class="item-img" onclick="previewItem('فلات وايت (Flat White)', 'ميزان دقيق بين الإسبريسو والحليب', 16, this.src)">
         </div>
@@ -1241,6 +1347,7 @@
 
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200" alt="كابتشينو" class="item-img" onclick="previewItem('كابتشينو (Cappuccino)', 'إسبريسو مع رغوة حليب ناعمة', 18, this.src)">
         </div>
@@ -1254,6 +1361,7 @@
 
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=200" alt="لاتيه" class="item-img" onclick="previewItem('لاتيه حار / بارد (Latte)', 'مستخلصة بعناية مع الحليب الطازج', 18, this.src)">
         </div>
@@ -1267,6 +1375,7 @@
 
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=200" alt="في 60" class="item-img" onclick="previewItem('في 60 - مقطرة (V60)', 'محاصيل فاخرة للفلتر اليومي', 22, this.src)">
         </div>
@@ -1280,6 +1389,7 @@
 
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=200" alt="اسبانيش لاتيه" class="item-img" onclick="previewItem('اسبانيش لاتيه بارد', 'إسبريسو مع حليب وحلا نَمَقْ المتوازن', 21, this.src)">
         </div>
@@ -1293,6 +1403,7 @@
 
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=200" alt="كيكة العسل" class="item-img" onclick="previewItem('كيكة العسل الخاصة', 'طبقات هشة ومحضرة يومياً', 24, this.src)">
         </div>
@@ -1306,6 +1417,7 @@
 
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1519869325930-281384150729?w=200" alt="تارت التوت" class="item-img" onclick="previewItem('تارت التوت الفاخر', 'معجنات مقرمشة بكريمة الفانيليا', 20, this.src)">
         </div>
@@ -1326,6 +1438,7 @@
       </div>
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=200" alt="محصول إثيوبيا" class="item-img" onclick="previewItem('محصول إثيوبيا قيديب (250g)', 'إيحاءات: خوخ، ياسمين، وحلاوة عسل', 75, this.src)">
         </div>
@@ -1338,6 +1451,7 @@
       </div>
       <div class="menu-card">
         <div class="holo-item-float-wrap">
+          <div class="holo-item-beam"></div>
           <div class="holo-item-base"></div>
           <img src="https://images.unsplash.com/photo-1611854779393-1b2da9d401fe?w=200" alt="محصول كولومبي" class="item-img" onclick="previewItem('محصول كولومبي هائلا (250g)', 'إيحاءات: كراميل، شوكولاتة داكنة، ومكسرات', 70, this.src)">
         </div>
@@ -1503,6 +1617,7 @@
       { name: "كيكة العسل الخاصة", shortName: "كيكة العسل", desc: "طبقات هشة ومحضرة يومياً", price: 24, img: "https://images.unsplash.com/photo-1587314168485-3236d6710814?w=300" }
     ];
     let currentHeroIdx = 0;
+    let heroAutoTimer = null;
 
     const menuCatalog = [
       { keys: ["اسبريسو", "إسبريسو", "espresso"], name: "إسبريسو نَمَقْ", price: 14 },
@@ -1527,6 +1642,7 @@
         document.getElementById('nfcModalTable').innerText = activeTable;
         document.getElementById('gateTableHint').innerText = `تم التعرف على (${activeTable}) عبر NFC • اضغط لتفعيل التجربة الفضائية`;
       }
+      startHeroAutoPlay();
       startAutoSlide();
       initStageTilt();
     });
@@ -1536,7 +1652,7 @@
       const canvas = document.getElementById('spaceCanvas');
       const ctx = canvas.getContext('2d');
       let stars = [];
-      const count = 130;
+      const count = 140;
 
       function resize() {
         canvas.width = window.innerWidth;
@@ -1549,10 +1665,10 @@
         stars.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          r: Math.random() * 1.8 + 0.3,
-          speed: Math.random() * 0.35 + 0.08,
-          alpha: Math.random() * 0.8 + 0.2,
-          color: Math.random() > 0.78 ? '#00F0FF' : (Math.random() > 0.55 ? '#F3E5AB' : '#FFFFFF')
+          r: Math.random() * 1.9 + 0.3,
+          speed: Math.random() * 0.4 + 0.1,
+          alpha: Math.random() * 0.85 + 0.15,
+          color: Math.random() > 0.76 ? '#00F0FF' : (Math.random() > 0.52 ? '#F3E5AB' : '#FFFFFF')
         });
       }
 
@@ -1613,13 +1729,35 @@
       }
     }
 
-    // مسرح العرض الهولوغرامي 3D
-    function cycleHeroDrink(dir) {
-      currentHeroIdx = (currentHeroIdx + dir + heroDrinks.length) % heroDrinks.length;
-      const d = heroDrinks[currentHeroIdx];
-      document.getElementById('stageDrinkImg').src = d.img;
-      document.getElementById('stageDrinkName').innerText = d.name;
-      document.getElementById('stageDrinkDesc').innerText = `${d.desc} • ${d.price} ر.س`;
+    // مسرح العرض الهولوغرامي 3D التلقائي
+    function renderHeroDrink(index) {
+      const imgEl = document.getElementById('stageDrinkImg');
+      imgEl.classList.add('switching');
+
+      setTimeout(() => {
+        currentHeroIdx = (index + heroDrinks.length) % heroDrinks.length;
+        const d = heroDrinks[currentHeroIdx];
+        imgEl.src = d.img;
+        document.getElementById('stageDrinkName').innerText = d.name;
+        document.getElementById('stageDrinkDesc').innerText = `${d.desc} • ${d.price} ر.س`;
+
+        const dots = document.querySelectorAll('#stageDots .stage-dot');
+        dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentHeroIdx));
+
+        imgEl.classList.remove('switching');
+      }, 220);
+    }
+
+    function startHeroAutoPlay() {
+      clearInterval(heroAutoTimer);
+      heroAutoTimer = setInterval(() => {
+        renderHeroDrink(currentHeroIdx + 1);
+      }, 4000);
+    }
+
+    function manualHeroCycle(dir) {
+      renderHeroDrink(currentHeroIdx + dir);
+      startHeroAutoPlay();
     }
 
     function addHeroDrinkToCart() {
